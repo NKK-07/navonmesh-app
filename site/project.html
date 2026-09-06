@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The project — NAVONMESH</title>
+<meta name="description" content="NAVONMESH is our answer to SIH 2026 Problem Statement 26005. Full specification sheet across cooling, power, electronics and software, plus build status and the team.">
+<meta name="theme-color" content="#14181D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%2314181D'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.5'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.5'/></svg>">
+</head>
+<body>
+
+<div class="util">
+  <span>SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+  <span>PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+</div>
+
+<header class="nav">
+  <a class="brand" href="./index.html">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+      <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-text">
+      <span class="brand-name">NAVONMESH</span>
+      <span class="brand-sub">SOLAR MINI COLD STORAGE</span>
+    </span>
+  </a>
+
+  <nav class="navlinks">
+    <a class="navlink" href="./index.html">Home</a>
+    <a class="navlink" href="./how-it-works.html">How it works</a>
+    <a class="navlink" href="./built-for-ner.html">Built for NER</a>
+    <a class="navlink" href="./impact.html">Impact</a>
+    <a class="navlink" href="./project.html" aria-current="page">The project</a>
+  </nav>
+
+  <div class="nav-right">
+    <span class="nav-langs">8 LANGUAGES</span>
+    <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">
+      Open the live app
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3.5 7h17M3.5 12h17M3.5 17h17" stroke-width="2" stroke-linecap="square"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="./index.html">Home</a>
+  <a href="./how-it-works.html">How it works</a>
+  <a href="./built-for-ner.html">Built for NER</a>
+  <a href="./impact.html">Impact</a>
+  <a href="./project.html" aria-current="page">The project</a>
+  <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">Open the live app</a>
+</div>
+
+<main>
+
+  <section class="section" style="padding-bottom:32px;border-bottom-width:2px">
+    <div class="sec-head sec-head--split" style="border-bottom:0;padding-bottom:0;align-items:flex-end">
+      <div>
+        <span class="kicker">SECTION 05 &nbsp;/&nbsp; THE PROJECT</span>
+        <h1 class="title">Solar-powered smart mini cold storage for vegetables in the NER.</h1>
+      </div>
+      <p class="lede" style="max-width:420px">NAVONMESH is our answer to Problem Statement 26005: a complete unit, from the panel on the roof to the phone in the farmer's hand, that keeps vegetables in the hills alive long enough to be worth something.</p>
+    </div>
+  </section>
+
+  <section class="section section--white" data-specsheet>
+    <div class="sec-head sec-head--split" style="margin-bottom:26px">
+      <div><h2 class="title-sm title">Specification sheet.</h2></div>
+      <div class="seg" role="group" aria-label="Specification category">
+        <button data-spec data-id="cooling">Cooling</button>
+        <button data-spec data-id="power">Power</button>
+        <button data-spec data-id="electronics">Electronics</button>
+        <button data-spec data-id="software">Software</button>
+      </div>
+    </div>
+
+    <div class="table">
+      <div class="thead t-spec"><span>ITEM</span><span>NOTE</span><span style="text-align:right">VALUE</span></div>
+      <div data-sp="rows"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sec-head" style="margin-bottom:26px">
+      <span class="kicker">SECTION 05.2 &nbsp;/&nbsp; STATUS</span>
+      <h2 class="title-sm title">Where the project actually stands.</h2>
+    </div>
+
+    <div class="table">
+      <div class="thead t-status"><span>REF</span><span>DELIVERABLE</span><span>STATUS</span></div>
+      <div class="trow t-status"><span class="c-ref">S-01</span><span class="c-name">Control and telemetry interface</span><span class="c-status is-ok">COMPLETE</span></div>
+      <div class="trow t-status"><span class="c-ref">S-02</span><span class="c-name">Ten crop profiles, eight languages</span><span class="c-status is-ok">COMPLETE</span></div>
+      <div class="trow t-status"><span class="c-ref">S-03</span><span class="c-name">Hardware prototype assembly</span><span class="c-status is-wip">IN PROGRESS</span></div>
+      <div class="trow t-status"><span class="c-ref">S-04</span><span class="c-name">Field pilot, one storage season</span><span class="c-status is-none">NOT STARTED</span></div>
+    </div>
+  </section>
+
+  <section class="section section--white section--flush" id="team">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="kicker">SECTION 05.3 &nbsp;/&nbsp; TEAM</span>
+        <h2 class="title-sm title">Six people, one cold room.</h2>
+      </div>
+      <span class="tag">FILL IN YOUR OWN NAMES</span>
+    </div>
+
+    <div class="hgrid g3 hgrid--bleed">
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">01 &nbsp;/&nbsp; TEAM LEAD</span>
+        <span class="nm">[NAME]</span>
+        <p>Problem framing, farmer interviews across the pilot districts, and the case put to the jury.</p>
+      </article>
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">02 &nbsp;/&nbsp; THERMAL &amp; REFRIGERATION</span>
+        <span class="nm">[NAME]</span>
+        <p>Chamber sizing, PUF envelope, compressor selection and the phase-change pack.</p>
+      </article>
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">03 &nbsp;/&nbsp; POWER ELECTRONICS</span>
+        <span class="nm">[NAME]</span>
+        <p>Array sizing, MPPT, the 48 V bus and battery management under NER irradiance.</p>
+      </article>
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">04 &nbsp;/&nbsp; EMBEDDED &amp; TELEMETRY</span>
+        <span class="nm">[NAME]</span>
+        <p>ESP32 firmware, the sensor array, the control algorithm and the LoRa link.</p>
+      </article>
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">05 &nbsp;/&nbsp; APPLICATION</span>
+        <span class="nm">[NAME]</span>
+        <p>The offline-first app, the three role dashboards and the read-aloud interface.</p>
+      </article>
+      <article class="cell cell--white member" style="padding:32px var(--gutter);gap:12px">
+        <span class="lbl kicker kicker-sm">06 &nbsp;/&nbsp; AGRONOMY &amp; LANGUAGE</span>
+        <span class="nm">[NAME]</span>
+        <p>Crop profiles, storage guidance, and the eight-language translation set.</p>
+      </article>
+    </div>
+
+    <div class="contactbar">
+      <div>
+        <span class="k">INSTITUTION</span>
+        <span class="big">[YOUR INSTITUTION]</span>
+        <span class="sub">[YOUR DEPARTMENT] &middot; [YOUR CITY]</span>
+      </div>
+      <div><span class="k">EMAIL</span><span class="v">[YOUR EMAIL]</span></div>
+      <div><span class="k">PHONE</span><span class="v">[YOUR PHONE]</span></div>
+      <div><span class="k">MENTOR</span><span class="v">[MENTOR NAME]</span></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-slim">
+  <span class="n">NAVONMESH</span>
+  <span class="m">SIH 2026 / PS 26005 / PROTOTYPE</span>
+</footer>
+
+<script src="./assets/site.js" defer></script>
+</body>
+</html>

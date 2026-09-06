@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works — NAVONMESH</title>
+<meta name="description" content="Seven stages between the solar panel and the produce: array, MPPT, LiFePO4 battery, ESP32 controller, BLDC compressor, PCM thermal store and the 200 kg PUF chamber. Plus the full sensor schedule and communications links.">
+<meta name="theme-color" content="#14181D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%2314181D'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.5'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.5'/></svg>">
+</head>
+<body>
+
+<div class="util">
+  <span>SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+  <span>PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+</div>
+
+<header class="nav">
+  <a class="brand" href="./index.html">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+      <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-text">
+      <span class="brand-name">NAVONMESH</span>
+      <span class="brand-sub">SOLAR MINI COLD STORAGE</span>
+    </span>
+  </a>
+
+  <nav class="navlinks">
+    <a class="navlink" href="./index.html">Home</a>
+    <a class="navlink" href="./how-it-works.html" aria-current="page">How it works</a>
+    <a class="navlink" href="./built-for-ner.html">Built for NER</a>
+    <a class="navlink" href="./impact.html">Impact</a>
+    <a class="navlink" href="./project.html">The project</a>
+  </nav>
+
+  <div class="nav-right">
+    <span class="nav-langs">8 LANGUAGES</span>
+    <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">
+      Open the live app
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3.5 7h17M3.5 12h17M3.5 17h17" stroke-width="2" stroke-linecap="square"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="./index.html">Home</a>
+  <a href="./how-it-works.html" aria-current="page">How it works</a>
+  <a href="./built-for-ner.html">Built for NER</a>
+  <a href="./impact.html">Impact</a>
+  <a href="./project.html">The project</a>
+  <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">Open the live app</a>
+</div>
+
+<main>
+
+  <section class="section" style="padding-bottom:32px;border-bottom-width:2px">
+    <div class="sec-head sec-head--split" style="border-bottom:0;padding-bottom:0;align-items:flex-end">
+      <div>
+        <span class="kicker">SECTION 02 &nbsp;/&nbsp; HOW IT WORKS</span>
+        <h1 class="title">Sunlight in at the roof. Eight degrees, held all night, at the shelf.</h1>
+      </div>
+      <p class="lede" style="max-width:420px">Seven stages between the panel and the produce. Select any stage in the schematic to see the part, what it does, and why it was chosen for the North East.</p>
+    </div>
+  </section>
+
+  <section class="section section--white" data-schematic>
+    <div class="figure-head" style="margin-bottom:26px">
+      <span>FIG. 2 &mdash; SYSTEM BLOCK SCHEMATIC</span>
+      <span>ENERGY PATH 01&ndash;04 &nbsp;/&nbsp; COLD PATH 05&ndash;07</span>
+    </div>
+
+    <div class="chain" role="group" aria-label="System stage">
+      <div class="chain-item">
+        <button class="blk" data-id="pv"><span class="b-num">01</span><span class="b-body"><span class="b-name">Solar array</span><span class="b-spec">2.4 kW</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="mppt"><span class="b-num">02</span><span class="b-body"><span class="b-name">MPPT controller</span><span class="b-spec">CHARGE CTRL</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="batt"><span class="b-num">03</span><span class="b-body"><span class="b-name">Battery bank</span><span class="b-spec">48 V / 100 Ah</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="mcu"><span class="b-num">04</span><span class="b-body"><span class="b-name">Controller</span><span class="b-spec">ESP32 DUAL CORE</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="comp"><span class="b-num">05</span><span class="b-body"><span class="b-name">Compressor</span><span class="b-spec">BLDC VARIABLE</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="pcm"><span class="b-num">06</span><span class="b-body"><span class="b-name">Thermal store</span><span class="b-spec">70 kg PCM</span></span></button>
+        <svg width="26" height="12" viewBox="0 0 26 12" fill="none" aria-hidden="true"><path d="M0 6h24M19 2l5 4-5 4" stroke="#B7BEC6" stroke-width="1.4"/></svg>
+      </div>
+      <div class="chain-item">
+        <button class="blk" data-id="room"><span class="b-num">07</span><span class="b-body"><span class="b-name">Cold chamber</span><span class="b-spec">200 kg / 100 mm PUF</span></span></button>
+      </div>
+    </div>
+
+    <div class="detail" style="margin-top:26px">
+      <div>
+        <div class="detail-meta">
+          <span class="kicker" data-s="num">STAGE 01</span>
+          <span style="color:var(--ink-3);font-weight:500" data-s="layer">ENERGY PATH</span>
+        </div>
+        <h3 data-s="name">Solar array</h3>
+        <p data-s="body">A 2.4 kW photovoltaic array sits on the roof of the chamber itself, so the unit needs no separate land and no grid connection.</p>
+        <div class="callout">
+          <span class="lbl">WHY THIS CHOICE FOR NER</span>
+          <p data-s="why">Most of the North East gets far less usable sun than the rest of India.</p>
+        </div>
+      </div>
+
+      <div class="speclist">
+        <span class="lbl">SPECIFICATION</span>
+        <div data-s="specs"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sec-head" style="margin-bottom:28px">
+      <span class="kicker">SECTION 02.2 &nbsp;/&nbsp; INSTRUMENTATION</span>
+      <h2 class="title-sm title">Sensor schedule.</h2>
+    </div>
+
+    <div class="table">
+      <div class="thead t-sensor"><span>TAG</span><span>DEVICE</span><span>MEASURES</span><span>RATING</span></div>
+      <div class="trow t-sensor"><span class="c-ref">TT-01</span><span class="c-name">SHT31 temperature sensor</span><span class="c-note">Chamber air temperature</span><span class="c-val">±0.3 °C</span></div>
+      <div class="trow t-sensor"><span class="c-ref">MT-01</span><span class="c-name">SHT31 humidity sensor</span><span class="c-note">Relative humidity</span><span class="c-val">±2 % RH</span></div>
+      <div class="trow t-sensor"><span class="c-ref">WT-01</span><span class="c-name">4-point strain gauge load cell</span><span class="c-note">Stored produce mass</span><span class="c-val">±0.1 kg to 200 kg</span></div>
+      <div class="trow t-sensor"><span class="c-ref">AT-01</span><span class="c-name">Electrochemical ethylene sensor</span><span class="c-note">Ripening gas concentration</span><span class="c-val">Normal / Mod / High</span></div>
+      <div class="trow t-sensor"><span class="c-ref">ZS-01</span><span class="c-name">Magnetic reed door switch</span><span class="c-note">Door position</span><span class="c-val">Open / closed</span></div>
+      <div class="trow t-sensor"><span class="c-ref">TE-01</span><span class="c-name">PCM core thermocouples</span><span class="c-note">Thermal store charge state</span><span class="c-val">≈ −0.8 °C phase point</span></div>
+    </div>
+  </section>
+
+  <section class="section section--white section--flush">
+    <div class="sec-head">
+      <span class="kicker">SECTION 02.3 &nbsp;/&nbsp; COMMUNICATIONS</span>
+      <h2 class="title-sm title">Four ways the data gets out.</h2>
+    </div>
+
+    <div class="hgrid g4 hgrid--bleed">
+      <article class="cell cell--white">
+        <span class="kicker kicker-sm">LINK 01 &nbsp;/&nbsp; PRIMARY</span>
+        <h3>LoRa SX1276, 868 MHz</h3>
+        <p>Kilometres of range with no tower and no subscription. This is how a chamber in a hill village reaches the FPO office.</p>
+      </article>
+      <article class="cell cell--white">
+        <span class="kicker kicker-sm">LINK 02 &nbsp;/&nbsp; FALLBACK</span>
+        <h3>GSM SMS</h3>
+        <p>If the chamber goes critical and LoRa is down, the alert still leaves as a text message.</p>
+      </article>
+      <article class="cell cell--white">
+        <span class="kicker kicker-sm">LINK 03 &nbsp;/&nbsp; SERVICING</span>
+        <h3>Local Wi-Fi access point</h3>
+        <p>A technician connects a phone directly to the unit for diagnostics, with no internet involved at all.</p>
+      </article>
+      <article class="cell cell--white">
+        <span class="kicker kicker-sm">LINK 04 &nbsp;/&nbsp; FARMER</span>
+        <h3>Offline-first application</h3>
+        <p>The app caches the last known state, so it opens and answers with no signal, then syncs when a link returns.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-slim">
+  <span class="n">NAVONMESH</span>
+  <span class="m">SIH 2026 / PS 26005 / PROTOTYPE</span>
+</footer>
+
+<script src="./assets/site.js" defer></script>
+</body>
+</html>

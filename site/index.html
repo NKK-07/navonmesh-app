@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAVONMESH — Solar-Powered Smart Mini Cold Storage</title>
+<meta name="description" content="A 200 kg solar-powered mini cold room for the hills of the North East. 100 mm PUF envelope, 2.4 kW rooftop array, LiFePO4 batteries with a 70 kg phase-change thermal store, and a farmer-facing app in eight regional languages. SIH 2026, Problem Statement 26005.">
+<meta name="theme-color" content="#14181D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%2314181D'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.5'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.5'/></svg>">
+</head>
+<body>
+
+<div class="util">
+  <span>SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+  <span>PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+</div>
+
+<header class="nav">
+  <a class="brand" href="./index.html">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+      <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+      <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-text">
+      <span class="brand-name">NAVONMESH</span>
+      <span class="brand-sub">SOLAR MINI COLD STORAGE</span>
+    </span>
+  </a>
+
+  <nav class="navlinks">
+    <a class="navlink" href="./index.html" aria-current="page">Home</a>
+    <a class="navlink" href="./how-it-works.html">How it works</a>
+    <a class="navlink" href="./built-for-ner.html">Built for NER</a>
+    <a class="navlink" href="./impact.html">Impact</a>
+    <a class="navlink" href="./project.html">The project</a>
+  </nav>
+
+  <div class="nav-right">
+    <span class="nav-langs">8 LANGUAGES</span>
+    <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">
+      Open the live app
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3.5 7h17M3.5 12h17M3.5 17h17" stroke-width="2" stroke-linecap="square"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="./index.html" aria-current="page">Home</a>
+  <a href="./how-it-works.html">How it works</a>
+  <a href="./built-for-ner.html">Built for NER</a>
+  <a href="./impact.html">Impact</a>
+  <a href="./project.html">The project</a>
+  <a class="btn" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">Open the live app</a>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="kicker">01 &nbsp;/&nbsp; SOLAR-POWERED MINI COLD STORAGE</span>
+      <h1>Cold storage that runs on sunlight, not the grid.</h1>
+      <p class="lede">A 200&nbsp;kg mini cold room for the hills of the North East. 100&nbsp;mm PUF envelope, 2.4&nbsp;kW rooftop array, LiFePO&#8324; batteries with a 70&nbsp;kg phase-change thermal store, and a farmer-facing app in eight regional languages.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-lg" href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">
+          See the live demo
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-lg btn-ghost" href="./how-it-works.html">Technical documentation</a>
+      </div>
+
+      <dl class="spec-list">
+        <div><dt>GRID DRAW</dt><dd>None. Fully off-grid, through multi-day outages.</dd></div>
+        <div><dt>TELEMETRY</dt><dd>LoRa 868&nbsp;MHz, SMS fallback, offline-first app.</dd></div>
+        <div><dt>INTERFACE</dt><dd>Eight NER languages, with speech output.</dd></div>
+      </dl>
+    </div>
+
+    <figure class="figure" style="margin:0">
+      <div class="figure-head">
+        <span>FIG. 1 &mdash; GENERAL ARRANGEMENT</span>
+        <span>NM-001 / ELEVATION</span>
+      </div>
+
+      <svg viewBox="0 0 620 470" role="img" aria-label="Elevation drawing of the NAVONMESH cold storage unit showing solar array, equipment cabinet, compressor and insulated chamber">
+        <g stroke="#14181D" fill="none" stroke-linecap="square">
+          <path d="M40 410h540" stroke-width="2"/>
+          <g stroke="#B7BEC6" stroke-width="1">
+            <path d="M46 410l-8 12M76 410l-8 12M106 410l-8 12M136 410l-8 12M166 410l-8 12M196 410l-8 12M226 410l-8 12M256 410l-8 12M286 410l-8 12M316 410l-8 12M346 410l-8 12M376 410l-8 12M406 410l-8 12M436 410l-8 12M466 410l-8 12M496 410l-8 12M526 410l-8 12M556 410l-8 12"/>
+          </g>
+
+          <rect x="250" y="180" width="290" height="230" stroke-width="2"/>
+          <rect x="264" y="194" width="262" height="202" stroke-width="1"/>
+          <g stroke="#B7BEC6" stroke-width="0.8">
+            <path d="M250 180l14 14M250 208l14 14M250 236l14 14M250 264l14 14M250 292l14 14M250 320l14 14M250 348l14 14M250 376l14 14M526 194l14-14M526 222l14-14M526 250l14-14M526 278l14-14M526 306l14-14M526 334l14-14M526 362l14-14M526 390l14-14"/>
+          </g>
+
+          <path d="M395 194v202" stroke-width="1"/>
+          <path d="M383 288h10M383 296h10" stroke-width="1.6"/>
+
+          <path d="M276 300h108M410 300h104" stroke-width="1"/>
+          <rect x="286" y="252" width="42" height="44" stroke-width="1"/>
+          <rect x="336" y="252" width="42" height="44" stroke-width="1"/>
+          <rect x="422" y="252" width="42" height="44" stroke-width="1"/>
+          <rect x="286" y="330" width="42" height="44" stroke-width="1"/>
+          <rect x="336" y="330" width="42" height="44" stroke-width="1"/>
+          <rect x="422" y="330" width="42" height="44" stroke-width="1"/>
+          <rect x="472" y="330" width="42" height="44" stroke-width="1"/>
+
+          <rect x="286" y="206" width="228" height="26" stroke-width="1.4"/>
+          <path d="M296 206v26M306 206v26M316 206v26M326 206v26M336 206v26M346 206v26M356 206v26M366 206v26M376 206v26M386 206v26M396 206v26M406 206v26M416 206v26M426 206v26M436 206v26M446 206v26M456 206v26M466 206v26M476 206v26M486 206v26M496 206v26M506 206v26" stroke="#B7BEC6" stroke-width="0.8"/>
+
+          <path d="M232 180l40-72h280l-12 72" stroke-width="2"/>
+          <path d="M258 152h286M248 170h288" stroke="#B7BEC6" stroke-width="1"/>
+          <path d="M320 108l-14 72M390 108l-8 72M460 108l-2 72M520 108v72" stroke="#B7BEC6" stroke-width="1"/>
+
+          <rect x="80" y="240" width="120" height="170" stroke-width="2"/>
+          <path d="M80 296h120M80 352h120" stroke-width="1.4"/>
+          <rect x="94" y="256" width="92" height="26" stroke-width="1"/>
+          <rect x="94" y="312" width="92" height="26" stroke-width="1"/>
+          <rect x="94" y="368" width="92" height="26" stroke-width="1"/>
+
+          <rect x="200" y="352" width="50" height="58" stroke-width="1.6"/>
+          <circle cx="225" cy="381" r="15" stroke-width="1"/>
+          <circle cx="225" cy="381" r="5" stroke-width="1"/>
+
+          <path d="M140 240v-96h124" stroke-width="1.4" stroke-dasharray="6 4"/>
+          <path d="M200 268h50v-24" stroke-width="1.4"/>
+
+          <path d="M400 108v-42h96" stroke-width="1"/>
+          <path d="M140 148h-72v-38" stroke-width="1"/>
+          <path d="M140 270H60" stroke-width="1"/>
+          <path d="M140 326H60" stroke-width="1"/>
+          <path d="M225 396v34h-96" stroke-width="1"/>
+          <path d="M540 240h52" stroke-width="1"/>
+          <path d="M400 219h140v-40h52" stroke-width="1"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" text-anchor="middle">
+          <circle cx="508" cy="66" r="13" fill="#14181D"/><text x="508" y="71" fill="#FFFFFF">01</text>
+          <circle cx="68" cy="97" r="13" fill="#14181D"/><text x="68" y="102" fill="#FFFFFF">02</text>
+          <circle cx="47" cy="270" r="13" fill="#14181D"/><text x="47" y="275" fill="#FFFFFF">03</text>
+          <circle cx="47" cy="326" r="13" fill="#14181D"/><text x="47" y="331" fill="#FFFFFF">04</text>
+          <circle cx="116" cy="430" r="13" fill="#14181D"/><text x="116" y="435" fill="#FFFFFF">05</text>
+          <circle cx="605" cy="240" r="13" fill="#14181D"/><text x="605" y="245" fill="#FFFFFF">06</text>
+          <circle cx="605" cy="179" r="13" fill="#14181D"/><text x="605" y="184" fill="#FFFFFF">07</text>
+        </g>
+      </svg>
+
+      <ul class="keylist">
+        <li><span class="n">01</span><span class="t">Solar array, 2.4 kW</span></li>
+        <li><span class="n">02</span><span class="t">MPPT charge controller</span></li>
+        <li><span class="n">03</span><span class="t">Battery, 48 V / 100 Ah LiFePO&#8324;</span></li>
+        <li><span class="n">04</span><span class="t">PCM thermal store, 70 kg</span></li>
+        <li><span class="n">05</span><span class="t">BLDC variable-speed compressor</span></li>
+        <li><span class="n">06</span><span class="t">Chamber, 200 kg / 100 mm PUF</span></li>
+        <li class="wide"><span class="n">07</span><span class="t">Evaporator, forced air circulation, ESP32 sensor array</span></li>
+      </ul>
+    </figure>
+  </section>
+
+  <!-- KEY FIGURES -->
+  <section class="keyfig">
+    <div class="hgrid g4">
+      <div class="cell"><span class="kicker kicker-sm">CHAMBER CAPACITY</span><span class="val">200 kg</span><span class="note">Per unit, mixed vegetables</span></div>
+      <div class="cell"><span class="kicker kicker-sm">SOLAR ARRAY</span><span class="val">2.4 kW</span><span class="note">Rooftop mounted, no separate land</span></div>
+      <div class="cell"><span class="kicker kicker-sm">THERMAL RESERVE</span><span class="val">8.6 hrs</span><span class="note">Cooling with the compressor off</span></div>
+      <div class="cell"><span class="kicker kicker-sm">INTERFACE LANGUAGES</span><span class="val">8</span><span class="note">All with speech output</span></div>
+    </div>
+  </section>
+
+  <!-- CONTROL PANEL -->
+  <section class="section">
+    <div class="sec-head sec-head--split">
+      <div>
+        <span class="kicker">02 &nbsp;/&nbsp; CONTROL AND TELEMETRY</span>
+        <h2 class="title">Holding 8&nbsp;&deg;C through a monsoon week.</h2>
+        <p class="lede">Select an operating condition to see the controller's response.</p>
+      </div>
+      <span class="tag tag-warn">SIMULATED PROTOTYPE TELEMETRY</span>
+    </div>
+
+    <div class="seg" role="group" aria-label="Operating condition" style="margin:30px 0">
+      <button data-scenario data-id="clear">Clear day</button>
+      <button data-scenario data-id="cloud">Cloudy monsoon day</button>
+      <button data-scenario data-id="door">Door left open</button>
+      <button data-scenario data-id="night">Night, no sun</button>
+    </div>
+
+    <div class="panel" data-panel>
+      <div class="panel-head">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <span class="status" data-f="status"><i></i><span>ALL SYSTEMS NORMAL</span></span>
+          <span class="panel-id">UNIT NM-001 &nbsp;/&nbsp; RI-BHOI, MEGHALAYA</span>
+        </div>
+        <span class="panel-id" data-f="clock">11:40 / 07 SEP</span>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <span class="lbl">CHAMBER TEMP</span>
+          <span class="val"><span data-f="temp">8.2</span><u> °C</u></span>
+          <span class="sub">SETPOINT 8.0 °C</span>
+        </div>
+        <div class="metric">
+          <span class="lbl">HUMIDITY</span>
+          <span class="val"><span data-f="hum">91</span><u> %</u></span>
+          <span class="sub">TARGET 90 % RH</span>
+        </div>
+        <div class="metric">
+          <span class="lbl">SOLAR INPUT</span>
+          <span class="val"><span data-f="solar">2.4</span><u> kW</u></span>
+          <span class="sub" data-f="solarNote">ARRAY AT FULL OUTPUT</span>
+        </div>
+        <div class="metric">
+          <span class="lbl">BATTERY</span>
+          <span class="val"><span data-f="batt">78</span><u> %</u></span>
+          <span class="track"><i data-f="battBar" style="width:78%;background:#10B981"></i></span>
+        </div>
+      </div>
+
+      <div class="panel-foot">
+        <div>
+          <span class="lbl">CONTROLLER ACTION</span>
+          <p data-f="note">Compressor running at 42% duty. Surplus solar is topping up the battery and re-freezing the thermal pack for tonight.</p>
+        </div>
+        <div>
+          <div class="rowline">
+            <span class="lbl">THERMAL RESERVE</span>
+            <span class="big" data-f="pcm">82 %</span>
+          </div>
+          <span class="track"><i data-f="pcmBar" style="width:82%;background:#7C3AED"></i></span>
+          <span class="cap" data-f="pcmNote">Fully charged. 8.6 h of cooling in reserve.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN DECISIONS -->
+  <section class="section section--flush">
+    <div class="sec-head">
+      <span class="kicker">03 &nbsp;/&nbsp; DESIGN DECISIONS</span>
+      <h2 class="title">Four decisions that make it work where nothing else does.</h2>
+    </div>
+
+    <div class="hgrid g4 hgrid--bleed" style="margin-top:0">
+      <article class="cell">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="kicker kicker-sm">D-01</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="#14181D" stroke-width="1.4"/><path d="M12 2.6v3.2M12 18.2v3.2M2.6 12h3.2M18.2 12h3.2M5.4 5.4l2.3 2.3M16.3 16.3l2.3 2.3M18.6 5.4l-2.3 2.3M7.7 16.3l-2.3 2.3" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>100% solar, off-grid</h3>
+        <p>2.4 kW array into an MPPT controller and a 48 V LiFePO&#8324; pack. No grid connection, no diesel, no monthly bill.</p>
+      </article>
+
+      <article class="cell">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="kicker kicker-sm">D-02</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6v18.8M4.1 7.1l15.8 9.8M19.9 7.1L4.1 16.9" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/><path d="M12 6.4l2.4-2.4M12 6.4L9.6 4M12 17.6l2.4 2.4M12 17.6L9.6 20" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>200 kg PUF chamber</h3>
+        <p>100 mm polyurethane foam and a hermetic seal hold 90&ndash;95% RH without letting the monsoon in, or condensation onto the produce.</p>
+      </article>
+
+      <article class="cell">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="kicker kicker-sm">D-03</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9.6v4.8h3.3L12 18.4V5.6L7.3 9.6H4z" stroke="#14181D" stroke-width="1.4" stroke-linejoin="round"/><path d="M15.6 9.3a4 4 0 010 5.4M18.3 6.6a8 8 0 010 10.8" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Eight languages, read aloud</h3>
+        <p>Hindi, Assamese, Nepali, Meitei, Khasi, Mizo, Nagamese and English, with speech output for farmers who do not read screens.</p>
+      </article>
+
+      <article class="cell">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="kicker kicker-sm">D-04</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.4V11.6" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="9.2" r="2" stroke="#14181D" stroke-width="1.4"/><path d="M8 5.2a6.6 6.6 0 000 8M16 5.2a6.6 6.6 0 010 8M5 2.4a10.8 10.8 0 000 13.6M19 2.4a10.8 10.8 0 010 13.6" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>LoRa first, offline always</h3>
+        <p>868 MHz LoRa carries telemetry where cell towers do not reach, with SMS fallback and an app that keeps working with no signal at all.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CROP PROFILES -->
+  <section class="section section--white">
+    <div class="sec-head" style="margin-bottom:30px">
+      <span class="kicker">04 &nbsp;/&nbsp; CROP PROFILES</span>
+      <h2 class="title">Ten NER crop profiles, shipped with the unit.</h2>
+      <p class="lede">Each carries its own set-point, humidity band and chilling limit. Select a crop to see the stored profile.</p>
+    </div>
+
+    <div class="crops" data-crops>
+      <div class="croplist" role="group" aria-label="Crop">
+        <button class="cbtn" data-id="cabbage"><span class="nm"><span class="n">Cabbage</span><span class="l">বন্ধাকপি · बन्दागोभी · Kobi</span></span><span class="t">0–2 °C</span></button>
+        <button class="cbtn" data-id="king_chilli"><span class="nm"><span class="n">King Chilli</span><span class="l">ভোট জলকীয়া · U-Morok · Hmar-cha</span></span><span class="t">5–7 °C</span></button>
+        <button class="cbtn" data-id="khasi_mandarin"><span class="nm"><span class="n">Khasi Mandarin</span><span class="l">Soh Niamtra · कमला सुन्तला</span></span><span class="t">4–7 °C</span></button>
+        <button class="cbtn" data-id="ginger"><span class="nm"><span class="n">Ginger</span><span class="l">আদা · अदुवा · Sying</span></span><span class="t">12–14 °C</span></button>
+        <button class="cbtn" data-id="tomato"><span class="nm"><span class="n">Tomato</span><span class="l">বিলাহী · गोलभेँडा · Soh Tyngkong</span></span><span class="t">8–10 °C</span></button>
+        <button class="cbtn" data-id="large_cardamom"><span class="nm"><span class="n">Large Cardamom</span><span class="l">বৰ ইলাচী · अलैंची · Elaka Tynhiang</span></span><span class="t">10–15 °C</span></button>
+      </div>
+
+      <div class="cropdetail">
+        <div class="cropdetail-head">
+          <div>
+            <h3 data-c="name">Cabbage</h3>
+            <span class="l" data-c="local">বন্ধাকপি · बन्दागोभी · Kobi</span>
+          </div>
+          <span class="tag" data-c="code">PROFILE C-01</span>
+        </div>
+
+        <div class="cropstats">
+          <div><span class="k">SET-POINT</span><span class="v" data-c="temp">0–2 °C</span></div>
+          <div><span class="k">HUMIDITY BAND</span><span class="v" data-c="hum">90–95 %</span></div>
+          <div><span class="k">SELLING WINDOW</span><span class="v" data-c="gain">6× longer</span></div>
+        </div>
+
+        <div class="compare">
+          <div class="compare-row">
+            <span class="k">OPEN SHED</span>
+            <span class="rail"><i data-c="ambBar" style="width:17%;background:#B91C1C"></i></span>
+            <span class="v" style="color:#B91C1C" data-c="ambient">6 d</span>
+          </div>
+          <div class="compare-row">
+            <span class="k">NAVONMESH</span>
+            <span class="rail"><i style="width:100%;background:#047857"></i></span>
+            <span class="v" style="color:#047857" data-c="cold">35 d</span>
+          </div>
+        </div>
+
+        <div class="callout">
+          <span class="lbl">STORAGE NOTE</span>
+          <p data-c="tip">Keep the bags ventilated, and store away from Khasi mandarin — the ethylene will yellow the leaves.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATORS -->
+  <section class="section section--flush">
+    <div class="sec-head">
+      <span class="kicker">05 &nbsp;/&nbsp; OPERATORS</span>
+      <h2 class="title">One cold room, three people who depend on it.</h2>
+    </div>
+
+    <div class="hgrid g3 hgrid--bleed">
+      <article class="cell role" style="padding:38px var(--gutter);gap:18px">
+        <span class="lbl">ROLE 01</span>
+        <h3>The farmer</h3>
+        <p>Opens the app in their own language, hears the status read aloud, and sees how many days each batch has left before it must be sold.</p>
+        <ul>
+          <li>Batch-by-batch shelf life</li>
+          <li>Sell-first alerts before spoilage</li>
+          <li>Keeps working with the phone offline</li>
+        </ul>
+      </article>
+
+      <article class="cell role" style="padding:38px var(--gutter);gap:18px">
+        <span class="lbl">ROLE 02</span>
+        <h3>The retailer</h3>
+        <p>Sees what is in the chamber, how cold it has been kept and how long it will hold, so produce is bought on evidence rather than a guess at the mandi gate.</p>
+        <ul>
+          <li>Live stock and weight</li>
+          <li>Cold-chain history per batch</li>
+          <li>Freshness proof before loading</li>
+        </ul>
+      </article>
+
+      <article class="cell role" style="padding:38px var(--gutter);gap:18px">
+        <span class="lbl">ROLE 03</span>
+        <h3>The FPO</h3>
+        <p>Runs a cluster of units across villages from one screen: uptime, utilisation, member batches and which chamber needs a technician this week.</p>
+        <ul>
+          <li>Multi-unit fleet view</li>
+          <li>Member-wise storage records</li>
+          <li>Maintenance scheduling</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- BUILD STATUS -->
+  <section class="section section--white">
+    <div class="sec-head" style="margin-bottom:26px">
+      <span class="kicker">06 &nbsp;/&nbsp; BUILD STATUS</span>
+      <h2 class="title">Where the project actually stands.</h2>
+    </div>
+
+    <div class="table">
+      <div class="thead t-status"><span>REF</span><span>DELIVERABLE</span><span>STATUS</span></div>
+      <div class="trow t-status"><span class="c-ref">S-01</span><span class="c-name">Control and telemetry interface</span><span class="c-status is-ok">COMPLETE</span></div>
+      <div class="trow t-status"><span class="c-ref">S-02</span><span class="c-name">Ten crop profiles, eight languages</span><span class="c-status is-ok">COMPLETE</span></div>
+      <div class="trow t-status"><span class="c-ref">S-03</span><span class="c-name">Hardware prototype assembly</span><span class="c-status is-wip">IN PROGRESS</span></div>
+      <div class="trow t-status"><span class="c-ref">S-04</span><span class="c-name">Field pilot, one storage season</span><span class="c-status is-none">NOT STARTED</span></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-copy">
+      <span class="kicker">07 &nbsp;/&nbsp; PILOT PROGRAMME</span>
+      <h2>Bring a unit to your village cluster.</h2>
+      <p>We are looking for FPOs, collection centres and horticulture departments across the North East to host the first pilot chambers.</p>
+    </div>
+    <div class="cta-act">
+      <a class="btn btn-lg btn-light" href="mailto:">
+        Request a pilot
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <span class="sub">[YOUR EMAIL] &nbsp;/&nbsp; [YOUR PHONE]</span>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div class="footer-col footer-about">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg width="32" height="32" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+          <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+          <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"/>
+          <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">NAVONMESH</span>
+      </div>
+      <p>Solar-powered smart mini cold storage for vegetables in the North Eastern Region.</p>
+    </div>
+
+    <div class="footer-col">
+      <span class="h">PRODUCT</span>
+      <a href="./how-it-works.html">How it works</a>
+      <a href="./built-for-ner.html">Built for NER</a>
+      <a href="./index.html#crops">Crop profiles</a>
+      <a href="https://harmonious-begonia-457704.netlify.app/" target="_blank" rel="noopener">Live demo app</a>
+    </div>
+
+    <div class="footer-col">
+      <span class="h">PROJECT</span>
+      <a href="./project.html">SIH 2026</a>
+      <a href="./impact.html">Impact</a>
+      <a href="./project.html#team">The team</a>
+      <a href="./how-it-works.html">Technical documentation</a>
+    </div>
+
+    <div class="footer-col">
+      <span class="h">CONTACT</span>
+      <span>[YOUR EMAIL]</span>
+      <span>[YOUR PHONE]</span>
+      <span>[YOUR INSTITUTION]</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>SIH 2026 / PS 26005 / PROTOTYPE</span>
+    <span>TELEMETRY SHOWN IS SIMULATED FROM THE PROTOTYPE CONTROL PANEL</span>
+  </div>
+</footer>
+
+<script src="./assets/site.js" defer></script>
+</body>
+</html>
