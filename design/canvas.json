@@ -1,0 +1,41 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Home", "x": 0, "y": 0, "w": 1440, "h": 4700, "is_interactive": true },
+    { "file": "MobileHome.dc.html", "title": "Home — mobile", "x": 1560, "y": 0, "w": 390, "h": 2150, "is_interactive": true },
+    { "file": "HowItWorks.dc.html", "title": "How it works", "x": 2070, "y": 0, "w": 1440, "h": 2450, "is_interactive": true },
+    { "file": "BuiltForNer.dc.html", "title": "Built for NER", "x": 3630, "y": 0, "w": 1440, "h": 2150, "is_interactive": true },
+    { "file": "Impact.dc.html", "title": "Impact", "x": 5190, "y": 0, "w": 1440, "h": 2250, "is_interactive": true },
+    { "file": "Project.dc.html", "title": "The project", "x": 6750, "y": 0, "w": 1440, "h": 2550, "is_interactive": true }
+  ],
+  "annotations": [
+    {
+      "id": "direction",
+      "x": 0,
+      "y": -300,
+      "w": 480,
+      "text": "Rebuilt in the industrial / engineering register — the Manufactt and Industrial X reference class, with structure borrowed from Ecofrost (spec sheets, ownership of the technical story) and ColdHubs (hard-number stat grids).\n\nNo gradients, no glows, no mesh, no grain anywhere. Flat colour, hard rules, square corners, technical line drawing."
+    },
+    {
+      "id": "system",
+      "x": 1560,
+      "y": -300,
+      "w": 430,
+      "text": "Type: Outfit for display, Inter for text, IBM Plex Mono for every label, tag, unit, reference code and table header.\n\nColour: warm paper #F4F5F3, ink #14181D, hairline rules #D5D9DE. Brand green/blue/amber survive only as small data and status accents.\n\nFIG. 1 is a real elevation drawing with numbered leader-line callouts, not an illustration."
+    },
+    {
+      "id": "motion",
+      "x": 2070,
+      "y": -300,
+      "w": 420,
+      "text": "Motion is functional only:\n\n• 140–160 ms colour and border changes on hover for cells, rows, segmented controls and nav links\n• Segmented controls invert to solid ink when selected\n• Bars ease to their new width over 500 ms\n• Mobile menu slides down 220 ms\n\nNo entrance reveals, no ambient loops, nothing decorative — so PNG/PDF export is now safe at any moment."
+    },
+    {
+      "id": "placeholders",
+      "x": 6750,
+      "y": -300,
+      "w": 450,
+      "text": "Everything in [BRACKETS] is a real fact I did not have — names, contacts, institution, mentor. Fill those in before this goes anywhere public.\n\nAll telemetry and impact figures come from the simulated hardware service and are labelled as such on every page."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

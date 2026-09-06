@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap">
+  <style>
+    body { margin: 0; background: #F4F5F3; color: #14181D; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { color: #14181D; text-decoration: none; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
+    .btnk { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+    .seg { transition: background .14s ease, color .14s ease, border-color .14s ease; cursor: pointer; }
+    .bar { transition: width .5s cubic-bezier(.3,.7,.3,1); }
+    .drawer { animation: slideDown .22s cubic-bezier(.3,.7,.3,1) both; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #F4F5F3;">
+
+  <div style="height: 30px; background: #14181D; display: flex; align-items: center; padding: 0 18px;">
+    <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1.1px; color: #A3ADB8;">SIH 2026 &nbsp;/&nbsp; PS 26005 &nbsp;/&nbsp; PROTOTYPE</span>
+  </div>
+
+  <!-- NAV -->
+  <div style="height: 64px; background: #F4F5F3; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 18px;">
+    <div style="display: flex; align-items: center; gap: 11px;">
+      <svg width="34" height="34" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+        <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <span style="font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 800; letter-spacing: 0.5px; color: #14181D;">NAVONMESH</span>
+    </div>
+
+    <button class="btnk" onClick="{{toggleMenu}}" style="width: 46px; height: 46px; border: 1.5px solid #14181D; background: {{menuBg}}; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="{{menuIcon}}" stroke="{{menuFg}}" stroke-width="2" stroke-linecap="square"></path></svg>
+    </button>
+  </div>
+
+  <sc-if value="{{menuOpen}}" hint-placeholder-val="{{true}}">
+    <div class="drawer" style="background: #FFFFFF; border-bottom: 1px solid #14181D; display: flex; flex-direction: column;">
+      <span style="padding: 0 18px; height: 52px; display: flex; align-items: center; font-size: 16px; font-weight: 700; color: #14181D; border-bottom: 1px solid #E4E7E4; border-left: 4px solid #14181D;">Home</span>
+      <span style="padding: 0 18px; height: 52px; display: flex; align-items: center; font-size: 16px; font-weight: 500; color: #4A5461; border-bottom: 1px solid #E4E7E4;">How it works</span>
+      <span style="padding: 0 18px; height: 52px; display: flex; align-items: center; font-size: 16px; font-weight: 500; color: #4A5461; border-bottom: 1px solid #E4E7E4;">Built for NER</span>
+      <span style="padding: 0 18px; height: 52px; display: flex; align-items: center; font-size: 16px; font-weight: 500; color: #4A5461; border-bottom: 1px solid #E4E7E4;">Impact</span>
+      <span style="padding: 0 18px; height: 52px; display: flex; align-items: center; font-size: 16px; font-weight: 500; color: #4A5461;">The project</span>
+      <span class="btnk" style="margin: 14px 18px 18px; height: 52px; display: flex; align-items: center; justify-content: center; background: #14181D; color: #F4F5F3; font-size: 15px; font-weight: 700;">Open the live app</span>
+    </div>
+  </sc-if>
+
+  <!-- HERO -->
+  <div style="padding: 32px 18px 34px; border-bottom: 1px solid #14181D; display: flex; flex-direction: column; gap: 20px;">
+    <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; color: {{accent}};">01 &nbsp;/&nbsp; SOLAR MINI COLD STORAGE</span>
+
+    <h1 style="font-size: 33px; font-weight: 800; line-height: 1.08; letter-spacing: -1px; color: #14181D; text-wrap: pretty;">Cold storage that runs on sunlight, not the grid.</h1>
+
+    <p style="font-size: 15.5px; line-height: 1.7; color: #4A5461;">A 200&nbsp;kg mini cold room for the hills of the North East, with an app that speaks eight regional languages.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <span class="btnk" style="height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; background: #14181D; color: #F4F5F3; font-size: 15px; font-weight: 700;">
+        See the live demo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+      <span class="btnk" style="height: 52px; display: flex; align-items: center; justify-content: center; background: transparent; color: #14181D; border: 1.5px solid #14181D; font-size: 15px; font-weight: 600;">Technical documentation</span>
+    </div>
+  </div>
+
+  <!-- KEY FIGURES -->
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border-bottom: 1px solid #14181D;">
+    <div style="background: #F4F5F3; padding: 20px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">CAPACITY</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -0.7px;">200 kg</span>
+    </div>
+    <div style="background: #F4F5F3; padding: 20px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SOLAR ARRAY</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -0.7px;">2.4 kW</span>
+    </div>
+    <div style="background: #F4F5F3; padding: 20px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">THERMAL RESERVE</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -0.7px;">8.6 hrs</span>
+    </div>
+    <div style="background: #F4F5F3; padding: 20px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">LANGUAGES</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -0.7px;">8</span>
+    </div>
+  </div>
+
+  <!-- LIVE PANEL -->
+  <div style="padding: 34px 18px; border-bottom: 1px solid #14181D; background: #FFFFFF; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; flex-direction: column; gap: 12px; border-bottom: 2px solid #14181D; padding-bottom: 14px;">
+      <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; color: {{accent}};">02 &nbsp;/&nbsp; CONTROL AND TELEMETRY</span>
+      <h2 style="font-size: 26px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.14; color: #14181D;">Holding 8&nbsp;&deg;C.</h2>
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #92400E; border: 1px solid #D9A441; background: #FBF3E2; padding: 5px 9px; align-self: flex-start;">SIMULATED TELEMETRY</span>
+    </div>
+
+    <div style="display: flex; border: 1.5px solid #14181D;">
+      <sc-for list="{{scenarioBtns}}" as="b" hint-placeholder-count="3">
+        <button class="seg" onClick="{{b.pick}}" style="flex: 1; padding: 12px 8px; border: 0; border-right: {{b.br}}; background: {{b.bg}}; color: {{b.fg}}; font-size: 12.5px; font-weight: 600; font-family: inherit; min-height: 46px;">{{b.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="background: #14181D;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 15px 18px; border-bottom: 1px solid #2E3742;">
+        <span class="mono" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid {{s.statusBd}}; color: {{s.statusFg}}; font-size: 10px; font-weight: 600; letter-spacing: 1.1px;">
+          <svg width="7" height="7" viewBox="0 0 8 8"><rect width="8" height="8" fill="currentColor"></rect></svg>
+          {{s.status}}
+        </span>
+        <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1px; color: #7C8895;">NM-001</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #2E3742;">
+        <div style="background: #14181D; padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #7C8895;">TEMP</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 27px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -0.8px;">{{s.temp}} &deg;C</span>
+        </div>
+        <div style="background: #14181D; padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #7C8895;">HUMIDITY</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 27px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -0.8px;">{{s.hum}} %</span>
+        </div>
+        <div style="background: #14181D; padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #7C8895;">SOLAR</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 27px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -0.8px;">{{s.solar}} kW</span>
+        </div>
+        <div style="background: #14181D; padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+          <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #7C8895;">BATTERY</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 27px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -0.8px;">{{s.batt}} %</span>
+          <div style="height: 5px; background: #2E3742;">
+            <div class="bar" style="height: 5px; background: #10B981; width: {{s.battW}};"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 18px; border-top: 1px solid #2E3742; display: flex; flex-direction: column; gap: 8px;">
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #7C8895;">CONTROLLER ACTION</span>
+        <p style="font-size: 14px; line-height: 1.65; color: #D3D9DF;">{{s.note}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN DECISIONS -->
+  <div style="padding: 34px 18px 0; border-bottom: 1px solid #14181D;">
+    <div style="display: flex; flex-direction: column; gap: 12px; border-bottom: 2px solid #14181D; padding-bottom: 14px;">
+      <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; color: {{accent}};">03 &nbsp;/&nbsp; DESIGN DECISIONS</span>
+      <h2 style="font-size: 26px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.14; color: #14181D;">Four decisions that make it work.</h2>
+    </div>
+
+    <div style="display: flex; flex-direction: column; margin: 0 -18px;">
+      <div style="padding: 24px 18px; border-bottom: 1px solid #D5D9DE; display: flex; flex-direction: column; gap: 9px;">
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">D-01</span>
+        <h3 style="font-size: 17px; font-weight: 700; color: #14181D;">100% solar, off-grid</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">2.4 kW array into an MPPT controller and a 48 V LiFePO&#8324; pack. No grid, no diesel, no bill.</p>
+      </div>
+      <div style="padding: 24px 18px; border-bottom: 1px solid #D5D9DE; display: flex; flex-direction: column; gap: 9px;">
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">D-02</span>
+        <h3 style="font-size: 17px; font-weight: 700; color: #14181D;">200 kg PUF chamber</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">100 mm foam and a sealed door hold 90&ndash;95% RH through the monsoon.</p>
+      </div>
+      <div style="padding: 24px 18px; border-bottom: 1px solid #D5D9DE; display: flex; flex-direction: column; gap: 9px;">
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">D-03</span>
+        <h3 style="font-size: 17px; font-weight: 700; color: #14181D;">Eight languages, read aloud</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Every screen and alert, spoken for farmers who do not read screens.</p>
+      </div>
+      <div style="padding: 24px 18px; display: flex; flex-direction: column; gap: 9px;">
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">D-04</span>
+        <h3 style="font-size: 17px; font-weight: 700; color: #14181D;">LoRa first, offline always</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">868 MHz telemetry where towers do not reach, SMS when it fails.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background: #14181D; padding: 34px 18px; display: flex; flex-direction: column; gap: 16px;">
+    <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.5px; color: #7C8895;">04 &nbsp;/&nbsp; PILOT PROGRAMME</span>
+    <h2 style="font-size: 25px; font-weight: 800; letter-spacing: -0.7px; line-height: 1.16; color: #FFFFFF;">Bring a unit to your village cluster.</h2>
+    <p style="font-size: 15px; line-height: 1.7; color: #A3ADB8;">We are looking for FPOs and collection centres across the North East to host the first pilot chambers.</p>
+    <span class="btnk" style="height: 52px; display: flex; align-items: center; justify-content: center; background: #F4F5F3; color: #14181D; font-size: 15px; font-weight: 700;">Request a pilot</span>
+    <span class="mono" style="font-size: 10.5px; font-weight: 500; letter-spacing: 1px; color: #7C8895; text-align: center;">[YOUR EMAIL] &nbsp;/&nbsp; [YOUR PHONE]</span>
+  </div>
+
+  <div style="background: #F4F5F3; padding: 24px 18px; display: flex; flex-direction: column; gap: 8px;">
+    <span style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 800; color: #14181D; letter-spacing: 0.5px;">NAVONMESH</span>
+    <span class="mono" style="font-size: 10px; line-height: 1.7; letter-spacing: 0.8px; color: #6B7683;">SIH 2026 / PS 26005 / PROTOTYPE. TELEMETRY SHOWN IS SIMULATED.</span>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#0369A1","#B45309","#14181D"],"section":"Brand"},"$preview":{"width":390,"height":2000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { scenario: 'clear', menu: false };
+  }
+
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#047857';
+
+    var scenarios = [
+      {
+        id: 'clear', label: 'Clear day',
+        temp: '8.2', hum: '91', solar: '2.4', batt: '78', battW: '78%',
+        status: 'NORMAL', statusFg: '#34D399', statusBd: '#1E6B52',
+        note: 'Compressor at 42% duty. Surplus solar is topping up the battery and re-freezing the thermal pack for tonight.'
+      },
+      {
+        id: 'cloud', label: 'Monsoon cloud',
+        temp: '8.6', hum: '92', solar: '0.6', batt: '54', battW: '54%',
+        status: 'ON BATTERY', statusFg: '#F59E0B', statusBd: '#7A5312',
+        note: 'Solar is down to a quarter of rated output, so the compressor has slowed and the battery is carrying the load.'
+      },
+      {
+        id: 'night', label: 'Night',
+        temp: '8.0', hum: '91', solar: '0.0', batt: '41', battW: '41%',
+        status: 'THERMAL RESERVE', statusFg: '#A78BFA', statusBd: '#4C3A85',
+        note: 'Compressor off. The phase-change pack is releasing stored cold, with about 4.1 hours left before sunrise.'
+      }
+    ];
+
+    var s = scenarios.filter(function (x) { return x.id === self.state.scenario; })[0] || scenarios[0];
+
+    var scenarioBtns = scenarios.map(function (x, i) {
+      var on = x.id === self.state.scenario;
+      return {
+        id: x.id,
+        label: x.label,
+        bg: on ? '#14181D' : 'transparent',
+        fg: on ? '#F4F5F3' : '#4A5461',
+        br: i === scenarios.length - 1 ? '0' : '1px solid #14181D',
+        pick: function () { self.setState({ scenario: x.id }); }
+      };
+    });
+
+    return {
+      accent: accent,
+      s: s,
+      scenarioBtns: scenarioBtns,
+      menuOpen: this.state.menu,
+      menuBg: this.state.menu ? '#14181D' : 'transparent',
+      menuFg: this.state.menu ? '#F4F5F3' : '#14181D',
+      menuIcon: this.state.menu ? 'M5 5l14 14M19 5L5 19' : 'M3.5 7h17M3.5 12h17M3.5 17h17',
+      toggleMenu: function () { self.setState({ menu: !self.state.menu }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

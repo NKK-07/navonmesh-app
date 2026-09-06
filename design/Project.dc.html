@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap">
+  <style>
+    body { margin: 0; background: #F4F5F3; color: #14181D; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { color: #14181D; text-decoration: none; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
+    .lnk { transition: color .15s ease, border-color .15s ease; border-bottom: 2px solid transparent; }
+    .lnk:hover { color: #14181D; border-bottom-color: #14181D; }
+    .btnk { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+    .btnk-solid:hover { background: #2B333D; }
+    .cell { transition: background .16s ease, border-color .16s ease; }
+    .cell:hover { background: #FAFBF9; border-color: #14181D; }
+    .seg { transition: background .14s ease, color .14s ease, border-color .14s ease; cursor: pointer; }
+    .seg:hover { border-color: #14181D; }
+    .row { transition: background .14s ease; }
+    .row:hover { background: #FAFBF9; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #F4F5F3;">
+
+  <div style="height: 34px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+  </div>
+
+  <div style="height: 74px; background: #F4F5F3; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+        <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 800; letter-spacing: 0.6px; color: #14181D; line-height: 1;">NAVONMESH</span>
+        <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">SOLAR MINI COLD STORAGE</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Home</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">How it works</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Built for NER</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Impact</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 600; color: #14181D; border-bottom-color: #14181D;">The project</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #6B7683;">8 LANGUAGES</span>
+      <span class="btnk btnk-solid" style="display: inline-flex; align-items: center; gap: 9px; background: #14181D; color: #F4F5F3; padding: 12px 20px; font-size: 13px; font-weight: 700;">
+        Open the live app
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- PAGE HEAD -->
+  <div style="padding: 60px 40px 32px; border-bottom: 2px solid #14181D; display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: end;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 05 &nbsp;/&nbsp; THE PROJECT</span>
+      <h1 style="font-size: 46px; font-weight: 800; letter-spacing: -1.3px; line-height: 1.08; color: #14181D; max-width: 800px; text-wrap: pretty;">Solar-powered smart mini cold storage for vegetables in the NER.</h1>
+    </div>
+    <p style="font-size: 16px; line-height: 1.75; color: #4A5461;">NAVONMESH is our answer to Problem Statement 26005: a complete unit, from the panel on the roof to the phone in the farmer's hand, that keeps vegetables in the hills alive long enough to be worth something.</p>
+  </div>
+
+  <!-- SPEC SHEET -->
+  <div style="padding: 56px 40px 68px; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; border-bottom: 2px solid #14181D; padding-bottom: 18px;">
+        <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">Specification sheet.</h2>
+        <div style="display: flex; border: 1.5px solid #14181D;">
+          <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+            <button class="seg" onClick="{{t.pick}}" style="padding: 13px 22px; border: 0; border-right: {{t.br}}; background: {{t.bg}}; color: {{t.fg}}; font-size: 13.5px; font-weight: 600; font-family: inherit; min-height: 48px;">{{t.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #D5D9DE;">
+        <div style="display: grid; grid-template-columns: 300px 1fr 240px; background: #F4F5F3; border-bottom: 1px solid #14181D;">
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">ITEM</span>
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">NOTE</span>
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; text-align: right;">VALUE</span>
+        </div>
+        <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+          <div class="row" style="display: grid; grid-template-columns: 300px 1fr 240px; border-bottom: 1px solid #E4E7E4;">
+            <span style="padding: 18px 24px; font-size: 15px; font-weight: 600; color: #14181D;">{{r.k}}</span>
+            <span style="padding: 18px 24px; font-size: 14.5px; line-height: 1.6; color: #4A5461;">{{r.note}}</span>
+            <span class="mono" style="padding: 18px 24px; font-size: 13.5px; font-weight: 600; color: #14181D; text-align: right;">{{r.v}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILD STATUS -->
+  <div style="padding: 68px 40px; border-bottom: 1px solid #14181D;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+      <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 780px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 05.2 &nbsp;/&nbsp; STATUS</span>
+        <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">Where the project actually stands.</h2>
+      </div>
+
+      <div style="border: 1px solid #D5D9DE; background: #FFFFFF;">
+        <div style="display: grid; grid-template-columns: 120px 1fr 220px; background: #F4F5F3; border-bottom: 1px solid #14181D;">
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">REF</span>
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">DELIVERABLE</span>
+          <span class="mono" style="padding: 13px 24px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">STATUS</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 220px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 18px 24px; font-size: 12.5px; color: #6B7683;">S-01</span>
+          <span style="padding: 18px 24px; font-size: 15px; font-weight: 600; color: #14181D;">Control and telemetry interface</span>
+          <span class="mono" style="padding: 18px 24px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #047857;">COMPLETE</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 220px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 18px 24px; font-size: 12.5px; color: #6B7683;">S-02</span>
+          <span style="padding: 18px 24px; font-size: 15px; font-weight: 600; color: #14181D;">Ten crop profiles, eight languages</span>
+          <span class="mono" style="padding: 18px 24px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #047857;">COMPLETE</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 220px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 18px 24px; font-size: 12.5px; color: #6B7683;">S-03</span>
+          <span style="padding: 18px 24px; font-size: 15px; font-weight: 600; color: #14181D;">Hardware prototype assembly</span>
+          <span class="mono" style="padding: 18px 24px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #B45309;">IN PROGRESS</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 220px;">
+          <span class="mono" style="padding: 18px 24px; font-size: 12.5px; color: #6B7683;">S-04</span>
+          <span style="padding: 18px 24px; font-size: 15px; font-weight: 600; color: #14181D;">Field pilot, one storage season</span>
+          <span class="mono" style="padding: 18px 24px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #6B7683;">NOT STARTED</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div style="padding: 68px 40px 0; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 05.3 &nbsp;/&nbsp; TEAM</span>
+        <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">Six people, one cold room.</h2>
+      </div>
+      <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; border: 1px solid #D5D9DE; padding: 6px 10px;">FILL IN YOUR OWN NAMES</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">01 &nbsp;/&nbsp; TEAM LEAD</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Problem framing, farmer interviews across the pilot districts, and the case put to the jury.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">02 &nbsp;/&nbsp; THERMAL &amp; REFRIGERATION</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Chamber sizing, PUF envelope, compressor selection and the phase-change pack.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">03 &nbsp;/&nbsp; POWER ELECTRONICS</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Array sizing, MPPT, the 48 V bus and battery management under NER irradiance.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">04 &nbsp;/&nbsp; EMBEDDED &amp; TELEMETRY</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">ESP32 firmware, the sensor array, the control algorithm and the LoRa link.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">05 &nbsp;/&nbsp; APPLICATION</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">The offline-first app, the three role dashboards and the read-aloud interface.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 32px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">06 &nbsp;/&nbsp; AGRONOMY &amp; LANGUAGE</span>
+        <span style="font-size: 19px; font-weight: 700; color: #14181D;">[NAME]</span>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Crop profiles, storage guidance, and the eight-language translation set.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr repeat(3, 240px); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+      <div style="background: #F4F5F3; padding: 30px 40px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">INSTITUTION</span>
+        <span style="font-size: 18px; font-weight: 700; color: #14181D;">[YOUR INSTITUTION]</span>
+        <span style="font-size: 14px; color: #4A5461;">[YOUR DEPARTMENT] &middot; [YOUR CITY]</span>
+      </div>
+      <div style="background: #F4F5F3; padding: 30px 24px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">EMAIL</span>
+        <span style="font-size: 15px; font-weight: 600; color: #14181D;">[YOUR EMAIL]</span>
+      </div>
+      <div style="background: #F4F5F3; padding: 30px 24px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">PHONE</span>
+        <span style="font-size: 15px; font-weight: 600; color: #14181D;">[YOUR PHONE]</span>
+      </div>
+      <div style="background: #F4F5F3; padding: 30px 24px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">MENTOR</span>
+        <span style="font-size: 15px; font-weight: 600; color: #14181D;">[MENTOR NAME]</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #14181D; padding: 40px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;">NAVONMESH</span>
+      <span class="mono" style="font-size: 11px; letter-spacing: 0.9px; color: #7C8895;">SIH 2026 / PS 26005 / PROTOTYPE</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#0369A1","#B45309","#14181D"],"section":"Brand"},"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'cooling' };
+  }
+
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#047857';
+
+    var groups = [
+      {
+        id: 'cooling', label: 'Cooling',
+        rows: [
+          { k: 'Chamber capacity', v: '200 kg', note: 'Sized to load onto a pickup and reach a hill collection centre.' },
+          { k: 'Insulation', v: '100 mm PUF', note: 'Hermetic polyurethane envelope, chosen for high ambient humidity.' },
+          { k: 'Compressor', v: 'BLDC variable speed', note: 'Runs directly off the DC bus, around 420 W at 42% duty.' },
+          { k: 'Thermal store', v: '70 kg PCM', note: 'Freezes on surplus solar, holds the set-point for about 8.6 hours alone.' },
+          { k: 'Humidity held', v: '90–95 % RH', note: 'Crop-dependent. Large cardamom runs a dry profile below 70%.' },
+          { k: 'Air handling', v: 'Forced circulation', note: 'Keeps the chamber even, so no shelf sits warmer than the sensor.' }
+        ]
+      },
+      {
+        id: 'power', label: 'Power',
+        rows: [
+          { k: 'Solar array', v: '2.4 kW', note: 'Roof-mounted on the chamber, sized against 3–5 kWh/m²/day.' },
+          { k: 'Charge controller', v: 'MPPT', note: 'Tracks the array through broken cloud and protects the pack.' },
+          { k: 'Battery', v: '48 V / 100 Ah LiFePO4', note: 'Tolerates heat and deep cycling without a ventilated battery room.' },
+          { k: 'Battery health', v: '98 % reported', note: 'Read from the BMS and surfaced in the app.' },
+          { k: 'Grid connection', v: 'None', note: 'Fully off-grid by design, including through multi-day outages.' },
+          { k: 'Renewable fraction', v: '82 %', note: 'Share of energy taken directly from solar in the simulation.' }
+        ]
+      },
+      {
+        id: 'electronics', label: 'Electronics',
+        rows: [
+          { k: 'Controller', v: 'ESP32 dual core', note: 'Reads every sensor and owns all control decisions.' },
+          { k: 'Temperature / humidity', v: 'SHT31', note: 'Rated ±0.3 °C and ±2% RH, calibrated at commissioning.' },
+          { k: 'Weight', v: '4-point load cell', note: 'Strain gauge to 200 kg at ±0.1 kg, drives batch inventory.' },
+          { k: 'Ripening', v: 'Ethylene sensor', note: 'Electrochemical, warns when a batch is gassing off.' },
+          { k: 'Door', v: 'Magnetic reed switch', note: 'Triggers the door-open alert and the compressor boost.' },
+          { k: 'Radio', v: 'SX1276 LoRa 868 MHz', note: 'Primary telemetry link, with GSM SMS as emergency fallback.' }
+        ]
+      },
+      {
+        id: 'software', label: 'Software',
+        rows: [
+          { k: 'Application', v: 'Offline-first PWA', note: 'Installs to the phone, opens and answers with no signal.' },
+          { k: 'Languages', v: '8, with speech', note: 'English, Hindi, Assamese, Nepali, Meitei, Khasi, Mizo, Nagamese.' },
+          { k: 'Roles', v: 'Farmer / retailer / FPO', note: 'Three dashboards over the same chamber telemetry.' },
+          { k: 'Crop profiles', v: '10 NER crops', note: 'Set-point, humidity band, chilling limit and shelf life for each.' },
+          { k: 'Inventory', v: 'FIFO batches', note: 'Per-owner batches with days-left and sell-first flagging.' },
+          { k: 'Data labelling', v: 'Live / simulated / est.', note: 'Every figure in the app carries its provenance on the screen.' }
+        ]
+      }
+    ];
+
+    var active = groups.filter(function (x) { return x.id === self.state.tab; })[0] || groups[0];
+
+    var tabs = groups.map(function (x, i) {
+      var on = x.id === self.state.tab;
+      return {
+        id: x.id,
+        label: x.label,
+        bg: on ? '#14181D' : 'transparent',
+        fg: on ? '#F4F5F3' : '#4A5461',
+        br: i === groups.length - 1 ? '0' : '1px solid #14181D',
+        pick: function () { self.setState({ tab: x.id }); }
+      };
+    });
+
+    return { accent: accent, tabs: tabs, rows: active.rows };
+  }
+}
+</script>
+</body>
+</html>

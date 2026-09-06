@@ -1,0 +1,13 @@
+# Generated design canvas (rebuilt from design/*.dc.html + canvas.json)
+design/navonmesh-website.html
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies / build output
+node_modules/
+dist/
+build/

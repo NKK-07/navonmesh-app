@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap">
+  <style>
+    body { margin: 0; background: #F4F5F3; color: #14181D; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { color: #14181D; text-decoration: none; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
+    .lnk { transition: color .15s ease, border-color .15s ease; border-bottom: 2px solid transparent; }
+    .lnk:hover { color: #14181D; border-bottom-color: #14181D; }
+    .btnk { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+    .btnk-solid:hover { background: #2B333D; }
+    .cell { transition: background .16s ease, border-color .16s ease; }
+    .cell:hover { background: #FAFBF9; border-color: #14181D; }
+    .row { transition: background .14s ease; }
+    .row:hover { background: #FAFBF9; }
+    .blk { transition: background .16s ease, border-color .16s ease, color .16s ease; cursor: pointer; }
+    .blk:hover { border-color: #14181D; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #F4F5F3;">
+
+  <div style="height: 34px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+  </div>
+
+  <div style="height: 74px; background: #F4F5F3; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+        <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 800; letter-spacing: 0.6px; color: #14181D; line-height: 1;">NAVONMESH</span>
+        <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">SOLAR MINI COLD STORAGE</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Home</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 600; color: #14181D; border-bottom-color: #14181D;">How it works</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Built for NER</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Impact</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">The project</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #6B7683;">8 LANGUAGES</span>
+      <span class="btnk btnk-solid" style="display: inline-flex; align-items: center; gap: 9px; background: #14181D; color: #F4F5F3; padding: 12px 20px; font-size: 13px; font-weight: 700;">
+        Open the live app
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- PAGE HEAD -->
+  <div style="padding: 60px 40px 32px; border-bottom: 2px solid #14181D; display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: end;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 02 &nbsp;/&nbsp; HOW IT WORKS</span>
+      <h1 style="font-size: 46px; font-weight: 800; letter-spacing: -1.3px; line-height: 1.08; color: #14181D; max-width: 780px; text-wrap: pretty;">Sunlight in at the roof. Eight degrees, held all night, at the shelf.</h1>
+    </div>
+    <p style="font-size: 16px; line-height: 1.75; color: #4A5461;">Seven stages between the panel and the produce. Select any stage in the schematic to see the part, what it does, and why it was chosen for the North East.</p>
+  </div>
+
+  <!-- SCHEMATIC -->
+  <div style="padding: 44px 40px 60px; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+
+      <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid #D5D9DE; padding-bottom: 12px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #14181D;">FIG. 2 &mdash; SYSTEM BLOCK SCHEMATIC</span>
+        <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">ENERGY PATH 01&ndash;04 &nbsp;/&nbsp; COLD PATH 05&ndash;07</span>
+      </div>
+
+      <div style="display: flex; align-items: stretch;">
+        <sc-for list="{{stages}}" as="st" hint-placeholder-count="7">
+          <div style="display: flex; align-items: center; flex: 1;">
+            <button class="blk" onClick="{{st.pick}}" style="flex: 1; min-height: 128px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 16px 18px; border: 1.5px solid {{st.bc}}; background: {{st.bg}}; font-family: inherit; text-align: left;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: {{st.numFg}};">{{st.num}}</span>
+              <span style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 14px; font-weight: 700; color: {{st.fg}}; line-height: 1.25;">{{st.name}}</span>
+                <span class="mono" style="font-size: 10.5px; font-weight: 500; color: {{st.subFg}}; line-height: 1.4;">{{st.spec}}</span>
+              </span>
+            </button>
+            <svg width="26" height="12" viewBox="0 0 26 12" fill="none" style="flex-shrink: 0;"><path d="M0 6h24M19 2l5 4-5 4" stroke="{{st.arrowFg}}" stroke-width="1.4"></path></svg>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+
+        <div style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid #D5D9DE; padding-bottom: 14px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: {{accent}};">STAGE {{active.num}}</span>
+            <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #6B7683;">{{active.layer}}</span>
+          </div>
+
+          <h3 style="font-size: 30px; font-weight: 800; letter-spacing: -0.8px; color: #14181D; line-height: 1.15;">{{active.name}}</h3>
+          <p style="font-size: 16px; line-height: 1.75; color: #4A5461;">{{active.body}}</p>
+
+          <div style="border-left: 3px solid #14181D; padding: 4px 0 4px 18px; margin-top: 4px;">
+            <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; display: block; margin-bottom: 7px;">WHY THIS CHOICE FOR NER</span>
+            <p style="font-size: 15px; line-height: 1.7; color: #14181D;">{{active.why}}</p>
+          </div>
+        </div>
+
+        <div style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683; border-bottom: 1px solid #14181D; padding-bottom: 12px;">SPECIFICATION</span>
+          <sc-for list="{{active.specs}}" as="row" hint-placeholder-count="4">
+            <div class="row" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 15px 0; border-bottom: 1px solid #E4E7E4;">
+              <span style="font-size: 14px; font-weight: 500; color: #4A5461;">{{row.k}}</span>
+              <span class="mono" style="font-size: 13px; font-weight: 600; color: #14181D; text-align: right;">{{row.v}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SENSOR SCHEDULE -->
+  <div style="padding: 68px 40px; border-bottom: 1px solid #14181D;">
+    <div style="display: flex; flex-direction: column; gap: 28px;">
+
+      <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 780px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 02.2 &nbsp;/&nbsp; INSTRUMENTATION</span>
+        <h2 style="font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.12; color: #14181D;">Sensor schedule.</h2>
+      </div>
+
+      <div style="border: 1px solid #D5D9DE; background: #FFFFFF;">
+        <div style="display: grid; grid-template-columns: 110px 1.4fr 1fr 220px; background: #F4F5F3; border-bottom: 1px solid #14181D;">
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">TAG</span>
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">DEVICE</span>
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">MEASURES</span>
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">RATING</span>
+        </div>
+        <sc-for list="{{sensors}}" as="x" hint-placeholder-count="6">
+          <div class="row" style="display: grid; grid-template-columns: 110px 1.4fr 1fr 220px; border-bottom: 1px solid #E4E7E4;">
+            <span class="mono" style="padding: 16px 20px; font-size: 12.5px; color: #6B7683;">{{x.tag}}</span>
+            <span style="padding: 16px 20px; font-size: 14.5px; font-weight: 600; color: #14181D;">{{x.device}}</span>
+            <span style="padding: 16px 20px; font-size: 14px; color: #4A5461;">{{x.measures}}</span>
+            <span class="mono" style="padding: 16px 20px; font-size: 12.5px; font-weight: 600; color: #14181D;">{{x.rating}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMUNICATIONS -->
+  <div style="padding: 68px 40px 0; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 780px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 02.3 &nbsp;/&nbsp; COMMUNICATIONS</span>
+      <h2 style="font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.12; color: #14181D;">Four ways the data gets out.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+      <div class="cell" style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">LINK 01 &nbsp;/&nbsp; PRIMARY</span>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">LoRa SX1276, 868 MHz</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">Kilometres of range with no tower and no subscription. This is how a chamber in a hill village reaches the FPO office.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">LINK 02 &nbsp;/&nbsp; FALLBACK</span>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">GSM SMS</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">If the chamber goes critical and LoRa is down, the alert still leaves as a text message.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">LINK 03 &nbsp;/&nbsp; SERVICING</span>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">Local Wi-Fi access point</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">A technician connects a phone directly to the unit for diagnostics, with no internet involved at all.</p>
+      </div>
+      <div class="cell" style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">LINK 04 &nbsp;/&nbsp; FARMER</span>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">Offline-first application</h3>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461;">The app caches the last known state, so it opens and answers with no signal, then syncs when a link returns.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #14181D; padding: 40px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;">NAVONMESH</span>
+      <span class="mono" style="font-size: 11px; letter-spacing: 0.9px; color: #7C8895;">SIH 2026 / PS 26005 / PROTOTYPE</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#0369A1","#B45309","#14181D"],"section":"Brand"},"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { stage: 'pv' };
+  }
+
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#047857';
+
+    var stages = [
+      {
+        id: 'pv', num: '01', name: 'Solar array', spec: '2.4 kW', layer: 'ENERGY PATH',
+        body: 'A 2.4 kW photovoltaic array sits on the roof of the chamber itself, so the unit needs no separate land and no grid connection. It is sized against NER irradiance of 3 to 5 kWh per square metre per day, not against a sunny plains average.',
+        why: 'Most of the North East gets far less usable sun than the rest of India. Oversizing the array is cheaper than under-cooling the harvest.',
+        specs: [{ k: 'Rated output', v: '2.4 kW' }, { k: 'Design irradiance', v: '3–5 kWh/m²/day' }, { k: 'Mounting', v: 'Integrated rooftop' }, { k: 'Grid connection', v: 'None' }]
+      },
+      {
+        id: 'mppt', num: '02', name: 'MPPT controller', spec: 'CHARGE CTRL', layer: 'ENERGY PATH',
+        body: 'Maximum power point tracking keeps the array at its best operating voltage as cloud passes over, which happens constantly in the hills. It also protects the battery bank from over-charge and deep discharge.',
+        why: 'Under broken monsoon cloud, MPPT recovers meaningfully more energy per day than a simple controller would.',
+        specs: [{ k: 'Type', v: 'MPPT' }, { k: 'Bus voltage', v: '48 V DC' }, { k: 'Protects', v: 'Battery bank' }, { k: 'Tracking', v: 'Continuous' }]
+      },
+      {
+        id: 'batt', num: '03', name: 'Battery bank', spec: '48 V / 100 Ah', layer: 'ENERGY PATH',
+        body: 'A 48 V, 100 Ah lithium iron phosphate pack carries the unit through the night and through cloudy stretches. Its BMS reports pack health back to the app alongside the state of charge.',
+        why: 'LiFePO4 tolerates heat and deep cycling far better than lead-acid, and needs none of the ventilated battery room a village site cannot provide.',
+        specs: [{ k: 'Chemistry', v: 'LiFePO4' }, { k: 'Pack', v: '48 V / 100 Ah' }, { k: 'Reported health', v: '98%' }, { k: 'Managed by', v: 'Integrated BMS' }]
+      },
+      {
+        id: 'mcu', num: '04', name: 'Controller', spec: 'ESP32 DUAL CORE', layer: 'CONTROL',
+        body: 'The ESP32 reads every sensor, decides compressor speed, chooses when to spend the thermal reserve rather than the battery, raises alerts and pushes telemetry out over LoRa. It is the only part of the system that makes decisions.',
+        why: 'Cheap, field-replaceable, and low-power enough to run on the sensor budget alone when the compressor is off overnight.',
+        specs: [{ k: 'MCU', v: 'ESP32 dual core' }, { k: 'Operating temp', v: '41 °C' }, { k: 'Drives', v: 'Duty, alerts' }, { k: 'Radios', v: 'LoRa, Wi-Fi AP' }]
+      },
+      {
+        id: 'comp', num: '05', name: 'Compressor', spec: 'BLDC VARIABLE', layer: 'COLD PATH',
+        body: 'A brushless DC compressor runs straight off the DC bus and varies its speed instead of switching hard on and off. At a typical duty of 42% it draws around 420 W, which is what makes a 2.4 kW array enough.',
+        why: 'Variable speed avoids the inrush surge that would force a much larger array and battery just to survive start-up.',
+        specs: [{ k: 'Type', v: 'BLDC variable speed' }, { k: 'Typical draw', v: '420 W' }, { k: 'Typical duty', v: '42%' }, { k: 'Supply', v: 'Direct DC' }]
+      },
+      {
+        id: 'pcm', num: '06', name: 'Thermal store', spec: '70 kg PCM', layer: 'COLD PATH',
+        body: 'Seventy kilograms of phase change material freeze while the sun is up and release that cold back into the chamber after dark. It gives roughly 8.6 hours of cooling with the compressor completely off.',
+        why: 'Storing cold is far cheaper than storing the electricity to make it later. This is what lets the battery stay small.',
+        specs: [{ k: 'Mass', v: '70 kg' }, { k: 'Phase point', v: '≈ −0.8 °C' }, { k: 'Full reserve', v: '8.6 hours' }, { k: 'Recharges on', v: 'Surplus solar' }]
+      },
+      {
+        id: 'room', num: '07', name: 'Cold chamber', spec: '200 kg / 100 mm PUF', layer: 'COLD PATH',
+        body: 'The room itself: 200 kg of produce behind 100 mm of polyurethane foam, with forced air circulation and a hermetic door seal holding 90 to 95% relative humidity.',
+        why: 'Sized to fit on a pickup truck so it can reach high-altitude collection centres on roads no container lorry will attempt.',
+        specs: [{ k: 'Capacity', v: '200 kg' }, { k: 'Insulation', v: '100 mm PUF' }, { k: 'Humidity held', v: '90–95% RH' }, { k: 'Air handling', v: 'Forced circulation' }]
+      }
+    ];
+
+    var active = stages.filter(function (x) { return x.id === self.state.stage; })[0] || stages[0];
+
+    var stageBtns = stages.map(function (x, i) {
+      var on = x.id === self.state.stage;
+      return {
+        id: x.id,
+        num: x.num,
+        name: x.name,
+        spec: x.spec,
+        bg: on ? '#14181D' : '#FFFFFF',
+        bc: on ? '#14181D' : '#D5D9DE',
+        fg: on ? '#FFFFFF' : '#14181D',
+        subFg: on ? '#A3ADB8' : '#6B7683',
+        numFg: on ? '#7C8895' : '#9AA4AF',
+        arrowFg: i === stages.length - 1 ? 'transparent' : '#B7BEC6',
+        pick: function () { self.setState({ stage: x.id }); }
+      };
+    });
+
+    var sensors = [
+      { tag: 'TT-01', device: 'SHT31 temperature sensor', measures: 'Chamber air temperature', rating: '±0.3 °C' },
+      { tag: 'MT-01', device: 'SHT31 humidity sensor', measures: 'Relative humidity', rating: '±2 % RH' },
+      { tag: 'WT-01', device: '4-point strain gauge load cell', measures: 'Stored produce mass', rating: '±0.1 kg to 200 kg' },
+      { tag: 'AT-01', device: 'Electrochemical ethylene sensor', measures: 'Ripening gas concentration', rating: 'Normal / Mod / High' },
+      { tag: 'ZS-01', device: 'Magnetic reed door switch', measures: 'Door position', rating: 'Open / closed' },
+      { tag: 'TE-01', device: 'PCM core thermocouples', measures: 'Thermal store charge state', rating: '≈ −0.8 °C phase point' }
+    ];
+
+    return { accent: accent, stages: stageBtns, active: active, sensors: sensors };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap">
+  <style>
+    body { margin: 0; background: #F4F5F3; color: #14181D; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { color: #14181D; text-decoration: none; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    .lnk { transition: color .15s ease, border-color .15s ease; border-bottom: 2px solid transparent; }
+    .lnk:hover { color: #14181D; border-bottom-color: #14181D; }
+
+    .btnk { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+    .btnk-solid:hover { background: #2B333D; }
+    .btnk-ghost:hover { background: #14181D; color: #F4F5F3; }
+    .btnk-light:hover { background: #E8EAE6; }
+
+    .cell { transition: background .16s ease, border-color .16s ease; }
+    .cell:hover { background: #FFFFFF; border-color: #14181D; }
+
+    .seg { transition: background .14s ease, color .14s ease, border-color .14s ease; cursor: pointer; }
+    .seg:hover { border-color: #14181D; }
+
+    .row { transition: background .14s ease; }
+    .row:hover { background: #FAFBF9; }
+
+    .bar { transition: width .5s cubic-bezier(.3,.7,.3,1); }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #F4F5F3;">
+
+  <!-- UTILITY STRIP -->
+  <div style="height: 34px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+  </div>
+
+  <!-- NAV -->
+  <div style="height: 74px; background: #F4F5F3; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+        <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 800; letter-spacing: 0.6px; color: #14181D; line-height: 1;">NAVONMESH</span>
+        <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">SOLAR MINI COLD STORAGE</span>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <span class="lnk" style="font-size: 14px; font-weight: 600; color: #14181D; border-bottom-color: #14181D;">Home</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">How it works</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Built for NER</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Impact</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">The project</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #6B7683;">8 LANGUAGES</span>
+      <span class="btnk btnk-solid" style="display: inline-flex; align-items: center; gap: 9px; background: #14181D; color: #F4F5F3; padding: 12px 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.2px;">
+        Open the live app
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="border-bottom: 1px solid #14181D; display: grid; grid-template-columns: 1fr 1fr;">
+
+    <div style="padding: 64px 40px 56px; border-right: 1px solid #D5D9DE; display: flex; flex-direction: column; gap: 26px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">01 &nbsp;/&nbsp; SOLAR-POWERED MINI COLD STORAGE</span>
+
+      <h1 style="font-size: 50px; font-weight: 800; line-height: 1.06; letter-spacing: -1.4px; color: #14181D; max-width: 580px; text-wrap: pretty;">Cold storage that runs on sunlight, not the grid.</h1>
+
+      <p style="font-size: 17px; line-height: 1.7; color: #4A5461; max-width: 540px;">
+        A 200&nbsp;kg mini cold room for the hills of the North East. 100&nbsp;mm PUF envelope, 2.4&nbsp;kW rooftop array, LiFePO&#8324; batteries with a 70&nbsp;kg phase-change thermal store, and a farmer-facing app in eight regional languages.
+      </p>
+
+      <div style="display: flex; gap: 12px; margin-top: 4px;">
+        <span class="btnk btnk-solid" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #14181D; color: #F4F5F3; padding: 16px 28px; font-size: 15px; font-weight: 700; min-height: 52px;">
+          See the live demo
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+        <span class="btnk btnk-ghost" style="display: inline-flex; align-items: center; gap: 10px; background: transparent; color: #14181D; border: 1.5px solid #14181D; padding: 16px 26px; font-size: 15px; font-weight: 600; min-height: 52px;">
+          Technical documentation
+        </span>
+      </div>
+
+      <div style="margin-top: 12px; border-top: 1px solid #D5D9DE; padding-top: 22px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 14px;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683; width: 108px; flex-shrink: 0;">GRID DRAW</span>
+          <span style="font-size: 14px; font-weight: 600; color: #14181D;">None. Fully off-grid, through multi-day outages.</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 14px;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683; width: 108px; flex-shrink: 0;">TELEMETRY</span>
+          <span style="font-size: 14px; font-weight: 600; color: #14181D;">LoRa 868&nbsp;MHz, SMS fallback, offline-first app.</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 14px;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683; width: 108px; flex-shrink: 0;">INTERFACE</span>
+          <span style="font-size: 14px; font-weight: 600; color: #14181D;">Eight NER languages, with speech output.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECHNICAL ELEVATION -->
+    <div style="background: #FFFFFF; padding: 40px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid #D5D9DE; padding-bottom: 12px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #14181D;">FIG. 1 &mdash; GENERAL ARRANGEMENT</span>
+        <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">NM-001 / ELEVATION</span>
+      </div>
+
+      <svg viewBox="0 0 620 470" style="width: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#14181D" fill="none" stroke-linecap="square">
+
+          <!-- ground -->
+          <path d="M40 410h540" stroke-width="2"></path>
+          <g stroke="#B7BEC6" stroke-width="1">
+            <path d="M46 410l-8 12M76 410l-8 12M106 410l-8 12M136 410l-8 12M166 410l-8 12M196 410l-8 12M226 410l-8 12M256 410l-8 12M286 410l-8 12M316 410l-8 12M346 410l-8 12M376 410l-8 12M406 410l-8 12M436 410l-8 12M466 410l-8 12M496 410l-8 12M526 410l-8 12M556 410l-8 12"></path>
+          </g>
+
+          <!-- chamber outer -->
+          <rect x="250" y="180" width="290" height="230" stroke-width="2"></rect>
+          <!-- PUF wall thickness -->
+          <rect x="264" y="194" width="262" height="202" stroke-width="1"></rect>
+          <g stroke="#B7BEC6" stroke-width="0.8">
+            <path d="M250 180l14 14M250 208l14 14M250 236l14 14M250 264l14 14M250 292l14 14M250 320l14 14M250 348l14 14M250 376l14 14M526 194l14-14M526 222l14-14M526 250l14-14M526 278l14-14M526 306l14-14M526 334l14-14M526 362l14-14M526 390l14-14"></path>
+          </g>
+
+          <!-- door -->
+          <path d="M395 194v202" stroke-width="1"></path>
+          <path d="M383 288h10M383 296h10" stroke-width="1.6"></path>
+
+          <!-- shelves + crates -->
+          <path d="M276 300h108M410 300h104" stroke-width="1"></path>
+          <rect x="286" y="252" width="42" height="44" stroke-width="1"></rect>
+          <rect x="336" y="252" width="42" height="44" stroke-width="1"></rect>
+          <rect x="422" y="252" width="42" height="44" stroke-width="1"></rect>
+          <rect x="286" y="330" width="42" height="44" stroke-width="1"></rect>
+          <rect x="336" y="330" width="42" height="44" stroke-width="1"></rect>
+          <rect x="422" y="330" width="42" height="44" stroke-width="1"></rect>
+          <rect x="472" y="330" width="42" height="44" stroke-width="1"></rect>
+
+          <!-- evaporator / air handling -->
+          <rect x="286" y="206" width="228" height="26" stroke-width="1.4"></rect>
+          <path d="M296 206v26M306 206v26M316 206v26M326 206v26M336 206v26M346 206v26M356 206v26M366 206v26M376 206v26M386 206v26M396 206v26M406 206v26M416 206v26M426 206v26M436 206v26M446 206v26M456 206v26M466 206v26M476 206v26M486 206v26M496 206v26M506 206v26" stroke="#B7BEC6" stroke-width="0.8"></path>
+
+          <!-- roof array -->
+          <path d="M232 180l40-72h280l-12 72" stroke-width="2"></path>
+          <path d="M258 152h286M248 170h288" stroke="#B7BEC6" stroke-width="1"></path>
+          <path d="M320 108l-14 72M390 108l-8 72M460 108l-2 72M520 108v72" stroke="#B7BEC6" stroke-width="1"></path>
+
+          <!-- equipment cabinet -->
+          <rect x="80" y="240" width="120" height="170" stroke-width="2"></rect>
+          <path d="M80 296h120M80 352h120" stroke-width="1.4"></path>
+          <rect x="94" y="256" width="92" height="26" stroke-width="1"></rect>
+          <rect x="94" y="312" width="92" height="26" stroke-width="1"></rect>
+          <rect x="94" y="368" width="92" height="26" stroke-width="1"></rect>
+
+          <!-- compressor -->
+          <rect x="200" y="352" width="50" height="58" stroke-width="1.6"></rect>
+          <circle cx="225" cy="381" r="15" stroke-width="1"></circle>
+          <circle cx="225" cy="381" r="5" stroke-width="1"></circle>
+
+          <!-- conduits -->
+          <path d="M140 240v-96h124" stroke-width="1.4" stroke-dasharray="6 4"></path>
+          <path d="M200 268h50v-24" stroke-width="1.4"></path>
+
+          <!-- leader lines -->
+          <path d="M400 108v-42h96" stroke-width="1"></path>
+          <path d="M140 148h-72v-38" stroke-width="1"></path>
+          <path d="M140 270H60" stroke-width="1"></path>
+          <path d="M140 326H60" stroke-width="1"></path>
+          <path d="M225 396v34h-96" stroke-width="1"></path>
+          <path d="M540 240h52" stroke-width="1"></path>
+          <path d="M400 219h140v-40h52" stroke-width="1" stroke-dasharray="0"></path>
+        </g>
+
+        <!-- callout discs -->
+        <g>
+          <circle cx="508" cy="66" r="13" fill="#14181D"></circle><text x="508" y="71" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">01</text>
+          <circle cx="68" cy="97" r="13" fill="#14181D"></circle><text x="68" y="102" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">02</text>
+          <circle cx="47" cy="270" r="13" fill="#14181D"></circle><text x="47" y="275" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">03</text>
+          <circle cx="47" cy="326" r="13" fill="#14181D"></circle><text x="47" y="331" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">04</text>
+          <circle cx="116" cy="430" r="13" fill="#14181D"></circle><text x="116" y="435" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">05</text>
+          <circle cx="605" cy="240" r="13" fill="#14181D"></circle><text x="605" y="245" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">06</text>
+          <circle cx="605" cy="179" r="13" fill="#14181D"></circle><text x="605" y="184" fill="#FFFFFF" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="600" text-anchor="middle">07</text>
+        </g>
+      </svg>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">01</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">Solar array, 2.4 kW</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">02</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">MPPT charge controller</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">03</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">Battery, 48 V / 100 Ah LiFePO&#8324;</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">04</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">PCM thermal store, 70 kg</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">05</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">BLDC variable-speed compressor</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">06</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">Chamber, 200 kg / 100 mm PUF</span></div>
+        <div style="background: #FFFFFF; padding: 11px 14px; display: flex; gap: 10px; align-items: baseline; grid-column: 1 / -1;"><span class="mono" style="font-size: 11px; font-weight: 600; color: {{accent}};">07</span><span style="font-size: 12.5px; font-weight: 600; color: #14181D;">Evaporator, forced air circulation, ESP32 sensor array</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY FIGURES -->
+  <div style="border-bottom: 1px solid #14181D; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #D5D9DE;">
+    <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 8px; border: 0;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">CHAMBER CAPACITY</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -1.2px;">200 kg</span>
+      <span style="font-size: 13px; color: #4A5461;">Per unit, mixed vegetables</span>
+    </div>
+    <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 8px; border: 0;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">SOLAR ARRAY</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -1.2px;">2.4 kW</span>
+      <span style="font-size: 13px; color: #4A5461;">Rooftop mounted, no separate land</span>
+    </div>
+    <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 8px; border: 0;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">THERMAL RESERVE</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -1.2px;">8.6 hrs</span>
+      <span style="font-size: 13px; color: #4A5461;">Cooling with the compressor off</span>
+    </div>
+    <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 8px; border: 0;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">INTERFACE LANGUAGES</span>
+      <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 800; color: #14181D; line-height: 1; letter-spacing: -1.2px;">8</span>
+      <span style="font-size: 13px; color: #4A5461;">All with speech output</span>
+    </div>
+  </div>
+
+  <!-- LIVE CONTROL PANEL -->
+  <div style="padding: 76px 40px; border-bottom: 1px solid #14181D;">
+    <div style="display: flex; flex-direction: column; gap: 30px;">
+
+      <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 14px; max-width: 700px;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">02 &nbsp;/&nbsp; CONTROL AND TELEMETRY</span>
+          <h2 style="font-size: 38px; font-weight: 800; letter-spacing: -1.1px; line-height: 1.12; color: #14181D;">Holding 8&nbsp;&deg;C through a monsoon week.</h2>
+          <p style="font-size: 16px; line-height: 1.7; color: #4A5461;">Select an operating condition to see the controller's response.</p>
+        </div>
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #92400E; border: 1px solid #D9A441; background: #FBF3E2; padding: 6px 10px;">SIMULATED PROTOTYPE TELEMETRY</span>
+      </div>
+
+      <div style="display: flex; border: 1.5px solid #14181D; width: fit-content;">
+        <sc-for list="{{scenarioBtns}}" as="b" hint-placeholder-count="4">
+          <button class="seg" onClick="{{b.pick}}" style="padding: 13px 22px; border: 0; border-right: {{b.br}}; background: {{b.bg}}; color: {{b.fg}}; font-size: 13.5px; font-weight: 600; font-family: inherit; min-height: 48px;">{{b.label}}</button>
+        </sc-for>
+      </div>
+
+      <div style="background: #14181D; border: 1px solid #14181D;">
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 28px; border-bottom: 1px solid #2E3742;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="mono" style="display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px; border: 1px solid {{s.statusBd}}; color: {{s.statusFg}}; font-size: 11px; font-weight: 600; letter-spacing: 1.2px; transition: color .2s ease, border-color .2s ease;">
+              <svg width="8" height="8" viewBox="0 0 8 8"><rect width="8" height="8" fill="currentColor"></rect></svg>
+              {{s.status}}
+            </span>
+            <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.1px; color: #7C8895;">UNIT NM-001 &nbsp;/&nbsp; RI-BHOI, MEGHALAYA</span>
+          </div>
+          <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.1px; color: #7C8895;">{{s.clock}}</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #2E3742;">
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">CHAMBER TEMP</span>
+            <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.4px;">{{s.temp}}<span class="mono" style="font-size: 17px; font-weight: 500; color: #7C8895; letter-spacing: 0;"> &deg;C</span></span>
+            <span class="mono" style="font-size: 11px; color: #7C8895;">SETPOINT 8.0 &deg;C</span>
+          </div>
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">HUMIDITY</span>
+            <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.4px;">{{s.hum}}<span class="mono" style="font-size: 17px; font-weight: 500; color: #7C8895; letter-spacing: 0;"> %</span></span>
+            <span class="mono" style="font-size: 11px; color: #7C8895;">TARGET 90 % RH</span>
+          </div>
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">SOLAR INPUT</span>
+            <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.4px;">{{s.solar}}<span class="mono" style="font-size: 17px; font-weight: 500; color: #7C8895; letter-spacing: 0;"> kW</span></span>
+            <span class="mono" style="font-size: 11px; color: #7C8895;">{{s.solarNote}}</span>
+          </div>
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">BATTERY</span>
+            <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.4px;">{{s.batt}}<span class="mono" style="font-size: 17px; font-weight: 500; color: #7C8895; letter-spacing: 0;"> %</span></span>
+            <div style="height: 6px; background: #2E3742;">
+              <div class="bar" style="height: 6px; background: #10B981; width: {{s.battW}};"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 1px; background: #2E3742; border-top: 1px solid #2E3742;">
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 10px;">
+            <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">CONTROLLER ACTION</span>
+            <p style="font-size: 15px; line-height: 1.65; color: #D3D9DF;">{{s.note}}</p>
+          </div>
+          <div style="background: #14181D; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">THERMAL RESERVE</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #FFFFFF;">{{s.pcm}} %</span>
+            </div>
+            <div style="height: 6px; background: #2E3742;">
+              <div class="bar" style="height: 6px; background: #7C3AED; width: {{s.pcmW}};"></div>
+            </div>
+            <span class="mono" style="font-size: 11px; line-height: 1.6; color: #A3ADB8;">{{s.pcmNote}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGINEERING DECISIONS -->
+  <div style="padding: 76px 40px 0; border-bottom: 1px solid #14181D;">
+    <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 760px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">03 &nbsp;/&nbsp; DESIGN DECISIONS</span>
+      <h2 style="font-size: 38px; font-weight: 800; letter-spacing: -1.1px; line-height: 1.12; color: #14181D;">Four decisions that make it work where nothing else does.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">D-01</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="#14181D" stroke-width="1.4"></circle><path d="M12 2.6v3.2M12 18.2v3.2M2.6 12h3.2M18.2 12h3.2M5.4 5.4l2.3 2.3M16.3 16.3l2.3 2.3M18.6 5.4l-2.3 2.3M7.7 16.3l-2.3 2.3" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">100% solar, off-grid</h3>
+        <p style="font-size: 14px; line-height: 1.68; color: #4A5461;">2.4 kW array into an MPPT controller and a 48 V LiFePO&#8324; pack. No grid connection, no diesel, no monthly bill.</p>
+      </div>
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">D-02</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2.6v18.8M4.1 7.1l15.8 9.8M19.9 7.1L4.1 16.9" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path><path d="M12 6.4l2.4-2.4M12 6.4L9.6 4M12 17.6l2.4 2.4M12 17.6L9.6 20" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">200 kg PUF chamber</h3>
+        <p style="font-size: 14px; line-height: 1.68; color: #4A5461;">100 mm polyurethane foam and a hermetic seal hold 90&ndash;95% RH without letting the monsoon in, or condensation onto the produce.</p>
+      </div>
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">D-03</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 9.6v4.8h3.3L12 18.4V5.6L7.3 9.6H4z" stroke="#14181D" stroke-width="1.4" stroke-linejoin="round"></path><path d="M15.6 9.3a4 4 0 010 5.4M18.3 6.6a8 8 0 010 10.8" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">Eight languages, read aloud</h3>
+        <p style="font-size: 14px; line-height: 1.68; color: #4A5461;">Hindi, Assamese, Nepali, Meitei, Khasi, Mizo, Nagamese and English, with speech output for farmers who do not read screens.</p>
+      </div>
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">D-04</span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 20.4V11.6" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path><circle cx="12" cy="9.2" r="2" stroke="#14181D" stroke-width="1.4"></circle><path d="M8 5.2a6.6 6.6 0 000 8M16 5.2a6.6 6.6 0 010 8M5 2.4a10.8 10.8 0 000 13.6M19 2.4a10.8 10.8 0 010 13.6" stroke="#14181D" stroke-width="1.4" stroke-linecap="round"></path></svg>
+        </div>
+        <h3 style="font-size: 18px; font-weight: 700; color: #14181D; line-height: 1.3;">LoRa first, offline always</h3>
+        <p style="font-size: 14px; line-height: 1.68; color: #4A5461;">868 MHz LoRa carries telemetry where cell towers do not reach, with SMS fallback and an app that keeps working with no signal at all.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CROP PROFILES -->
+  <div style="padding: 76px 40px; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="display: flex; flex-direction: column; gap: 30px;">
+
+      <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 760px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">04 &nbsp;/&nbsp; CROP PROFILES</span>
+        <h2 style="font-size: 38px; font-weight: 800; letter-spacing: -1.1px; line-height: 1.12; color: #14181D;">Ten NER crop profiles, shipped with the unit.</h2>
+        <p style="font-size: 16px; line-height: 1.7; color: #4A5461;">Each carries its own set-point, humidity band and chilling limit. Select a crop to see the stored profile.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+
+        <div style="background: #FFFFFF; display: flex; flex-direction: column;">
+          <sc-for list="{{cropBtns}}" as="c" hint-placeholder-count="6">
+            <button class="seg" onClick="{{c.pick}}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 17px 20px; border: 0; border-bottom: 1px solid #E4E7E4; border-left: 3px solid {{c.mark}}; background: {{c.bg}}; font-family: inherit; text-align: left; min-height: 68px;">
+              <span style="display: flex; flex-direction: column; gap: 3px;">
+                <span style="font-size: 15px; font-weight: 700; color: {{c.fg}};">{{c.label}}</span>
+                <span style="font-size: 12px; font-weight: 500; color: {{c.subFg}};">{{c.local}}</span>
+              </span>
+              <span class="mono" style="font-size: 12px; font-weight: 600; color: {{c.subFg}}; white-space: nowrap;">{{c.tempShort}}</span>
+            </button>
+          </sc-for>
+        </div>
+
+        <div style="background: #FFFFFF; padding: 34px 36px; display: flex; flex-direction: column; gap: 28px;">
+
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; border-bottom: 1px solid #D5D9DE; padding-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <h3 style="font-size: 28px; font-weight: 800; letter-spacing: -0.7px; color: #14181D;">{{crop.name}}</h3>
+              <span style="font-size: 14px; font-weight: 500; color: #4A5461;">{{crop.local}}</span>
+            </div>
+            <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; border: 1px solid #D5D9DE; padding: 6px 10px; white-space: nowrap;">PROFILE {{crop.code}}</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+            <div style="background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SET-POINT</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1.1; letter-spacing: -0.7px;">{{crop.temp}}</span>
+            </div>
+            <div style="background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">HUMIDITY BAND</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1.1; letter-spacing: -0.7px;">{{crop.hum}}</span>
+            </div>
+            <div style="background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SELLING WINDOW</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 800; color: #14181D; line-height: 1.1; letter-spacing: -0.7px;">{{crop.gain}} longer</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #6B7683; width: 132px; flex-shrink: 0;">OPEN SHED</span>
+              <div style="flex: 1; height: 22px; background: #EEF0EC; border: 1px solid #D5D9DE;">
+                <div class="bar" style="height: 20px; background: #B91C1C; width: {{crop.ambW}};"></div>
+              </div>
+              <span class="mono" style="font-size: 12px; font-weight: 600; color: #B91C1C; width: 62px; text-align: right;">{{crop.ambient}} d</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #6B7683; width: 132px; flex-shrink: 0;">NAVONMESH</span>
+              <div style="flex: 1; height: 22px; background: #EEF0EC; border: 1px solid #D5D9DE;">
+                <div class="bar" style="height: 20px; background: #047857; width: 100%;"></div>
+              </div>
+              <span class="mono" style="font-size: 12px; font-weight: 600; color: #047857; width: 62px; text-align: right;">{{crop.cold}} d</span>
+            </div>
+          </div>
+
+          <div style="border-left: 3px solid #14181D; padding: 4px 0 4px 18px;">
+            <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; display: block; margin-bottom: 6px;">STORAGE NOTE</span>
+            <p style="font-size: 14.5px; line-height: 1.65; color: #14181D;">{{crop.tip}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATORS -->
+  <div style="padding: 76px 40px 0; border-bottom: 1px solid #14181D;">
+    <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 760px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">05 &nbsp;/&nbsp; OPERATORS</span>
+      <h2 style="font-size: 38px; font-weight: 800; letter-spacing: -1.1px; line-height: 1.12; color: #14181D;">One cold room, three people who depend on it.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+
+      <div class="cell" style="background: #F4F5F3; padding: 38px 40px; display: flex; flex-direction: column; gap: 18px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">ROLE 01</span>
+        <h3 style="font-size: 22px; font-weight: 800; color: #14181D; letter-spacing: -0.4px;">The farmer</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: #4A5461;">Opens the app in their own language, hears the status read aloud, and sees how many days each batch has left before it must be sold.</p>
+        <ul style="display: flex; flex-direction: column; border-top: 1px solid #D5D9DE;">
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Batch-by-batch shelf life</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Sell-first alerts before spoilage</li>
+          <li style="padding: 12px 0; font-size: 14px; color: #14181D; font-weight: 500;">Keeps working with the phone offline</li>
+        </ul>
+      </div>
+
+      <div class="cell" style="background: #F4F5F3; padding: 38px 40px; display: flex; flex-direction: column; gap: 18px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">ROLE 02</span>
+        <h3 style="font-size: 22px; font-weight: 800; color: #14181D; letter-spacing: -0.4px;">The retailer</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: #4A5461;">Sees what is in the chamber, how cold it has been kept and how long it will hold, so produce is bought on evidence rather than a guess at the mandi gate.</p>
+        <ul style="display: flex; flex-direction: column; border-top: 1px solid #D5D9DE;">
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Live stock and weight</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Cold-chain history per batch</li>
+          <li style="padding: 12px 0; font-size: 14px; color: #14181D; font-weight: 500;">Freshness proof before loading</li>
+        </ul>
+      </div>
+
+      <div class="cell" style="background: #F4F5F3; padding: 38px 40px; display: flex; flex-direction: column; gap: 18px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">ROLE 03</span>
+        <h3 style="font-size: 22px; font-weight: 800; color: #14181D; letter-spacing: -0.4px;">The FPO</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: #4A5461;">Runs a cluster of units across villages from one screen: uptime, utilisation, member batches and which chamber needs a technician this week.</p>
+        <ul style="display: flex; flex-direction: column; border-top: 1px solid #D5D9DE;">
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Multi-unit fleet view</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid #E4E7E4; font-size: 14px; color: #14181D; font-weight: 500;">Member-wise storage records</li>
+          <li style="padding: 12px 0; font-size: 14px; color: #14181D; font-weight: 500;">Maintenance scheduling</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILD STATUS -->
+  <div style="padding: 76px 40px; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="display: flex; flex-direction: column; gap: 30px;">
+      <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 760px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">06 &nbsp;/&nbsp; BUILD STATUS</span>
+        <h2 style="font-size: 38px; font-weight: 800; letter-spacing: -1.1px; line-height: 1.12; color: #14181D;">Where the project actually stands.</h2>
+      </div>
+
+      <div style="border: 1px solid #D5D9DE;">
+        <div style="display: grid; grid-template-columns: 120px 1fr 200px; gap: 0; background: #F4F5F3; border-bottom: 1px solid #D5D9DE;">
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">REF</span>
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">DELIVERABLE</span>
+          <span class="mono" style="padding: 13px 20px; font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">STATUS</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 200px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 16px 20px; font-size: 12.5px; color: #6B7683;">S-01</span>
+          <span style="padding: 16px 20px; font-size: 15px; font-weight: 600; color: #14181D;">Control and telemetry interface</span>
+          <span class="mono" style="padding: 16px 20px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #047857;">COMPLETE</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 200px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 16px 20px; font-size: 12.5px; color: #6B7683;">S-02</span>
+          <span style="padding: 16px 20px; font-size: 15px; font-weight: 600; color: #14181D;">Ten crop profiles, eight languages</span>
+          <span class="mono" style="padding: 16px 20px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #047857;">COMPLETE</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 200px; border-bottom: 1px solid #E4E7E4;">
+          <span class="mono" style="padding: 16px 20px; font-size: 12.5px; color: #6B7683;">S-03</span>
+          <span style="padding: 16px 20px; font-size: 15px; font-weight: 600; color: #14181D;">Hardware prototype assembly</span>
+          <span class="mono" style="padding: 16px 20px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #B45309;">IN PROGRESS</span>
+        </div>
+        <div class="row" style="display: grid; grid-template-columns: 120px 1fr 200px;">
+          <span class="mono" style="padding: 16px 20px; font-size: 12.5px; color: #6B7683;">S-04</span>
+          <span style="padding: 16px 20px; font-size: 15px; font-weight: 600; color: #14181D;">Field pilot, one storage season</span>
+          <span class="mono" style="padding: 16px 20px; font-size: 11.5px; font-weight: 600; letter-spacing: 1px; color: #6B7683;">NOT STARTED</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background: #14181D; padding: 68px 40px; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;">
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 660px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: #7C8895;">07 &nbsp;/&nbsp; PILOT PROGRAMME</span>
+      <h2 style="font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1.15; color: #FFFFFF;">Bring a unit to your village cluster.</h2>
+      <p style="font-size: 16px; line-height: 1.7; color: #A3ADB8;">We are looking for FPOs, collection centres and horticulture departments across the North East to host the first pilot chambers.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <span class="btnk btnk-light" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #F4F5F3; color: #14181D; padding: 17px 32px; font-size: 15px; font-weight: 700; min-height: 54px;">
+        Request a pilot
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+      <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #7C8895; text-align: center;">[YOUR EMAIL] &nbsp;/&nbsp; [YOUR PHONE]</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background: #F4F5F3; border-top: 1px solid #2E3742; padding: 48px 40px 32px;">
+    <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; border-bottom: 1px solid #D5D9DE; padding-bottom: 36px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <svg width="32" height="32" viewBox="0 0 38 38" fill="none">
+            <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+            <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+            <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+            <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #14181D; letter-spacing: 0.5px;">NAVONMESH</span>
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; color: #4A5461; max-width: 320px;">Solar-powered smart mini cold storage for vegetables in the North Eastern Region.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">PRODUCT</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">How it works</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">Built for NER</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">Crop profiles</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">Live demo app</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">PROJECT</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">SIH 2026</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">Impact</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">The team</span>
+        <span class="lnk" style="font-size: 14px; color: #4A5461; width: fit-content;">Technical documentation</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683;">CONTACT</span>
+        <span style="font-size: 14px; color: #4A5461;">[YOUR EMAIL]</span>
+        <span style="font-size: 14px; color: #4A5461;">[YOUR PHONE]</span>
+        <span style="font-size: 14px; color: #4A5461;">[YOUR INSTITUTION]</span>
+      </div>
+    </div>
+
+    <div style="padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <span class="mono" style="font-size: 11px; letter-spacing: 0.8px; color: #6B7683;">SIH 2026 / PS 26005 / PROTOTYPE</span>
+      <span class="mono" style="font-size: 11px; letter-spacing: 0.8px; color: #6B7683;">TELEMETRY SHOWN IS SIMULATED FROM THE PROTOTYPE CONTROL PANEL</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#0369A1","#B45309","#14181D"],"section":"Brand"},"$preview":{"width":1440,"height":4600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { scenario: 'clear', crop: 'cabbage' };
+  }
+
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#047857';
+
+    var scenarios = [
+      {
+        id: 'clear', label: 'Clear day',
+        temp: '8.2', hum: '91', solar: '2.4', batt: '78', pcm: '82',
+        battW: '78%', pcmW: '82%', solarNote: 'ARRAY AT FULL OUTPUT',
+        clock: '11:40 / 07 SEP',
+        status: 'ALL SYSTEMS NORMAL', statusFg: '#34D399', statusBd: '#1E6B52',
+        pcmNote: 'Fully charged. 8.6 h of cooling in reserve.',
+        note: 'Compressor running at 42% duty. Surplus solar is topping up the battery and re-freezing the thermal pack for tonight.'
+      },
+      {
+        id: 'cloud', label: 'Cloudy monsoon day',
+        temp: '8.6', hum: '92', solar: '0.6', batt: '54', pcm: '74',
+        battW: '54%', pcmW: '74%', solarNote: 'HEAVY CLOUD COVER',
+        clock: '13:05 / 07 SEP',
+        status: 'RUNNING ON BATTERY', statusFg: '#F59E0B', statusBd: '#7A5312',
+        pcmNote: 'Holding charge. 7.7 h in reserve.',
+        note: 'Solar has dropped to a quarter of rated output. The controller has slowed the compressor and is drawing from the battery rather than spending the thermal reserve.'
+      },
+      {
+        id: 'door', label: 'Door left open',
+        temp: '11.4', hum: '84', solar: '2.1', batt: '76', pcm: '80',
+        battW: '76%', pcmW: '80%', solarNote: 'ARRAY AT 88% OUTPUT',
+        clock: '09:22 / 07 SEP',
+        status: 'DOOR OPEN 4 MIN', statusFg: '#F87171', statusBd: '#7F2626',
+        pcmNote: 'Reserve untouched. 8.4 h available.',
+        note: 'The reed switch has been open for four minutes. Compressor speed is boosted and an alert has already gone to the farmer in their own language.'
+      },
+      {
+        id: 'night', label: 'Night, no sun',
+        temp: '8.0', hum: '91', solar: '0.0', batt: '41', pcm: '46',
+        battW: '41%', pcmW: '46%', solarNote: 'NO GENERATION UNTIL 05:40',
+        clock: '02:15 / 08 SEP',
+        status: 'ON THERMAL RESERVE', statusFg: '#A78BFA', statusBd: '#4C3A85',
+        pcmNote: 'Discharging. 4.1 h of cold left before sunrise.',
+        note: 'Compressor off. The phase-change pack is releasing stored cold to hold the set-point, sparing the battery for the sensors and the radio.'
+      }
+    ];
+
+    var s = scenarios.filter(function (x) { return x.id === self.state.scenario; })[0] || scenarios[0];
+
+    var scenarioBtns = scenarios.map(function (x, i) {
+      var on = x.id === self.state.scenario;
+      return {
+        id: x.id,
+        label: x.label,
+        bg: on ? '#14181D' : 'transparent',
+        fg: on ? '#F4F5F3' : '#4A5461',
+        br: i === scenarios.length - 1 ? '0' : '1px solid #14181D',
+        pick: function () { self.setState({ scenario: x.id }); }
+      };
+    });
+
+    var crops = [
+      { id: 'cabbage', code: 'C-01', name: 'Cabbage', local: 'বন্ধাকপি · बन्दागोभी · Kobi', tempShort: '0–2 °C', temp: '0–2 °C', hum: '90–95 %', cold: 35, ambient: 6, gain: '6×',
+        tip: 'Keep the bags ventilated, and store away from Khasi mandarin — the ethylene will yellow the leaves.' },
+      { id: 'king_chilli', code: 'C-02', name: 'King Chilli', local: 'ভোট জলকীয়া · U-Morok · Hmar-cha', tempShort: '5–7 °C', temp: '5–7 °C', hum: '90–95 %', cold: 28, ambient: 5, gain: '5.6×',
+        tip: 'Never cool below 4 °C — chilling injury sets in fast. High humidity is what keeps the capsaicin and the colour intact.' },
+      { id: 'khasi_mandarin', code: 'C-03', name: 'Khasi Mandarin', local: 'Soh Niamtra · कमला सुन्तला', tempShort: '4–7 °C', temp: '4–7 °C', hum: '85–90 %', cold: 45, ambient: 8, gain: '5.6×',
+        tip: 'A strong ethylene producer. Give it its own shelf so it does not ripen the tomatoes and beans stored alongside.' },
+      { id: 'ginger', code: 'C-04', name: 'Ginger', local: 'আদা · अदुवा · Sying', tempShort: '12–14 °C', temp: '12–14 °C', hum: '85–90 %', cold: 120, ambient: 20, gain: '6×',
+        tip: 'Cure the rhizomes before loading. Below 10 °C the skin darkens and the flesh turns soft in storage.' },
+      { id: 'tomato', code: 'C-05', name: 'Tomato', local: 'বিলাহী · गोलभेँडा · Soh Tyngkong', tempShort: '8–10 °C', temp: '8–10 °C', hum: '85–90 %', cold: 18, ambient: 4, gain: '4.5×',
+        tip: 'The default mixed-storage set-point of 8 °C suits tomatoes well. Load them at breaker stage, not fully red.' },
+      { id: 'large_cardamom', code: 'C-06', name: 'Large Cardamom', local: 'বৰ ইলাচী · अलैंची · Elaka Tynhiang', tempShort: '10–15 °C', temp: '10–15 °C', hum: '60–70 %', cold: 240, ambient: 45, gain: '5.3×',
+        tip: 'This one wants it dry. Hold humidity below 70% or the essential-oil aroma goes and mould takes hold.' }
+    ];
+
+    var pickedCrop = crops.filter(function (x) { return x.id === self.state.crop; })[0] || crops[0];
+
+    var cropBtns = crops.map(function (x) {
+      var on = x.id === self.state.crop;
+      return {
+        id: x.id,
+        label: x.name,
+        local: x.local,
+        tempShort: x.tempShort,
+        bg: on ? '#F4F5F3' : '#FFFFFF',
+        mark: on ? '#14181D' : 'transparent',
+        fg: '#14181D',
+        subFg: on ? '#4A5461' : '#6B7683',
+        pick: function () { self.setState({ crop: x.id }); }
+      };
+    });
+
+    var crop = {
+      code: pickedCrop.code,
+      name: pickedCrop.name,
+      local: pickedCrop.local,
+      temp: pickedCrop.temp,
+      hum: pickedCrop.hum,
+      cold: pickedCrop.cold,
+      ambient: pickedCrop.ambient,
+      gain: pickedCrop.gain,
+      tip: pickedCrop.tip,
+      ambW: Math.round((pickedCrop.ambient / pickedCrop.cold) * 100) + '%'
+    };
+
+    return { accent: accent, s: s, scenarioBtns: scenarioBtns, crop: crop, cropBtns: cropBtns };
+  }
+}
+</script>
+</body>
+</html>

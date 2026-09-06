@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap">
+  <style>
+    body { margin: 0; background: #F4F5F3; color: #14181D; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a { color: #14181D; text-decoration: none; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
+    .lnk { transition: color .15s ease, border-color .15s ease; border-bottom: 2px solid transparent; }
+    .lnk:hover { color: #14181D; border-bottom-color: #14181D; }
+    .btnk { transition: background .15s ease, color .15s ease, border-color .15s ease; }
+    .btnk-solid:hover { background: #2B333D; }
+    .cell { transition: background .16s ease, border-color .16s ease; }
+    .cell:hover { background: #FAFBF9; border-color: #14181D; }
+    .seg { transition: background .14s ease, color .14s ease, border-color .14s ease; cursor: pointer; }
+    .seg:hover { border-color: #14181D; }
+    .row { transition: background .14s ease; }
+    .row:hover { background: #FAFBF9; }
+    .bar { transition: width .5s cubic-bezier(.3,.7,.3,1); }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #F4F5F3;">
+
+  <div style="height: 34px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PROBLEM STATEMENT 26005</span>
+    <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1.2px; color: #A3ADB8;">PROTOTYPE &nbsp;/&nbsp; NORTH EASTERN REGION, INDIA</span>
+  </div>
+
+  <div style="height: 74px; background: #F4F5F3; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 40px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.75" y="0.75" width="36.5" height="36.5" fill="none" stroke="#14181D" stroke-width="1.5"></rect>
+        <circle cx="13" cy="19" r="4.5" fill="none" stroke="#14181D" stroke-width="1.5"></circle>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="#14181D" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 800; letter-spacing: 0.6px; color: #14181D; line-height: 1;">NAVONMESH</span>
+        <span class="mono" style="font-size: 10px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">SOLAR MINI COLD STORAGE</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 30px;">
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Home</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">How it works</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">Built for NER</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 600; color: #14181D; border-bottom-color: #14181D;">Impact</span>
+      <span class="lnk" style="font-size: 14px; font-weight: 500; color: #4A5461;">The project</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="mono" style="font-size: 11px; font-weight: 500; letter-spacing: 1px; color: #6B7683;">8 LANGUAGES</span>
+      <span class="btnk btnk-solid" style="display: inline-flex; align-items: center; gap: 9px; background: #14181D; color: #F4F5F3; padding: 12px 20px; font-size: 13px; font-weight: 700;">
+        Open the live app
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- PAGE HEAD -->
+  <div style="padding: 60px 40px 32px; border-bottom: 2px solid #14181D; display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: end;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 04 &nbsp;/&nbsp; IMPACT</span>
+        <span class="mono" style="font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: #92400E; border: 1px solid #D9A441; background: #FBF3E2; padding: 5px 9px;">PROJECTED, NOT MEASURED</span>
+      </div>
+      <h1 style="font-size: 46px; font-weight: 800; letter-spacing: -1.3px; line-height: 1.08; color: #14181D; max-width: 800px; text-wrap: pretty;">The loss is not the harvest. It is the week the farmer cannot wait.</h1>
+    </div>
+    <p style="font-size: 16px; line-height: 1.75; color: #4A5461;">Produce that has to be sold the day it is picked is sold at whatever price the day offers. Storage buys time, and time is where the money is.</p>
+  </div>
+
+  <!-- PROJECTION -->
+  <div style="padding: 56px 40px 68px; border-bottom: 1px solid #14181D;">
+    <div style="display: flex; flex-direction: column; gap: 26px;">
+
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; border-bottom: 2px solid #14181D; padding-bottom: 18px;">
+        <div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px;">
+          <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">One season, at three scales.</h2>
+          <p style="font-size: 15.5px; line-height: 1.7; color: #4A5461;">Select a deployment size to see the projected effect over a single storage season.</p>
+        </div>
+
+        <div style="display: flex; border: 1.5px solid #14181D;">
+          <sc-for list="{{segments}}" as="g" hint-placeholder-count="3">
+            <button class="seg" onClick="{{g.pick}}" style="padding: 13px 22px; border: 0; border-right: {{g.br}}; background: {{g.bg}}; color: {{g.fg}}; font-size: 13.5px; font-weight: 600; font-family: inherit; min-height: 48px;">{{g.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+        <div class="cell" style="background: #FFFFFF; padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">PRODUCE SAVED</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #14181D; line-height: 1.05; letter-spacing: -0.9px;">{{v.saved}}</span>
+          <span style="font-size: 13px; line-height: 1.5; color: #4A5461;">kept out of post-harvest decay</span>
+        </div>
+        <div class="cell" style="background: #FFFFFF; padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">VALUE PROTECTED</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #14181D; line-height: 1.05; letter-spacing: -0.9px;">{{v.value}}</span>
+          <span style="font-size: 13px; line-height: 1.5; color: #4A5461;">around 35% income retained</span>
+        </div>
+        <div class="cell" style="background: #FFFFFF; padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">WASTE AVOIDED</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #14181D; line-height: 1.05; letter-spacing: -0.9px;">{{v.waste}}</span>
+          <span style="font-size: 13px; line-height: 1.5; color: #4A5461;">spoilage removed in transit</span>
+        </div>
+        <div class="cell" style="background: #FFFFFF; padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">RENEWABLE FRACTION</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #14181D; line-height: 1.05; letter-spacing: -0.9px;">82 %</span>
+          <span style="font-size: 13px; line-height: 1.5; color: #4A5461;">of energy used, direct from solar</span>
+        </div>
+        <div class="cell" style="background: #FFFFFF; padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">SELLING WINDOW</span>
+          <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: #14181D; line-height: 1.05; letter-spacing: -0.9px;">+12 days</span>
+          <span style="font-size: 13px; line-height: 1.5; color: #4A5461;">to negotiate on price</span>
+        </div>
+      </div>
+
+      <div style="border-left: 3px solid #D9A441; background: #FBF3E2; padding: 18px 22px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #92400E; display: block; margin-bottom: 6px;">BASIS</span>
+        <p style="font-size: 14.5px; line-height: 1.65; color: #78350F;">{{v.caveat}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WITH / WITHOUT -->
+  <div style="padding: 68px 40px; border-bottom: 1px solid #14181D; background: #FFFFFF;">
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start;">
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 04.2 &nbsp;/&nbsp; WHERE THE VALUE COMES FROM</span>
+        <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">Same harvest. Two very different weeks.</h2>
+        <p style="font-size: 16px; line-height: 1.75; color: #4A5461;">A 200 kg load of cabbage picked on a Monday, in a shed and in a chamber. The produce does not change. What changes is how long the farmer gets to choose a buyer.</p>
+        <ul style="display: flex; flex-direction: column; border-top: 1px solid #D5D9DE; margin-top: 8px;">
+          <li style="padding: 16px 0; border-bottom: 1px solid #E4E7E4; font-size: 15px; line-height: 1.6; color: #14181D; font-weight: 500;">The distress sale disappears, because the crop is no longer the thing under time pressure.</li>
+          <li style="padding: 16px 0; border-bottom: 1px solid #E4E7E4; font-size: 15px; line-height: 1.6; color: #14181D; font-weight: 500;">Batches can be aggregated across members until a lot is worth a buyer's trip.</li>
+          <li style="padding: 16px 0; font-size: 15px; line-height: 1.6; color: #14181D; font-weight: 500;">Cold-chain history travels with the batch, so quality can be priced instead of argued about.</li>
+        </ul>
+      </div>
+
+      <div style="border: 1px solid #D5D9DE;">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; padding: 20px 28px; border-bottom: 1px solid #14181D; background: #F4F5F3;">
+          <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; color: #14181D;">FIG. 3 &mdash; 200 kg CABBAGE, ONE SEASON</span>
+          <span class="mono" style="font-size: 10.5px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">ESTIMATE</span>
+        </div>
+
+        <div style="padding: 32px 28px; display: flex; flex-direction: column; gap: 26px;">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">IN AN OPEN SHED</span>
+              <span class="mono" style="font-size: 13px; font-weight: 600; color: #B91C1C;">6 DAYS</span>
+            </div>
+            <div style="height: 34px; background: #F4F5F3; border: 1px solid #D5D9DE;">
+              <div class="bar" style="height: 32px; background: #B91C1C; width: 17%;"></div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">IN THE CHAMBER AT 8 &deg;C</span>
+              <span class="mono" style="font-size: 13px; font-weight: 600; color: #047857;">35 DAYS</span>
+            </div>
+            <div style="height: 34px; background: #F4F5F3; border: 1px solid #D5D9DE;">
+              <div class="bar" style="height: 32px; background: #047857; width: 100%;"></div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+            <div style="background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 7px;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SPOILAGE, SHED</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: #B91C1C; line-height: 1;">~30 %</span>
+            </div>
+            <div style="background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 7px;">
+              <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SPOILAGE, CHAMBER</span>
+              <span class="num" style="font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: #047857; line-height: 1;">near zero</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD -->
+  <div style="padding: 68px 40px 0; border-bottom: 1px solid #14181D;">
+    <div style="border-bottom: 2px solid #14181D; padding-bottom: 18px; display: flex; flex-direction: column; gap: 14px; max-width: 780px;">
+      <span class="mono" style="font-size: 11px; font-weight: 600; letter-spacing: 1.6px; color: {{accent}};">SECTION 04.3 &nbsp;/&nbsp; METHOD</span>
+      <h2 style="font-size: 34px; font-weight: 800; letter-spacing: -1px; line-height: 1.14; color: #14181D;">How these numbers were arrived at.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; margin: 0 -40px; border-top: 1px solid #D5D9DE;">
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">M-01 &nbsp;/&nbsp; SHELF LIFE</span>
+        <p style="font-size: 15px; line-height: 1.75; color: #4A5461;">Cold and ambient shelf life come from the ten crop profiles built into the system, one per NER crop, with their own set-points and humidity bands.</p>
+      </div>
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">M-02 &nbsp;/&nbsp; VALUE</span>
+        <p style="font-size: 15px; line-height: 1.75; color: #4A5461;">Income retention is modelled from the difference between a same-day distress sale and a sale inside the extended window. It is a projection, not an audited figure.</p>
+      </div>
+      <div class="cell" style="background: #F4F5F3; padding: 34px 40px; display: flex; flex-direction: column; gap: 12px;">
+        <span class="mono" style="font-size: 10.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">M-03 &nbsp;/&nbsp; WHAT IS MISSING</span>
+        <p style="font-size: 15px; line-height: 1.75; color: #4A5461;">No unit has completed a field season yet. Every number on this page is a simulation from the prototype control panel, and will be replaced by pilot data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #14181D; padding: 40px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px;">NAVONMESH</span>
+      <span class="mono" style="font-size: 11px; letter-spacing: 0.9px; color: #7C8895;">SIH 2026 / PS 26005 / PROTOTYPE</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#0369A1","#B45309","#14181D"],"section":"Brand"},"$preview":{"width":1440,"height":2200}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { scale: 'one' };
+  }
+
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#047857';
+
+    var scales = [
+      {
+        id: 'one', label: 'One unit', mult: 1,
+        caveat: 'Figures for a single 200 kg chamber over one storage season, simulated from the prototype control panel. No field-season data exists yet.'
+      },
+      {
+        id: 'cluster', label: 'Five-unit cluster', mult: 5,
+        caveat: 'A five-chamber FPO cluster, scaled linearly from the single-unit simulation. Real clusters share transport and aggregation gains this model does not attempt to capture.'
+      },
+      {
+        id: 'district', label: 'Twenty-unit district', mult: 20,
+        caveat: 'A twenty-chamber district rollout, scaled linearly from the single-unit simulation. Treat this as an order-of-magnitude sketch for planning, not a forecast.'
+      }
+    ];
+
+    var sel = scales.filter(function (x) { return x.id === self.state.scale; })[0] || scales[0];
+
+    function kg(n) { return n.toLocaleString('en-IN') + ' kg'; }
+
+    var v = {
+      saved: kg(1240 * sel.mult),
+      value: '₹' + (48000 * sel.mult).toLocaleString('en-IN'),
+      waste: kg(320 * sel.mult),
+      caveat: sel.caveat
+    };
+
+    var segments = scales.map(function (x, i) {
+      var on = x.id === self.state.scale;
+      return {
+        id: x.id,
+        label: x.label,
+        bg: on ? '#14181D' : 'transparent',
+        fg: on ? '#F4F5F3' : '#4A5461',
+        br: i === scales.length - 1 ? '0' : '1px solid #14181D',
+        pick: function () { self.setState({ scale: x.id }); }
+      };
+    });
+
+    return { accent: accent, segments: segments, v: v };
+  }
+}
+</script>
+</body>
+</html>
