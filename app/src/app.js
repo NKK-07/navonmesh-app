@@ -3,6 +3,8 @@
 
 import { hardwareService } from './data/mockHardware.js';
 import * as notify from './utils/notifications.js';
+import { isSignedIn, getUser, signOut } from './utils/api.js';
+import { renderLoginPage, bindLoginEvents } from './views/LoginPage.js';
 
 // Components
 import { renderHeader, bindHeaderEvents } from './components/Header.js';
@@ -57,6 +59,10 @@ class NavonmeshApp {
       history.replaceState({}, '', location.pathname);
     }
 
+    // A token that expired or was revoked drops the app back to the login
+    // screen rather than leaving it showing data it can no longer refresh.
+    window.addEventListener('navonmesh:signed-out', () => this.render());
+
     // Subscribe to hardware telemetry state updates
     hardwareService.subscribe(state => {
       // Notifications ride the same tick as the render, so an alert raised by
@@ -91,6 +97,15 @@ class NavonmeshApp {
   render() {
     const appEl = document.getElementById('app');
     if (!appEl) return;
+
+    // Nothing renders until there is a session. The unit's readings belong to
+    // whoever the FPO registered, and the server will refuse them anyway, so
+    // showing a dashboard first would only ever be a dashboard of nothing.
+    if (!isSignedIn()) {
+      appEl.innerHTML = renderLoginPage();
+      bindLoginEvents(() => { this.currentTab = 'dashboard'; this.render(); });
+      return;
+    }
 
     const hwState = hardwareService.getState();
 

@@ -3,3 +3,4 @@
 vapid.json
 subscriptions.json
 node_modules/
+.env.local

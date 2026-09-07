@@ -3,13 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Web Push relay for the NAVONMESH cold storage app",
+  "description": "API, database and push relay for the NAVONMESH cold storage app",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\""
+    "migrate": "node migrate.js",
+    "migrate:status": "node migrate.js --status",
+    "seed": "node seed.js",
+    "provision": "node provision.js",
+    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\"",
+    "test:rls": "node test-rls.js"
   },
   "dependencies": {
-    "web-push": "^3.6.7"
+    "pg": "^8.13.1",
+    "web-push": "^3.6.7",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

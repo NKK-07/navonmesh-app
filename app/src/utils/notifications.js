@@ -12,6 +12,8 @@
 // SMS over the LoRa link stays the fallback underneath both, for handsets with
 // no data at all. Nothing here replaces that.
 
+import { apiFetch } from './api.js';
+
 const PREF_KEY = 'navonmesh_notify_prefs';
 const SEEN_KEY = 'navonmesh_notify_seen';
 
@@ -149,10 +151,13 @@ export async function enable({ lang = 'en', unit = 'NM-004' } = {}) {
     const levels = Object.entries(prefs.levels)
       .filter(([, on]) => on).map(([k]) => k);
 
-    const res = await fetch('/api/subscribe', {
+    const res = await apiFetch('/api/push/subscribe', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ subscription: sub, lang, unit, levels })
+      body: JSON.stringify({
+        subscription: sub, lang, unit, levels,
+        quietFrom: prefs.quietHours.from,
+        quietTo: prefs.quietHours.to
+      })
     });
     push = res.ok ? 'subscribed' : 'local-only';
   } catch {
@@ -170,9 +175,8 @@ export async function disable() {
     const reg = await navigator.serviceWorker.ready;
     const sub = await reg.pushManager.getSubscription();
     if (sub) {
-      await fetch('/api/unsubscribe', {
+      await apiFetch('/api/push/unsubscribe', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ endpoint: sub.endpoint })
       }).catch(() => {});
       await sub.unsubscribe();
