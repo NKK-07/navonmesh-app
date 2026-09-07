@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAVONMESH: cold that runs on sunlight</title>
+<meta name="description" content="A 200 kg solar cold room for the hills of the North East. Eight degrees held through the night with no grid behind it, so your harvest waits for a price worth taking.">
+<meta name="theme-color" content="#0F1519">
+
+<!-- DEPLOY STEP: og:image and og:url need absolute URLs. Patch both with the live address at deploy time. -->
+<meta property="og:title" content="NAVONMESH: cold that runs on sunlight">
+<meta property="og:description" content="A 200 kg solar cold room for the hills of the North East. Eight degrees held all night, with nothing plugged in.">
+<meta property="og:image" content="">
+<meta property="og:url" content="">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%230F1519'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='%2304785C' stroke-width='1.6'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='%23F2F5F4' stroke-width='1.6'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500&family=Outfit:wght@800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="env" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="../index.html">
+    <svg width="26" height="26" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+      <circle cx="13" cy="19" r="4.5" stroke="var(--accent)" stroke-width="1.6"/>
+      <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    <span>NAVONMESH</span>
+  </a>
+  <a class="btn btn-sm" href="#book">Book a unit</a>
+</nav>
+
+<!-- ============================ THE HERO ============================ -->
+<div class="hero" id="hero">
+  <div class="stage" id="stage">
+
+    <svg class="scene" id="scene" viewBox="0 0 720 620" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0F1519" stop-opacity="1"/>
+          <stop offset="0.14" stop-color="#0F1519" stop-opacity="0"/>
+          <stop offset="0.86" stop-color="#0F1519" stop-opacity="0"/>
+          <stop offset="1" stop-color="#0F1519" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+
+      <g id="cam">
+
+        <!-- ---------- 0 to 620: the roof ---------- -->
+        <g class="draw" data-load="1" data-from="0.00" data-to="0.14">
+          <circle class="sun" cx="556" cy="120" r="34"/>
+          <g class="rays">
+            <path d="M556 62v-22M556 200v22M614 120h22M498 120h-22M597 79l15-15M515 161l-15 15M597 161l15 15M515 79l-15-15"/>
+          </g>
+        </g>
+
+        <g class="mist" data-load="1" data-from="0.00" data-to="0.16">
+          <path d="M40 250q120-16 240 0t240 0 160-8"/>
+          <path d="M20 292q140 14 280 0t260-6"/>
+        </g>
+
+        <g class="draw" data-load="1" data-from="0.02" data-to="0.18">
+          <path class="hill" d="M0 520q150-52 300-30t210 44 210-18"/>
+        </g>
+
+        <!-- solar array -->
+        <g class="draw" data-from="0.05" data-to="0.20">
+          <path class="panel" d="M168 396 L470 322 L556 372 L254 446 Z"/>
+          <path class="hatch" d="M215 385 L505 341M262 397 L529 352M309 409 L546 363M356 421 L522 380"/>
+          <path class="leg" d="M212 428v58M498 396v70M254 446v46"/>
+        </g>
+
+        <text class="lbl" x="588" y="356" data-load="1" data-from="0.06" data-to="0.16">2.4 kW</text>
+
+        <!-- ---------- 620 to 1240: the descent ---------- -->
+        <g class="draw" data-from="0.16" data-to="0.30">
+          <path class="spine" d="M360 470v300"/>
+        </g>
+        <g class="flow" data-from="0.18" data-to="0.44">
+          <path class="spark" d="M360 470v300"/>
+        </g>
+
+        <g class="draw" data-from="0.22" data-to="0.34">
+          <rect class="box" x="292" y="772" width="136" height="72" rx="2"/>
+          <path class="hatch" d="M310 796h100M310 812h72M310 828h56"/>
+        </g>
+        <text class="lbl" x="446" y="812" data-from="0.24" data-to="0.36">MPPT</text>
+
+        <g class="draw" data-from="0.28" data-to="0.40">
+          <path class="spine" d="M360 844v112"/>
+          <rect class="box" x="268" y="956" width="184" height="96" rx="2"/>
+          <path class="cells" d="M292 980v48M330 980v48M368 980v48M406 980v48M428 980v48"/>
+        </g>
+        <text class="lbl" x="470" y="1010" data-from="0.30" data-to="0.42">48 V LiFePO4</text>
+
+        <g class="draw" data-from="0.36" data-to="0.46">
+          <path class="spine" d="M360 1052v168"/>
+        </g>
+
+        <!-- ---------- 1240 to 1860: the chamber ---------- -->
+        <g class="draw" data-from="0.44" data-to="0.58">
+          <rect class="wall-out" x="140" y="1300" width="440" height="500" rx="2"/>
+          <rect class="wall-in" x="164" y="1324" width="392" height="452" rx="2"/>
+          <path class="puf" d="M140 1324l24-24M140 1372l24-24M140 1420l24-24M140 1468l24-24M140 1516l24-24M140 1564l24-24M140 1612l24-24M140 1660l24-24M140 1708l24-24M140 1756l24-24M556 1324l24-24M556 1372l24-24M556 1420l24-24M556 1468l24-24M556 1516l24-24M556 1564l24-24M556 1612l24-24M556 1660l24-24M556 1708l24-24M556 1756l24-24"/>
+        </g>
+        <text class="lbl" x="596" y="1316" data-from="0.46" data-to="0.58">100 mm PUF</text>
+
+        <!-- frost bloom -->
+        <g class="frost" data-from="0.52" data-to="0.70">
+          <path d="M360 1550v-92M360 1550v92M360 1550h-96M360 1550h96M360 1550l-68-68M360 1550l68 68M360 1550l68-68M360 1550l-68 68"/>
+          <path class="frost-b" d="M330 1520l-14-30M390 1520l14-30M330 1580l-14 30M390 1580l14 30M300 1550h-32M420 1550h32"/>
+        </g>
+
+        <!-- circulating air -->
+        <g class="air" data-from="0.58" data-to="0.74">
+          <path d="M212 1400q0 60 56 60t56 60"/>
+          <path d="M508 1400q0 60-56 60t-56 60"/>
+        </g>
+
+        <!-- ---------- 1860 to 2480: at rest ---------- -->
+        <g class="draw" data-from="0.72" data-to="0.86">
+          <rect class="crate" x="176" y="2028" width="120" height="96" rx="2"/>
+          <rect class="crate" x="304" y="2028" width="120" height="96" rx="2"/>
+          <rect class="crate" x="432" y="2028" width="120" height="96" rx="2"/>
+          <path class="slats" d="M176 2060h120M176 2092h120M304 2060h120M304 2092h120M432 2060h120M432 2092h120"/>
+        </g>
+        <g class="produce" data-from="0.76" data-to="0.90">
+          <circle cx="206" cy="2012" r="15"/><circle cx="238" cy="2008" r="17"/><circle cx="268" cy="2013" r="14"/>
+          <circle cx="334" cy="2011" r="16"/><circle cx="366" cy="2007" r="15"/><circle cx="396" cy="2012" r="16"/>
+          <circle cx="462" cy="2010" r="15"/><circle cx="494" cy="2009" r="16"/><circle cx="524" cy="2013" r="14"/>
+        </g>
+
+        <!-- the hold line: the signature element -->
+        <g class="hold" data-from="0.80" data-to="0.96">
+          <path class="amb" d="M152 2280q60-46 120-18t120-64 120-30 128-52"/>
+          <path class="held" d="M152 2296h408"/>
+          <path class="tick" d="M152 2276v40M560 2276v40"/>
+        </g>
+        <text class="lbl warm" x="576" y="2192" data-from="0.84" data-to="0.96">AMBIENT</text>
+        <text class="lbl acc" x="576" y="2301" data-from="0.86" data-to="0.96">8.0 &#176;C HELD</text>
+
+      </g>
+
+      <rect x="0" y="0" width="720" height="620" fill="url(#fade)" pointer-events="none"/>
+    </svg>
+
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="bands" id="bands">
+      <div class="band" data-band="0" data-a="0.00" data-b="0.18" data-entrance="rise">
+        <p class="kicker"><span class="chip">RI-BHOI, MEGHALAYA</span></p>
+        <h1 class="line" data-text="The sun comes up over Ri-Bhoi."></h1>
+      </div>
+      <div class="band" data-band="1" data-a="0.22" data-b="0.44" data-entrance="blur">
+        <p class="line" data-text="By eight, it is already cold inside."></p>
+      </div>
+      <div class="band" data-band="2" data-a="0.50" data-b="0.72" data-entrance="scatter" data-spread="0.5">
+        <p class="line" data-text="Eight degrees, held all night, with nothing plugged in."></p>
+      </div>
+      <div class="band" data-band="3" data-a="0.76" data-b="0.96" data-entrance="settle">
+        <p class="line" data-text="So the harvest can wait for a price worth taking."></p>
+        <p class="sub">Two hundred kilograms, on a roof, off the grid.</p>
+        <p class="cta-row"><a class="btn" href="#book">Book a unit through your FPO</a></p>
+      </div>
+    </div>
+
+    <div class="hud" id="hud" aria-hidden="true">
+      <span class="chip" id="hudDepth">ROOF</span>
+      <span class="chip" id="hudTemp">24.0 &#176;C</span>
+    </div>
+
+    <div class="cue" id="cue" aria-hidden="true">
+      <span>scroll</span>
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><path d="M7 1v16M2 12l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+  </div>
+</div>
+
+<!-- static hero, for phones and reduced motion -->
+<header class="static-hero" id="staticHero">
+  <div class="static-inner">
+    <p class="kicker"><span class="chip">RI-BHOI, MEGHALAYA</span></p>
+    <h1>Cold that runs on sunlight.</h1>
+    <p class="lede">A 200 kg cold room for the hills of the North East. No grid, no diesel, no monthly bill. Eight degrees held through the night, so your harvest waits for a price worth taking.</p>
+    <p><a class="btn" href="#book">Book a unit through your FPO</a></p>
+  </div>
+  <svg class="static-art" viewBox="0 0 400 300" fill="none" aria-hidden="true">
+    <rect x="70" y="120" width="260" height="150" rx="2" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="86" y="136" width="228" height="118" rx="2" stroke="currentColor" stroke-width="1" opacity=".5"/>
+    <path d="M96 78 L262 36 L310 66 L144 108 Z" stroke="var(--accent)" stroke-width="1.5"/>
+    <path d="M124 72 L282 52M148 80 L296 60" stroke="var(--accent)" stroke-width="1" opacity=".6"/>
+    <path d="M200 108v12" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M200 195v-40M200 195v40M200 195h-42M200 195h42M200 195l-30-30M200 195l30 30M200 195l30-30M200 195l-30 30" stroke="var(--accent)" stroke-width="1" opacity=".7"/>
+  </svg>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ============================ 6.1 THE WAIT ============================ -->
+  <section class="sec sec-wait reveal" id="wait">
+    <p class="kicker">01 / THE PROBLEM</p>
+    <h2 class="title">The loss is not the harvest. It is the week you cannot wait.</h2>
+    <p class="body">Twenty five to thirty percent of what the North East grows never gets sold. Not because it was not good enough, but because it could not wait. At harvest everyone sells at once, the price drops, and produce that cannot be stored has to move that day. The word for it is a distress sale, and it takes twenty to thirty percent off a farm's income every year.</p>
+  </section>
+
+  <!-- ============================ 6.2 THE HOLD ============================ -->
+  <section class="sec sec-hold reveal" id="worth">
+    <div class="hold-head">
+      <p class="kicker">02 / WHAT HOLDING IS WORTH</p>
+      <h2 class="title">Pick what you grow. Then hold it.</h2>
+      <p class="body">The bar on the left is how long you have now. Press and hold the button, and watch what a unit on your roof gives you.</p>
+    </div>
+
+    <div class="crops" role="group" aria-label="Choose a crop">
+      <button class="crop is-on" data-crop="mandarin">Khasi Mandarin</button>
+      <button class="crop" data-crop="ginger">Ginger</button>
+      <button class="crop" data-crop="chilli">King Chilli</button>
+      <button class="crop" data-crop="cabbage">Cabbage</button>
+      <button class="crop" data-crop="tomato">Tomato</button>
+    </div>
+
+    <div class="gauge">
+      <div class="rail">
+        <div class="fill" id="gFill"></div>
+        <div class="marker" id="gAmb"><span>ambient</span></div>
+      </div>
+      <div class="readout">
+        <p class="days"><span id="gDays">12</span><u>days</u></p>
+        <p class="mono" id="gPrice">Shillong mandi reference: &#8377;85 / kg</p>
+      </div>
+    </div>
+
+    <button class="holdbtn" id="holdBtn" aria-describedby="holdHint">
+      <span class="holdbtn-fill" id="holdFill"></span>
+      <span class="holdbtn-label">Press and hold to keep it cold</span>
+    </button>
+    <p class="hint mono" id="holdHint">Let go early and it warms straight back up. That is the whole product.</p>
+  </section>
+
+  <!-- ============================ 6.3 HOW IT HOLDS ============================ -->
+  <section class="sec sec-proof reveal" id="how">
+    <p class="kicker">03 / HOW IT HOLDS</p>
+    <div class="proof">
+      <article class="pf">
+        <p class="pf-n">2.4 kW</p>
+        <p class="body">On the roof. No grid connection, no diesel, no monthly bill.</p>
+      </article>
+      <article class="pf">
+        <p class="pf-n">100 mm</p>
+        <p class="body">PUF and a hermetic seal keep 90 to 95% humidity in and the monsoon out.</p>
+      </article>
+      <article class="pf">
+        <p class="pf-n">8.6 h</p>
+        <p class="body">A 70 kg phase change store keeps cooling after the compressor stops.</p>
+      </article>
+      <article class="pf">
+        <p class="pf-n">868 MHz</p>
+        <p class="body">LoRa carries readings where there is no cell signal, with SMS behind it and an app that works with no signal at all.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ 6.4 TEN CROPS ============================ -->
+  <section class="sec sec-crops reveal" id="profiles">
+    <div class="split">
+      <div>
+        <p class="kicker">04 / CROP PROFILES</p>
+        <h2 class="title">Ten NER crops, shipped with the unit.</h2>
+      </div>
+      <p class="body">Each one carries its own set point, humidity band and chilling limit. Cabbage at zero to two degrees. King chilli never below four, or it takes chilling injury. The unit already knows the difference.</p>
+    </div>
+  </section>
+
+  <!-- ============================ 6.5 OBJECTIONS ============================ -->
+  <section class="sec sec-faq reveal" id="faq">
+    <p class="kicker">05 / THE REAL QUESTIONS</p>
+    <div class="faq">
+      <details>
+        <summary>We cannot afford one unit per farm.</summary>
+        <p class="body">Most units are owned by an FPO and shared across members. One unit serves a collection point, and the cost per farmer per season is a fraction of one distress sale.</p>
+      </details>
+      <details>
+        <summary>Who fixes it when it breaks?</summary>
+        <p class="body">The unit reports its own health over LoRa before you notice anything. Nine sensors, a quarterly check, and a technician who is told what is wrong before they arrive.</p>
+      </details>
+      <details>
+        <summary>What happens in the monsoon, with no sun for days?</summary>
+        <p class="body">The battery carries the night. The phase change store carries 8.6 hours beyond that. Through a long grey spell the unit steps down through five power modes rather than stopping.</p>
+      </details>
+      <details>
+        <summary>Nobody at our collection point reads English.</summary>
+        <p class="body">Eight languages, including Khasi, Mizo, Meitei and Nagamese, with speech output for anyone who does not read a screen.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================ 6.6 + 6.7 CLOSE AND FORM ============================ -->
+  <section class="sec sec-book reveal" id="book">
+    <h2 class="close-line">One unit. Two hundred kilograms. The week you never had.</h2>
+
+    <form class="form" id="bookForm" novalidate>
+      <p class="f-row">
+        <label for="fName">Your name</label>
+        <input id="fName" name="name" type="text" autocomplete="name" required>
+      </p>
+      <p class="f-row">
+        <label for="fFpo">FPO or village</label>
+        <input id="fFpo" name="fpo" type="text" required>
+      </p>
+      <p class="f-row">
+        <label for="fCrop">What you grow</label>
+        <input id="fCrop" name="crop" type="text" required>
+      </p>
+      <p class="f-actions">
+        <button class="btn" type="submit">Book a unit</button>
+      </p>
+      <p class="f-done mono" id="formDone" role="status" hidden>Booked. Someone from the Ri-Bhoi team will call you within two working days.</p>
+    </form>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p class="mono">NAVONMESH &#183; Smart India Hackathon 2026 &#183; Problem statement 26005</p>
+  <nav class="foot-links" aria-label="Site">
+    <a href="../index.html">Home</a>
+    <a href="../how-it-works.html">How it works</a>
+    <a href="../built-for-ner.html">Built for NER</a>
+    <a href="../impact.html">Impact</a>
+    <a href="../app/">Open the live app</a>
+  </nav>
+</footer>
+
+<script src="assets/hero.js"></script>
+</body>
+</html>
