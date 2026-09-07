@@ -1,0 +1,16 @@
+# Vercel serves the static site at the repo root. Everything below either does
+# not belong on a CDN or actively confuses the build.
+
+# The API. It has its own package.json, which is enough to make Vercel treat
+# this repo as a Node project that needs building, and it deploys to Railway
+# rather than here.
+server/
+
+# Working files, not the website.
+design/
+10k-websites-skill/
+CINEMATIC-DESIGN-PACKAGE.md
+typee.md
+
+# A second landing attempt that nothing links to.
+landing-v2/
