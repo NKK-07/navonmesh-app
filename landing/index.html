@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NAVONMESH — thirty four outside, eight inside</title>
-<meta name="description" content="A 200 kg solar cold room for the hills of the North East. Outside swings from nineteen to thirty four across a day. Inside does not move. Scrub the day and see.">
+<meta name="description" content="A 200 kg solar cold room for the hills of the North East. Outside swings from nineteen to thirty four across a day. Inside does not move. Scrub the day and see what the week is worth.">
 <meta name="theme-color" content="#04241E">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%2304241E'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.8'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.8'/></svg>">
@@ -55,7 +55,6 @@
     <a class="nav-cta" href="../index.html">The full project <span aria-hidden="true">&#8594;</span></a>
   </nav>
 
-  <!-- what are we storing -->
   <div class="crops" role="group" aria-label="Choose a crop">
     <button class="crop is-on" data-crop="tomato">Tomato</button>
     <button class="crop" data-crop="chilli">King Chilli</button>
@@ -64,7 +63,6 @@
     <button class="crop" data-crop="cabbage">Cabbage</button>
   </div>
 
-  <!-- the two readings -->
   <div class="read read-out" id="readOut">
     <p class="r-tag">OUTSIDE</p>
     <p class="r-deg"><span id="degOut">34</span><i>&deg;</i></p>
@@ -85,7 +83,6 @@
     </svg>
   </div>
 
-  <!-- the divider -->
   <div class="handle" id="handle" role="slider" tabindex="0"
        aria-label="Drag to reveal the inside of the cold room"
        aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
@@ -98,7 +95,7 @@
     <span class="h-hint" id="hHint">drag</span>
   </div>
 
-  <!-- one day, scrubbable -->
+  <!-- one day, scrubbable, with what is powering the cooling underneath -->
   <div class="day" id="day">
     <div class="day-head">
       <p class="day-t">ONE DAY IN RI-BHOI</p>
@@ -118,11 +115,19 @@
     <div class="day-ticks" aria-hidden="true">
       <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
     </div>
+    <div class="power">
+      <span class="pw-bar" aria-hidden="true">
+        <i class="pw-seg pw-pcm" style="--a:0%;--b:26%"></i>
+        <i class="pw-seg pw-sol" style="--a:26%;--b:74%"></i>
+        <i class="pw-seg pw-bat" style="--a:74%;--b:100%"></i>
+      </span>
+      <p class="pw-now"><b id="pwMode">SOLAR</b><span id="pwNote">2.4 kW on the roof, battery charging</span></p>
+    </div>
   </div>
 
   <div class="say">
-    <h1 class="say-line" id="sayLine">Twenty six degrees<br>is the whole product.</h1>
-    <a class="pill" href="../index.html">See how it works <span class="pill-go" aria-hidden="true">&#8594;</span></a>
+    <h1 class="say-line" id="sayLine">Twenty five degrees<br>is the whole product.</h1>
+    <a class="pill" href="#worth">What the week is worth <span class="pill-go" aria-hidden="true">&#8595;</span></a>
   </div>
 
 </section>
@@ -130,7 +135,6 @@
 <!-- ============================== BELOW ============================== -->
 <main id="main">
 
-  <!-- the split keeps running -->
   <section class="vs">
     <div class="vs-col vs-hot">
       <p class="vs-tag">WITHOUT COLD</p>
@@ -146,6 +150,86 @@
     </div>
   </section>
 
+  <!-- =========================== WHAT IT IS WORTH =========================== -->
+  <section class="band worth" id="worth">
+    <p class="kick">02 / WHAT THE WEEK IS WORTH</p>
+    <h2 class="big">Days are not the point. This is.</h2>
+    <p class="lede">Cold storage does not grow more food. It moves when you sell, and when you sell is most of what you are paid. Pick a crop, then drag how long you hold it.</p>
+
+    <div class="w-crops" role="group" aria-label="Choose a crop">
+      <button class="w-crop is-on" data-w="mandarin">Khasi Mandarin</button>
+      <button class="w-crop" data-w="ginger">Ginger</button>
+      <button class="w-crop" data-w="chilli">King Chilli</button>
+    </div>
+
+    <div class="w-grid">
+      <div class="w-side w-now">
+        <p class="w-tag">SOLD AT THE GLUT</p>
+        <p class="w-money">&#8377;<span id="wNow">3,740</span></p>
+        <p class="w-sub"><span id="wKg">44</span> kg at &#8377;<span id="wRateNow">85</span> a kilo</p>
+      </div>
+      <div class="w-side w-later">
+        <p class="w-tag">HELD <span id="wWeeksTag">THREE WEEKS</span></p>
+        <p class="w-money">&#8377;<span id="wLater">4,672</span></p>
+        <p class="w-sub"><span id="wKg2">44</span> kg at &#8377;<span id="wRateLater">106</span> a kilo</p>
+      </div>
+    </div>
+
+    <p class="w-delta"><span>ONE CRATE, ONE DECISION</span><b id="wDelta">+&#8377;932</b></p>
+
+    <div class="w-slider">
+      <label class="w-slabel" for="wWeeks">HOW LONG YOU HOLD IT</label>
+      <input type="range" id="wWeeks" min="0" max="4" step="1" value="3">
+      <span class="w-ticks" aria-hidden="true"><span>sell now</span><span>1 wk</span><span>2 wk</span><span>3 wk</span><span>4 wk</span></span>
+    </div>
+
+    <p class="w-source">The mandi rate is a real Shillong reference. The lift from holding is derived from the twenty to thirty percent of farm income that research attributes to distress selling, so read it as a ratio rather than a quoted forward price.</p>
+  </section>
+
+  <!-- ============================= HOW IT HOLDS ============================= -->
+  <section class="band steps">
+    <p class="kick">03 / HOW IT HOLDS</p>
+    <h2 class="big">Four things, and no grid connection.</h2>
+    <ol class="step-list">
+      <li>
+        <p class="s-n">01</p>
+        <h3 class="s-h">2.4 kW on the roof</h3>
+        <p class="s-p">A rooftop array into an MPPT controller. No separate land, no grid connection, no diesel, no monthly bill.</p>
+      </li>
+      <li>
+        <p class="s-n">02</p>
+        <h3 class="s-h">48 V LiFePO4</h3>
+        <p class="s-p">The battery carries the evening and most of the night. Lithium iron phosphate because it takes heat and deep cycling better than the alternatives.</p>
+      </li>
+      <li>
+        <p class="s-n">03</p>
+        <h3 class="s-h">100 mm PUF, sealed</h3>
+        <p class="s-p">The envelope keeps 90 to 95 percent humidity in and the monsoon out. A 70 kg phase change store holds the cold for another 8.6 hours once the compressor stops.</p>
+      </li>
+      <li>
+        <p class="s-n">04</p>
+        <h3 class="s-h">868 MHz LoRa, then SMS</h3>
+        <p class="s-p">Readings travel where there is no cell signal. The app works with no signal at all, in eight languages, and reads itself aloud for anyone who does not read a screen.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============================= THE FPO MODEL ============================= -->
+  <section class="band fpo">
+    <div class="fpo-grid">
+      <div class="fpo-say">
+        <p class="kick">04 / WHO OWNS ONE</p>
+        <h2 class="big">Nobody buys this alone.</h2>
+        <p class="lede">The objection is never whether cold storage works. It is the upfront cost for a smallholder, and who fixes it when it breaks. The answer the sector has landed on is shared ownership, which is why the app has an FPO fleet view built into it.</p>
+      </div>
+      <ul class="fpo-list">
+        <li><b>The FPO owns the unit</b><span>One unit serves a collection point rather than a single farm, so the cost per farmer per season is a fraction of one distress sale.</span></li>
+        <li><b>Members share the chamber</b><span>Every batch is tracked to its owner, with its own crop profile and its own countdown.</span></li>
+        <li><b>It reports its own health</b><span>Nine sensors over LoRa. A technician is told what is wrong before they set out, which matters when the nearest one is two valleys away.</span></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="band band-figs">
     <div class="figs">
       <div class="fig"><p class="fig-n hot-n">4&times;</p><p class="fig-l">LONGER FOR A TOMATO</p></div>
@@ -153,6 +237,12 @@
       <div class="fig"><p class="fig-n">10</p><p class="fig-l">NER CROPS, EACH ITS OWN SET POINT</p></div>
       <div class="fig"><p class="fig-n">0</p><p class="fig-l">RUPEES OF GRID POWER</p></div>
     </div>
+  </section>
+
+  <section class="band who">
+    <p class="kick">05 / WHO BUILT IT</p>
+    <h2 class="big who-h">A prototype for Smart India Hackathon 2026, problem statement 26005.</h2>
+    <p class="lede">Built for the hills of the North East specifically. For holdings measured in bighas rather than hectares, for collection points a long way from a grid connection, and for eight languages most agricultural software does not carry. The engineering, the field reasoning and the working app are all on the main site.</p>
   </section>
 
   <section class="band band-close">

@@ -75,6 +75,20 @@ function insideAt(h, set) {
   return set + load * 0.2;
 }
 
+/* Solar from about 06 to 18, battery through the evening, and the phase
+   change store from 01 to 06 with the compressor off. The reserve is 8.6
+   hours, so five hours of it leaves headroom rather than running it flat. */
+function powerAt(h) {
+  if (h >= 6 && h < 17)  return { key:'sol', mode:'SOLAR',
+    note:'2.4 kW on the roof, battery charging' };
+  if (h >= 17 && h < 19) return { key:'sol', mode:'SOLAR + BATTERY',
+    note:'Light going, the battery starts sharing the load' };
+  if (h >= 19 || h < 1)  return { key:'bat', mode:'BATTERY',
+    note:'No sun. 48 V LiFePO4 carrying the compressor' };
+  return { key:'pcm', mode:'PCM THERMAL STORE',
+    note:'Compressor stopped. 70 kg of phase change holding the cold' };
+}
+
 function shapeFor(kind, wilt) {
   const path = SHAPE[kind];
   let out = '<path d="' + path + '"/>';
@@ -118,6 +132,15 @@ function paint() {
   $('#prodHotShape').innerHTML = shapeFor(crop, wilt);
   $('#prodColdShape').innerHTML = shapeFor(crop, 0);
   $('#prodHot').style.setProperty('--wilt', wilt.toFixed(3));
+
+  /* what is actually running the cooling at this hour. These bands follow
+     the five power modes in the app's hardware service: solar carries the
+     day, the battery takes the evening, and after midnight the phase change
+     store carries it with the compressor stopped. */
+  const pw = powerAt(hour);
+  document.getElementById('pwMode').textContent = pw.mode;
+  document.getElementById('pwNote').textContent = pw.note;
+  document.getElementById('day').dataset.mode = pw.key;
 
   /* the sun climbs and sets */
   const sunT = clamp((hour - 5) / 14, 0, 1);
@@ -265,3 +288,66 @@ reduce.addEventListener('change', e => { if (e.matches) stopPlay(); });
 
 paint();
 setTimeout(startPlay, 1200);
+
+
+/* ======================================================================
+   What the week is worth.
+
+   The mandi rate is a real Shillong reference. The lift from holding is
+   derived from the twenty to thirty percent of farm income that research
+   attributes to distress selling, so it is capped there and presented as a
+   ratio rather than a forward price anyone quoted.
+   ====================================================================== */
+
+const WORTH = {
+  mandarin: { name:'Khasi Mandarin', kg:44, rate:85,   unit:'a kilo' },
+  ginger:   { name:'Ginger',         kg:50, rate:110,  unit:'a kilo' },
+  chilli:   { name:'King Chilli',    kg:35, rate:1200, unit:'a kilo, dried' }
+};
+
+const LIFT_PER_WEEK = 0.075;   /* compounding to about 28 percent at four
+                                  weeks, the top of the researched range */
+const WEEK_WORDS = ['NOW','ONE WEEK','TWO WEEKS','THREE WEEKS','FOUR WEEKS'];
+
+let wCrop = 'mandarin';
+let wWeeks = 3;
+
+const rupees = n => Math.round(n).toLocaleString('en-IN');
+
+function paintWorth() {
+  const c = WORTH[wCrop];
+  if (!c) return;
+  const lift = Math.min(0.28, wWeeks * LIFT_PER_WEEK);
+  const later = c.rate * (1 + lift);
+  const now = c.kg * c.rate;
+  const then = c.kg * later;
+
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('wNow', rupees(now));
+  set('wLater', rupees(then));
+  set('wKg', c.kg);
+  set('wKg2', c.kg);
+  set('wRateNow', rupees(c.rate));
+  set('wRateLater', rupees(later));
+  set('wWeeksTag', WEEK_WORDS[wWeeks]);
+  set('wDelta', (then - now >= 0 ? '+' : '') + '₹' + rupees(then - now));
+
+  const bar = document.querySelector('.w-later');
+  if (bar) bar.style.setProperty('--fill', (0.4 + lift * 2.1).toFixed(3));
+}
+
+document.querySelectorAll('.w-crop').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.w-crop').forEach(b => b.classList.remove('is-on'));
+    btn.classList.add('is-on');
+    wCrop = btn.dataset.w;
+    paintWorth();
+  });
+});
+
+const wRange = document.getElementById('wWeeks');
+if (wRange) {
+  wRange.addEventListener('input', () => { wWeeks = Number(wRange.value); paintWorth(); });
+}
+
+paintWorth();
