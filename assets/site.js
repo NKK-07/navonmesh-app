@@ -333,8 +333,117 @@ function initSpecSheet() {
   });
 }
 
+/* ---------- scroll reveal ----------
+   Marks elements from here rather than from the markup, so the five pages
+   stay free of presentational hooks and a new section inherits the behaviour
+   by being a .cell or a .sec-head like every other. */
+
+const REVEAL_SINGLES = [
+  '.sec-head', '.figure', '.panel', '.detail', '.crops', '.matrix',
+  '.figbox', '.table', '.callout', '.chain', '.speclist', '.spec-list'
+];
+
+/* Containers whose direct children come in one after another. */
+const REVEAL_GROUPS = [
+  ['.hgrid', '.cell'],
+  ['.hero-copy', ':scope > *'],
+  ['.keylist', 'li']
+];
+
+const STAGGER_MS = 60;
+const STAGGER_CAP = 6;   // past six the wait reads as lag, not rhythm
+
+function countUp(el, done) {
+  const raw = el.textContent.trim();
+  const m = raw.match(/^([\d]+(?:[.,][\d]+)?)(.*)$/s);
+  if (!m) { done(); return; }
+
+  const target = parseFloat(m[1].replace(/,/g, ''));
+  if (!isFinite(target)) { done(); return; }
+
+  const decimals = (m[1].split('.')[1] || '').length;
+  const suffix = m[2];
+  const DURATION = 850;
+  const start = performance.now();
+
+  function frame(now) {
+    const p = Math.min(1, (now - start) / DURATION);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = (target * eased).toFixed(decimals) + suffix;
+    if (p < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      el.textContent = raw;   // restore the authored string exactly
+      done();
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+function initReveal() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+
+  const marked = new Set();
+  const mark = (el, delay) => {
+    if (!el || marked.has(el)) return;
+    marked.add(el);
+    el.setAttribute('data-reveal', '');
+    if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
+  };
+
+  for (const sel of REVEAL_SINGLES) $$(sel).forEach((el) => mark(el, 0));
+
+  for (const [containerSel, childSel] of REVEAL_GROUPS) {
+    for (const container of $$(containerSel)) {
+      $$(childSel, container).forEach((child, i) => {
+        mark(child, Math.min(i, STAGGER_CAP) * STAGGER_MS);
+      });
+    }
+  }
+
+  const counters = $$('.keyfig .val');
+  counters.forEach((el) => el.setAttribute('data-count', ''));
+
+  if (!marked.size) return;
+  root.classList.add('has-reveal');
+
+  const showNow = (el) => {
+    el.classList.add('is-in');
+    if (el.hasAttribute('data-count')) el.removeAttribute('data-count');
+  };
+
+  // No observer, or the visitor asked for less motion: everything renders in
+  // its final state and the counters keep their authored text.
+  if (reduce || !('IntersectionObserver' in window)) {
+    marked.forEach(showNow);
+    counters.forEach((el) => el.removeAttribute('data-count'));
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const el = entry.target;
+      io.unobserve(el);
+      el.classList.add('is-in');
+
+      // A key figure inside a revealing cell counts up once, after the cell
+      // has begun to fade in so the two do not fight for attention.
+      const figure = el.querySelector && el.querySelector('[data-count]');
+      if (figure) {
+        const delay = parseInt(el.style.getPropertyValue('--reveal-delay'), 10) || 0;
+        figure.removeAttribute('data-count');
+        setTimeout(() => countUp(figure, () => {}), delay + 160);
+      }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+  marked.forEach((el) => io.observe(el));
+}
+
 /* ---------- boot ---------- */
 
-for (const init of [initNav, initPanel, initCrops, initSchematic, initMatrix, initImpact, initSpecSheet]) {
+for (const init of [initNav, initPanel, initCrops, initSchematic, initMatrix, initImpact, initSpecSheet, initReveal]) {
   try { init(); } catch (err) { console.error('[navonmesh] init failed:', err); }
 }
