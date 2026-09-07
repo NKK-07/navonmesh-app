@@ -10,7 +10,6 @@ import { renderBottomNav, bindBottomNavEvents } from './components/BottomNav.js'
 import { renderDemoPanel, bindDemoPanelEvents } from './components/DemoPanel.js';
 
 // Views
-import { renderLandingPage, bindLandingPageEvents } from './views/LandingPage.js';
 import { renderFarmerDashboard, bindFarmerDashboardEvents } from './views/FarmerDashboard.js';
 import { renderStorageMonitor } from './views/StorageMonitor.js';
 import { renderPerformancePage, bindPerformanceEvents } from './views/PerformancePage.js';
@@ -25,14 +24,11 @@ import { renderConnectivityPage } from './views/ConnectivityPage.js';
 import { renderHelpPage, bindHelpEvents } from './views/HelpPage.js';
 import { renderRetailerDashboard } from './views/RetailerDashboard.js';
 import { renderFpoDashboard } from './views/FpoDashboard.js';
-import { renderHowItWorksPage } from './views/HowItWorksPage.js';
-import { renderBuiltForNerPage } from './views/BuiltForNerPage.js';
-import { renderImpactPage } from './views/ImpactPage.js';
 import { renderSettingsPage, bindSettingsEvents } from './views/SettingsPage.js';
 
 class NavonmeshApp {
   constructor() {
-    this.currentTab = 'landing'; // Default landing page
+    this.currentTab = 'dashboard'; // The site at ../index.html is the pitch; the app opens on live state
     this.currentLang = 'en';
     this.userRole = 'farmer';
     this.selectedCropId = 'cabbage';
@@ -69,7 +65,6 @@ class NavonmeshApp {
     this.userRole = role;
     if (role === 'retailer') this.currentTab = 'retailer';
     else if (role === 'fpo') this.currentTab = 'fpo';
-    else if (this.currentTab === 'landing') this.currentTab = 'dashboard';
     this.render();
   }
 
@@ -79,26 +74,10 @@ class NavonmeshApp {
 
     const hwState = hardwareService.getState();
 
-    // If on Landing Page view
-    if (this.currentTab === 'landing') {
-      appEl.innerHTML = `
-        ${renderHeader(hwState, this.currentLang, this.setLang.bind(this), (open) => { this.isDemoModalOpen = open; this.render(); })}
-        <main class="main-content">
-          ${renderLandingPage(this.currentLang, this.setUserRole.bind(this))}
-        </main>
-        ${renderDemoPanel(this.isDemoModalOpen)}
-      `;
-
-      bindHeaderEvents(hwState, this.currentLang, this.setLang.bind(this));
-      bindLandingPageEvents((role) => this.setUserRole(role));
-      bindDemoPanelEvents((open) => { this.isDemoModalOpen = open; this.render(); });
-      return;
-    }
-
     // Offline Banner if applicable
     const offlineBanner = !hwState.isOnline ? `
       <div style="background: #FEE2E2; border-bottom: 2px solid #EF4444; color: #B91C1C; text-align: center; padding: 10px; font-weight: 800; font-size: 14px;">
-        🔴 OFFLINE MODE — Your cold storage is still working safely. Viewing locally cached hardware telemetry.
+        <i class="dot dot-danger"></i> OFFLINE MODE — Your cold storage is still working safely. Viewing locally cached hardware telemetry.
       </div>
     ` : '';
 
@@ -118,9 +97,6 @@ class NavonmeshApp {
     else if (this.currentTab === 'troubleshoot') mainViewHtml = renderHelpPage(hwState, this.currentLang);
     else if (this.currentTab === 'retailer') mainViewHtml = renderRetailerDashboard(hwState);
     else if (this.currentTab === 'fpo') mainViewHtml = renderFpoDashboard();
-    else if (this.currentTab === 'how_it_works') mainViewHtml = renderHowItWorksPage(this.currentLang);
-    else if (this.currentTab === 'built_for_ner') mainViewHtml = renderBuiltForNerPage(this.currentLang);
-    else if (this.currentTab === 'impact') mainViewHtml = renderImpactPage(this.currentLang);
     else if (this.currentTab === 'settings') mainViewHtml = renderSettingsPage(hwState, this.currentLang, this.userRole);
 
     appEl.innerHTML = `

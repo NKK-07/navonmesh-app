@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F5F3; -webkit-font-smoothing: antialiased; }
+    a { color: #047857; text-decoration: none; }
+    a:hover { color: #14181D; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #F4F5F3; font-family: 'Inter', -apple-system, sans-serif; color: #14181D; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 26px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #A3ADB8;">UNIT NM-004 / RI-BHOI</span>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #7C8895;">SHT31 &plusmn;0.3&deg;C</span>
+  </div>
+
+  <div style="height: 54px; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1;">Storage monitor</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">CHAMBER TELEMETRY</span>
+    </div>
+    <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid {{accent}}; color: {{accent}}; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1.1px;">
+      <i style="width: 7px; height: 7px; background: currentColor; display: block;"></i>IN RANGE
+    </span>
+  </div>
+
+  <div style="background: #14181D; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; flex-shrink: 0;">
+    <div style="background: #14181D; padding: 15px 14px; display: flex; flex-direction: column; gap: 7px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">NOW</span>
+      <span style="font-family: 'Outfit', sans-serif; font-size: 30px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.1px; font-variant-numeric: tabular-nums;">{{now}}<u style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: #7C8895; letter-spacing: 0; text-decoration: none;">&deg;C</u></span>
+    </div>
+    <div style="background: #14181D; padding: 15px 14px; display: flex; flex-direction: column; gap: 7px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">{{spanLabel}} MIN</span>
+      <span style="font-family: 'Outfit', sans-serif; font-size: 30px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.1px; font-variant-numeric: tabular-nums;">{{min}}<u style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: #7C8895; letter-spacing: 0; text-decoration: none;">&deg;C</u></span>
+    </div>
+    <div style="background: #14181D; padding: 15px 14px; display: flex; flex-direction: column; gap: 7px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #7C8895;">{{spanLabel}} MAX</span>
+      <span style="font-family: 'Outfit', sans-serif; font-size: 30px; font-weight: 800; color: #FFFFFF; line-height: 1; letter-spacing: -1.1px; font-variant-numeric: tabular-nums;">{{max}}<u style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: #7C8895; letter-spacing: 0; text-decoration: none;">&deg;C</u></span>
+    </div>
+  </div>
+
+  <div style="display: flex; border-bottom: 1px solid #D5D9DE; background: #FFFFFF; flex-shrink: 0;">
+    <sc-for list="{{spans}}" as="s" hint-placeholder-count="3">
+      <button onClick="{{ s.pick }}" style="flex: 1; min-height: 48px; border: 0; border-right: 1px solid #D5D9DE; background: {{s.bg}}; color: {{s.fg}}; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 1.1px; cursor: pointer;">{{s.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="background: #FFFFFF; padding: 16px; border-bottom: 1px solid #14181D; flex-shrink: 0;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid #D5D9DE; padding-bottom: 10px; margin-bottom: 14px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.3px;">CHAMBER TEMPERATURE</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">{{caption}}</span>
+    </div>
+
+    <svg width="358" height="150" viewBox="0 0 358 150" style="display: block; overflow: visible;">
+      <rect x="0" y="75" width="358" height="30" fill="#EAF1EE"/>
+      <line x1="0" y1="90" x2="358" y2="90" stroke="{{accent}}" stroke-width="1" stroke-dasharray="3 3"/>
+      <line x1="0" y1="0" x2="358" y2="0" stroke="#E4E7E4" stroke-width="1"/>
+      <line x1="0" y1="37.5" x2="358" y2="37.5" stroke="#E4E7E4" stroke-width="1"/>
+      <line x1="0" y1="112.5" x2="358" y2="112.5" stroke="#E4E7E4" stroke-width="1"/>
+      <line x1="0" y1="150" x2="358" y2="150" stroke="#D5D9DE" stroke-width="1"/>
+      <polyline points="{{points}}" fill="none" stroke="#14181D" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 9px;">
+      <sc-for list="{{ticks}}" as="t" hint-placeholder-count="5">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; color: #6B7683;">{{t.v}}</span>
+      </sc-for>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px; margin-top: 12px; border-top: 1px solid #E4E7E4; padding-top: 11px;">
+      <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; color: #6B7683;"><i style="width: 14px; height: 2px; background: #14181D; display: block;"></i>MEASURED</span>
+      <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; color: #6B7683;"><i style="width: 14px; height: 10px; background: #EAF1EE; display: block;"></i>SAFE BAND 7.5-8.5&deg;C</span>
+    </div>
+  </div>
+
+  <div style="flex: 1; background: #FFFFFF; overflow: hidden;">
+    <div style="display: grid; grid-template-columns: 1fr auto; padding: 11px 16px; background: #F4F5F3; border-bottom: 1px solid #14181D;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">SENSOR</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">READING</span>
+    </div>
+    <sc-for list="{{sensors}}" as="s" hint-placeholder-count="4">
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 13px 16px; border-bottom: 1px solid #E4E7E4;">
+        <span style="display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-size: 13.5px; font-weight: 600;">{{s.name}}</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #6B7683;">{{s.ref}}</span>
+        </span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; font-weight: 600; color: {{s.color}}; text-align: right;">{{s.val}}</span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; border-top: 1px solid #14181D; background: #F4F5F3; flex-shrink: 0;">
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">HOME</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; background: #14181D; color: #F4F5F3;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 9.5h17M9.5 4.5v15"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">STORE</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ENERGY</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c0-7 3-12 8-14 0 8-3 13-8 14Z"/><path d="M12 21c0-5-2-9-6-11 0 6 2 10 6 11Z"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">CROPS</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10.5 19a1.8 1.8 0 0 0 3 0"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ALERTS</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#B45309","#14181D","#B91C1C"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#047857';
+    const W = 358, H = 150, LO = 6, HI = 11;
+    const plot = (vals) => vals.map((v, i) => {
+      const x = (i / (vals.length - 1)) * W;
+      const y = H - ((v - LO) / (HI - LO)) * H;
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ');
+
+    const SETS = {
+      '24h': {
+        label: '24H', spanLabel: '24H', caption: 'LAST 24 HOURS',
+        vals: [8.1, 8.0, 7.9, 7.9, 8.0, 8.2, 8.1, 9.6, 9.1, 8.4, 8.2, 8.1, 8.0, 8.1, 8.3, 8.2, 8.1, 8.0, 8.1, 8.2],
+        ticks: ['00', '06', '12', '18', '24'], min: '7.9', max: '9.6', now: '8.2'
+      },
+      '7d': {
+        label: '7D', spanLabel: '7D', caption: 'LAST 7 DAYS',
+        vals: [8.0, 8.3, 8.1, 9.2, 8.4, 8.0, 8.1, 8.2, 8.6, 8.1, 7.9, 8.0, 8.2, 8.2],
+        ticks: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'], min: '7.9', max: '9.2', now: '8.2'
+      },
+      '30d': {
+        label: '30D', spanLabel: '30D', caption: 'LAST 30 DAYS',
+        vals: [8.2, 8.0, 8.4, 8.1, 9.4, 8.3, 8.0, 8.2, 8.5, 8.1, 7.8, 8.0, 8.3, 8.9, 8.2, 8.0, 8.1, 8.4, 8.2, 8.1],
+        ticks: ['W1', 'W2', 'W3', 'W4'], min: '7.8', max: '9.4', now: '8.2'
+      }
+    };
+    const key = this.state.span ?? '24h';
+    const cur = SETS[key];
+    const spans = Object.keys(SETS).map((k) => ({
+      label: SETS[k].label,
+      pick: () => this.setState({ span: k }),
+      bg: k === key ? '#14181D' : 'transparent',
+      fg: k === key ? '#F4F5F3' : '#4A5461'
+    }));
+    const sensors = [
+      { name: 'Chamber temperature', ref: 'SHT31 / ±0.3°C', val: '8.2 °C', color: accent },
+      { name: 'Relative humidity', ref: 'SHT31 / ±2% RH', val: '91 %', color: accent },
+      { name: 'Door', ref: 'Magnetic reed switch', val: 'CLOSED', color: '#4A5461' },
+      { name: 'Chamber load', ref: '4-point load cell / ±0.1 kg', val: '186.0 kg', color: '#4A5461' }
+    ];
+    return {
+      accent, spans, sensors,
+      points: plot(cur.vals),
+      ticks: cur.ticks.map((v) => ({ v: v })),
+      caption: cur.caption, spanLabel: cur.spanLabel,
+      min: cur.min, max: cur.max, now: cur.now
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -12,8 +12,8 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
     const crop = getCropById(batch.cropId);
     const isUrgent = batch.urgency === 'SELL_FIRST';
     return `
-      <div class="card" style="border: 2px solid ${isUrgent ? '#F59E0B' : 'var(--border-light)'}; background: ${isUrgent ? '#FFFBEB' : 'var(--bg-card)'}; position: relative;">
-        ${isUrgent ? '<span class="metric-status-badge warning" style="position: absolute; top: 16px; right: 16px; font-weight: 900;">🔥 SELL FIRST</span>' : ''}
+      <div class="card" style="border: 2px solid ${isUrgent ? '#B45309' : 'var(--border-light)'}; background: ${isUrgent ? '#FBF3E2' : 'var(--bg-card)'}; position: relative;">
+        ${isUrgent ? '<span class="metric-status-badge warning" style="position: absolute; top: 16px; right: 16px; font-weight: 900;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> SELL FIRST</span>' : ''}
         
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
           <span style="font-size: 40px;">${crop.icon}</span>
@@ -24,11 +24,11 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); font-size: 13px;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: var(--bg-main); padding: 12px; font-size: 13px;">
           <div><strong>Quantity:</strong> ${batch.weightKg} kg</div>
           <div><strong>Stored Date:</strong> ${batch.storedDate}</div>
           <div style="grid-column: 1 / -1; color: var(--agri-green-dark); font-weight: 800;">
-            ⏳ Estimated Days Left: ${batch.estDaysLeft} Days
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17M12 7.5V12l3 2"/></svg> Estimated Days Left: ${batch.estDaysLeft} Days
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
     <div class="demo-modal-overlay" id="addProduceOverlay">
       <div class="demo-modal-card" style="max-width: 500px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h2 style="font-size: 20px;">🥬 Add Stored Produce Batch</h2>
+          <h2 style="font-size: 20px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> Add Stored Produce Batch</h2>
           <button id="btnCloseProduceModal" style="font-size: 22px; font-weight: bold;">✕</button>
         </div>
 
@@ -74,7 +74,7 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
       
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div>
-          <h1 style="font-size: 28px; margin-bottom: 4px;">🥬 ${getTranslation(currentLang, 'navProduce')}</h1>
+          <h1 style="font-size: 28px; margin-bottom: 4px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> ${getTranslation(currentLang, 'navProduce')}</h1>
           <p style="color: var(--text-muted); font-size: 15px;">Manage stored vegetable batches with automated FIFO sale indicators.</p>
         </div>
 
@@ -84,7 +84,7 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
       </div>
 
       <!-- Live Weight Capacity Card -->
-      <div class="card" style="border: 2px solid var(--agri-green); background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);">
+      <div class="card" style="border: 2px solid var(--agri-green); background: linear-gradient(180deg, #EAF1EE 0%, #FFFFFF 100%);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <div>
             <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL CURRENT LOAD</span>
@@ -96,16 +96,16 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
         </div>
 
         <!-- Load cell capacity bar -->
-        <div style="width: 100%; height: 16px; background: #E2E8F0; border-radius: var(--radius-full); overflow: hidden;">
-          <div style="width: ${loadPct}%; height: 100%; background: ${loadPct > 90 ? '#F59E0B' : 'var(--agri-green)'}; border-radius: var(--radius-full);"></div>
+        <div style="width: 100%; height: 16px; background: #D5D9DE; overflow: hidden;">
+          <div style="width: ${loadPct}%; height: 100%; background: ${loadPct > 90 ? '#B45309' : 'var(--agri-green)'};"></div>
         </div>
         <span style="font-size: 12px; color: var(--text-muted); margin-top: 8px; display: block;">
           Available Capacity: ${state.maxCapacityKg - state.produceWeightKg} kg
         </span>
 
         ${loadPct > 90 ? `
-          <div style="margin-top: 12px; background: #FEF3C7; padding: 10px; border-radius: var(--radius-sm); color: #B45309; font-weight: bold; font-size: 13px;">
-            ⚠️ Storage almost full (>90% capacity).
+          <div style="margin-top: 12px; background: #FBF3E2; padding: 10px; color: #B45309; font-weight: bold; font-size: 13px;">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21.5 20h-19zM12 10v4.5M12 17.2h.01"/></svg> Storage almost full (>90% capacity).
           </div>
         ` : ''}
       </div>

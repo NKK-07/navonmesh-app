@@ -1,0 +1,27 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Farmer dashboard", "is_interactive": true },
+    { "file": "StorageMonitor.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "Storage monitor", "is_interactive": true },
+    { "file": "Energy.dc.html", "x": 980, "y": 0, "w": 390, "h": 844, "title": "Energy", "is_interactive": true },
+    { "file": "CropProfiles.dc.html", "x": 1470, "y": 0, "w": 390, "h": 844, "title": "Crop profiles", "is_interactive": true },
+    { "file": "Alerts.dc.html", "x": 1960, "y": 0, "w": 390, "h": 844, "title": "Alerts", "is_interactive": true },
+    { "file": "Desktop.dc.html", "x": 0, "y": 1010, "w": 1440, "h": 900, "title": "Desktop shell", "is_interactive": true }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -170,
+      "w": 700,
+      "text": "The app in the marketing site's register: #F4F5F3 paper, #14181D instrument panel, one green accent, IBM Plex Mono labels, Outfit numerals, hard 1px rules, no radii or shadows.\n\nAll six screens respond to taps — scenario band, timeframe, mode A-E, crop rows, alert filter and expand."
+    },
+    {
+      "id": "desktop-note",
+      "x": 1540,
+      "y": 1010,
+      "w": 340,
+      "text": "Desktop, 1440x900. The 260px sidebar is the real width from style.css.\n\nCut from the nav: How It Works, Built for NER, Impact — all three are already pages on the marketing site. The app's own landing page goes too, so /app/ opens on the Dashboard instead of a second pitch.\n\n15 items down to 12, in three groups. Emoji replaced with stroke SVGs on a 24px grid. Active state is a paper fill plus a 3px ink rule, not the green pill.\n\nOne link out at the foot, back to the site for anything explanatory."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

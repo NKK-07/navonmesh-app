@@ -15,7 +15,7 @@ export const CROPS_DATA = [
       mizo: 'Kobi (Cabbage)',
       nag: 'Cabbage'
     },
-    icon: '🥬',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [0, 2],
     tempTarget: 1.0,
     mixedStorageTempTarget: 8.0, // Default mixed vegetable setting
@@ -41,7 +41,7 @@ export const CROPS_DATA = [
       mizo: 'Hmar-cha',
       nag: 'Raja Mircha / Bhut Jolokia'
     },
-    icon: '🌶️',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [5, 7],
     tempTarget: 6.0,
     mixedStorageTempTarget: 6.5,
@@ -67,7 +67,7 @@ export const CROPS_DATA = [
       mizo: 'Kawkbawp',
       nag: 'Tomato'
     },
-    icon: '🍅',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [8, 10],
     tempTarget: 9.0,
     mixedStorageTempTarget: 8.5,
@@ -93,7 +93,7 @@ export const CROPS_DATA = [
       mizo: 'Lainta',
       nag: 'Ginger'
     },
-    icon: '🫚',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [12, 14],
     tempTarget: 13.0,
     mixedStorageTempTarget: 12.0,
@@ -119,7 +119,7 @@ export const CROPS_DATA = [
       mizo: 'Serthlum',
       nag: 'Mandarin Orange'
     },
-    icon: '🍊',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [4, 7],
     tempTarget: 5.5,
     mixedStorageTempTarget: 6.0,
@@ -145,7 +145,7 @@ export const CROPS_DATA = [
       mizo: 'Bebra',
       nag: 'Beans'
     },
-    icon: '🫘',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [5, 7],
     tempTarget: 6.0,
     mixedStorageTempTarget: 7.0,
@@ -171,7 +171,7 @@ export const CROPS_DATA = [
       mizo: 'Laimu',
       nag: 'Pineapple'
     },
-    icon: '🍍',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [10, 13],
     tempTarget: 11.5,
     mixedStorageTempTarget: 10.0,
@@ -197,7 +197,7 @@ export const CROPS_DATA = [
       mizo: 'Bawkbawn',
       nag: 'Brinjal'
     },
-    icon: '🍆',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [8, 12],
     tempTarget: 10.0,
     mixedStorageTempTarget: 9.0,
@@ -223,7 +223,7 @@ export const CROPS_DATA = [
       mizo: 'Kobi Par',
       nag: 'Cauliflower'
     },
-    icon: '🥦',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [0, 2],
     tempTarget: 1.0,
     mixedStorageTempTarget: 8.0,
@@ -249,7 +249,7 @@ export const CROPS_DATA = [
       mizo: 'Ram-Elachi',
       nag: 'Large Cardamom'
     },
-    icon: '🌿',
+    icon: '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg>',
     tempRange: [10, 15],
     tempTarget: 12.5,
     mixedStorageTempTarget: 12.0,

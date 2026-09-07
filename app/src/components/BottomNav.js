@@ -1,21 +1,22 @@
 // NAVONMESH Mobile & Tablet Bottom Navigation Component
 
 import { getTranslation } from '../data/i18n.js';
+import { icon } from './icons.js';
 
 export function renderBottomNav(currentTab, currentLang) {
   const items = [
-    { id: 'dashboard', icon: '🏠', labelKey: 'navDashboard' },
-    { id: 'storage', icon: '❄️', labelKey: 'navStorageMonitor' },
-    { id: 'produce', icon: '🥬', labelKey: 'navProduce' },
-    { id: 'energy', icon: '⚡', labelKey: 'navEnergy' },
-    { id: 'alerts', icon: '🔔', labelKey: 'navAlerts' }
+    { id: 'dashboard', labelKey: 'navDashboard' },
+    { id: 'storage', labelKey: 'navStorageMonitor' },
+    { id: 'produce', labelKey: 'navProduce' },
+    { id: 'energy', labelKey: 'navEnergy' },
+    { id: 'alerts', labelKey: 'navAlerts' }
   ];
 
   const linksHtml = items.map(item => {
     const isActive = currentTab === item.id;
     return `
       <button class="bottom-nav-link ${isActive ? 'active' : ''}" data-tab="${item.id}">
-        <span class="bottom-nav-link-icon">${item.icon}</span>
+        ${icon(item.id, 21)}
         <span>${getTranslation(currentLang, item.labelKey)}</span>
       </button>
     `;

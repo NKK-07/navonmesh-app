@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F5F3; -webkit-font-smoothing: antialiased; }
+    a { color: #047857; text-decoration: none; }
+    a:hover { color: #14181D; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #F4F5F3; font-family: 'Inter', -apple-system, sans-serif; color: #14181D; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 26px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #A3ADB8;">UNIT NM-004 / RI-BHOI</span>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #7C8895;">SMS + LoRa RELAY</span>
+  </div>
+
+  <div style="height: 54px; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1;">Alerts</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">{{countLabel}}</span>
+    </div>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px; color: #6B7683; border: 1px solid #D5D9DE; padding: 6px 9px;">EN</span>
+  </div>
+
+  <div style="display: flex; border-bottom: 1px solid #14181D; background: #FFFFFF; flex-shrink: 0;">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="3">
+      <button onClick="{{ f.pick }}" style="flex: 1; min-height: 48px; border: 0; border-right: 1px solid #D5D9DE; background: {{f.bg}}; color: {{f.fg}}; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 1.1px; cursor: pointer;">{{f.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1; background: #FFFFFF; overflow: hidden;">
+    <sc-for list="{{alerts}}" as="a" hint-placeholder-count="4">
+      <div style="border-bottom: 1px solid #E4E7E4; border-left: 4px solid {{a.tone}};">
+        <button onClick="{{ a.toggle }}" style="width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 14px 16px; border: 0; background: {{a.bg}}; text-align: left; cursor: pointer; font-family: inherit; min-height: 62px; align-items: center;">
+          <span style="display: flex; flex-direction: column; gap: 5px;">
+            <span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: {{a.tone}};">
+              <i style="width: 7px; height: 7px; background: currentColor; display: block;"></i>{{a.level}}
+            </span>
+            <span style="font-size: 14px; font-weight: 700; line-height: 1.3; color: #14181D;">{{a.title}}</span>
+          </span>
+          <span style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; color: #6B7683; white-space: nowrap;">{{a.time}}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7683" stroke-width="2" style="transform: {{a.rot}};"><path d="m6 9 6 6 6-6"/></svg>
+          </span>
+        </button>
+
+        <sc-if value="{{a.open}}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 0 16px 16px; background: {{a.bg}}; display: flex; flex-direction: column; gap: 13px;">
+            <p style="margin: 0; font-size: 13px; line-height: 1.65; color: #4A5461;">{{a.body}}</p>
+            <div style="border-top: 1px solid #D5D9DE; padding-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683;">WHAT TO DO</span>
+              <span style="font-size: 13.5px; font-weight: 600; line-height: 1.5; color: #14181D;">{{a.action}}</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; border-top: 1px solid #14181D; background: #F4F5F3; flex-shrink: 0;">
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">HOME</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 9.5h17M9.5 4.5v15"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">STORE</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ENERGY</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c0-7 3-12 8-14 0 8-3 13-8 14Z"/><path d="M12 21c0-5-2-9-6-11 0 6 2 10 6 11Z"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">CROPS</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; background: #14181D; color: #F4F5F3;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10.5 19a1.8 1.8 0 0 0 3 0"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ALERTS</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#B45309","#14181D","#B91C1C"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#047857';
+    const ALL = [
+      { id: 'a1', kind: 'action', level: 'SELL FIRST', tone: '#B91C1C', time: '2 H AGO',
+        title: 'King Chilli has 7 days left',
+        body: 'BATCH-003, 35 kg, stored 29 August for Marthang. At 5-7°C this batch reaches the end of its safe window on 14 September.',
+        action: 'Move BATCH-003 to market before the Khasi Mandarin batch.' },
+      { id: 'a2', kind: 'action', level: 'BATTERY LOW', tone: '#92400E', time: '5 H AGO',
+        title: 'Battery fell below 50% overnight',
+        body: 'State of charge reached 47% at 04:20 before sunrise. Three cloudy days in a row have left less morning headroom than usual.',
+        action: 'No action tonight. If it drops under 30% tomorrow, reduce the door openings.' },
+      { id: 'a3', kind: 'info', level: 'RESOLVED', tone: '#6B7683', time: '6 H AGO',
+        title: 'Door was open 4 minutes',
+        body: 'Chamber rose from 8.0°C to 9.6°C and recovered to the set point in 11 minutes. No effect on stored produce.',
+        action: 'Nothing to do. Keep loading time under 3 minutes where you can.' },
+      { id: 'a4', kind: 'info', level: 'NORMAL', tone: accent, time: '10 MIN AGO',
+        title: 'System operating normally',
+        body: 'Solar is charging the battery. Temperature and humidity are both inside the band set for cabbage.',
+        action: 'None required.' },
+      { id: 'a5', kind: 'info', level: 'SCHEDULED', tone: '#6B7683', time: '12 NOV',
+        title: 'Next service check due',
+        body: 'Last checked 12 August 2026. The quarterly check covers compressor runtime, PCM charge cycles and load-cell calibration.',
+        action: 'Book the Ri-Bhoi FPO technician in the first week of November.' }
+    ];
+    const F = { all: 'ALL', action: 'NEEDS ACTION', info: 'INFO' };
+    const key = this.state.filter ?? 'all';
+    const open = this.state.open ?? 'a1';
+    const filters = Object.keys(F).map((k) => ({
+      label: F[k],
+      pick: () => this.setState({ filter: k }),
+      bg: k === key ? '#14181D' : 'transparent',
+      fg: k === key ? '#F4F5F3' : '#4A5461'
+    }));
+    const shown = ALL.filter((a) => key === 'all' || a.kind === key);
+    const alerts = shown.map((a) => ({
+      level: a.level, tone: a.tone, time: a.time, title: a.title, body: a.body, action: a.action,
+      open: a.id === open,
+      bg: a.id === open ? '#F4F5F3' : '#FFFFFF',
+      rot: a.id === open ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggle: () => this.setState({ open: a.id === open ? null : a.id })
+    }));
+    const n = ALL.filter((a) => a.kind === 'action').length;
+    return { accent, filters, alerts, countLabel: n + ' NEED ACTION / ' + ALL.length + ' TOTAL' };
+  }
+}
+</script>
+</body>
+</html>

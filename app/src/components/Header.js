@@ -20,7 +20,7 @@ export function renderHeader(state, currentLang, onLangChange, onToggleDemo) {
   return `
     <header class="app-header">
       <div class="header-brand">
-        <div class="brand-logo-icon">☀️❄️</div>
+        <div class="brand-logo-icon"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M3.5 7l17 10M20.5 7l-17 10"/></svg></div>
         <div class="brand-text-wrapper">
           <span class="brand-title">${getTranslation(currentLang, 'appName')}</span>
           <span class="brand-tagline">${getTranslation(currentLang, 'tagline')}</span>
@@ -28,7 +28,7 @@ export function renderHeader(state, currentLang, onLangChange, onToggleDemo) {
       </div>
 
       <div class="header-center-info">
-        <span class="unit-badge">📍 ${getTranslation(currentLang, 'unitId')} | ${getTranslation(currentLang, 'location')}</span>
+        <span class="unit-badge"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5"/></svg> ${getTranslation(currentLang, 'unitId')} | ${getTranslation(currentLang, 'location')}</span>
         
         <div class="system-status-pill ${statusClass}">
           <span class="pulse-dot"></span>
@@ -36,13 +36,13 @@ export function renderHeader(state, currentLang, onLangChange, onToggleDemo) {
         </div>
 
         <span class="data-honesty-badge ${state.isOnline ? 'live' : 'simulated'}">
-          ${state.isOnline ? '🟢 ' + onlineText : '🔴 ' + onlineText}
+          ${state.isOnline ? '<i class="dot dot-ok"></i> ' + onlineText : '<i class="dot dot-danger"></i> ' + onlineText}
         </span>
       </div>
 
       <div class="header-right-actions">
         <button class="audio-listen-btn" id="btnHeaderSpeak" title="Read Aloud Status">
-          🔊 <span>${getTranslation(currentLang, 'listen')}</span>
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg> <span>${getTranslation(currentLang, 'listen')}</span>
         </button>
 
         <select class="lang-select" id="headerLangSelect">

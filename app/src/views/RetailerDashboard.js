@@ -9,7 +9,7 @@ export function renderRetailerDashboard(state) {
   const sellFirstCards = sellFirstItems.map(b => {
     const crop = getCropById(b.cropId);
     return `
-      <div style="background: #FFFBEB; border: 2px solid #F59E0B; border-radius: var(--radius-md); padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <div style="background: #FBF3E2; border: 2px solid #B45309; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
         <div style="display: flex; align-items: center; gap: 14px;">
           <span style="font-size: 36px;">${crop.icon}</span>
           <div>
@@ -18,7 +18,7 @@ export function renderRetailerDashboard(state) {
           </div>
         </div>
         <div style="text-align: right;">
-          <span class="metric-status-badge warning" style="font-size: 14px; font-weight: 900;">🔥 ${b.estDaysLeft} DAYS LEFT</span>
+          <span class="metric-status-badge warning" style="font-size: 14px; font-weight: 900;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> ${b.estDaysLeft} DAYS LEFT</span>
           <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Sell Priority: URGENT</div>
         </div>
       </div>
@@ -29,14 +29,14 @@ export function renderRetailerDashboard(state) {
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div>
-        <h1 style="font-size: 28px; margin-bottom: 4px;">🛒 Small Vegetable Retailer Dashboard</h1>
+        <h1 style="font-size: 28px; margin-bottom: 4px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h2.5l2 11h11M8 20a1 1 0 1 0 2 0 1 1 0 0 0-2 0M16 20a1 1 0 1 0 2 0 1 1 0 0 0-2 0M7 9h13l-1.5 5H8"/></svg> Small Vegetable Retailer Dashboard</h1>
         <p style="color: var(--text-muted); font-size: 15px;">Monitor inventory viability and prioritize produce sales to maximize profit.</p>
       </div>
 
       <!-- Urgent Sell First Highlight Container -->
-      <div class="card" style="border: 2px solid #F59E0B; background: linear-gradient(180deg, #FEF3C7 0%, #FFFFFF 100%);">
+      <div class="card" style="border: 2px solid #B45309; background: linear-gradient(180deg, #FBF3E2 0%, #FFFFFF 100%);">
         <h3 style="font-size: 18px; color: #B45309; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-          🔥 SELL FIRST — Prevent Spoilage
+          <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> SELL FIRST — Prevent Spoilage
         </h3>
 
         <div style="display: flex; flex-direction: column; gap: 12px;">

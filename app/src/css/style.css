@@ -1,61 +1,85 @@
 /* ==========================================================================
    NAVONMESH — SMART SOLAR MINI COLD STORAGE DESIGN SYSTEM
-   Modern Agricultural + Clean Energy Aesthetics
-   Tailored for Rural & North Eastern Region (NER) Farmers
+
+   Industrial / engineering register, shared with the marketing site at the
+   origin root. Flat colour, hard rules, no gradients, no shadows, no radii —
+   the values below are lifted from ../../../assets/site.css so that clicking
+   "Open the live app" does not change visual language.
+
+   The custom property NAMES are unchanged from the previous system so the
+   ~336 var() references across the views keep resolving; only the values
+   moved. Blue and purple collapse to neutral ink: the site carries one
+   accent, and instrument panels read better when colour means something.
    ========================================================================== */
 
 :root {
-  /* Core Palette */
-  --bg-main: #F8FAFC;
+  /* Core palette — paper, ink, rules */
+  --bg-main: #F4F5F3;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F1F5F9;
-  --text-dark: #0F172A;
-  --text-muted: #475569;
-  --border-light: #E2E8F0;
+  --bg-card-hover: #FAFBF9;
+  --text-dark: #14181D;
+  --text-muted: #4A5461;
+  --border-light: #D5D9DE;
 
-  /* Brand Accents */
-  --agri-green: #059669;
-  --agri-green-light: #D1FAE5;
-  --agri-green-dark: #047857;
+  /* Panel — the dark instrument surface */
+  --panel: #14181D;
+  --panel-rule: #2E3742;
+  --panel-dim: #7C8895;
+  --panel-text: #D3D9DF;
+  --panel-mute: #A3ADB8;
 
-  --solar-yellow: #D97706;
-  --solar-yellow-light: #FEF3C7;
-  --solar-yellow-dark: #B45309;
+  /* The one accent */
+  --agri-green: #047857;
+  --agri-green-light: #EAF1EE;
+  --agri-green-dark: #14181D;
 
-  --cooling-blue: #0284C7;
-  --cooling-blue-light: #E0F2FE;
-  --cooling-blue-dark: #0369A1;
+  /* Warning register */
+  --solar-yellow: #B45309;
+  --solar-yellow-light: #FBF3E2;
+  --solar-yellow-dark: #92400E;
 
-  --pcm-purple: #7C3AED;
-  --pcm-purple-light: #EDE9FE;
+  /* Formerly blue / purple — now neutral ink, so colour stays meaningful */
+  --cooling-blue: #4A5461;
+  --cooling-blue-light: #EEF0EC;
+  --cooling-blue-dark: #14181D;
 
-  /* Status Indicators */
-  --status-safe: #10B981;
-  --status-warning: #F59E0B;
-  --status-danger: #EF4444;
+  --pcm-purple: #4A5461;
+  --pcm-purple-light: #EEF0EC;
 
-  /* Shadows & Radius */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 9999px;
+  /* Status */
+  --status-safe: #047857;
+  --status-warning: #B45309;
+  --status-danger: #B91C1C;
+
+  /* No depth: the site separates with 1px rules, never shadow */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
+  /* No radii */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-full: 0;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit', var(--font-family);
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 }
 
-/* Dark Mode / High Contrast Rural Mode (Option) */
+/* High-contrast night mode: the whole surface becomes the instrument panel. */
 body.dark-theme {
-  --bg-main: #0F172A;
-  --bg-card: #1E293B;
-  --bg-card-hover: #334155;
-  --text-dark: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border-light: #334155;
+  --bg-main: #14181D;
+  --bg-card: #1B2026;
+  --bg-card-hover: #232931;
+  --text-dark: #F4F5F3;
+  --text-muted: #A3ADB8;
+  --border-light: #2E3742;
+  --agri-green-light: #16241F;
+  --solar-yellow-light: #2A2117;
+  --cooling-blue-light: #232931;
+  --pcm-purple-light: #232931;
 }
 
 /* Reset & Base Setup */
@@ -146,14 +170,14 @@ button {
 .brand-logo-icon {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, var(--agri-green), var(--cooling-blue));
+  background: var(--panel);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 24px;
-  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+  box-shadow: none;
 }
 
 .brand-text-wrapper {
@@ -219,8 +243,8 @@ button {
 }
 
 .system-status-pill.critical {
-  background: #FEE2E2;
-  color: #DC2626;
+  background: #F7E4E4;
+  color: #B91C1C;
 }
 
 .pulse-dot {
@@ -248,19 +272,19 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: var(--text-dark);
   color: white;
   padding: 10px 18px;
   border-radius: var(--radius-full);
   font-weight: 700;
   font-size: 14px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: none;
   transition: all 0.2s ease;
 }
 
 .audio-listen-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  box-shadow: none;
 }
 
 .lang-select {
@@ -275,15 +299,16 @@ button {
   cursor: pointer;
 }
 
-/* Sidebar Navigation */
+/* Sidebar Navigation — grouped, rule-separated, no pills */
 .app-sidebar {
   width: 260px;
+  flex-shrink: 0;
   background: var(--bg-card);
   border-right: 1px solid var(--border-light);
   display: none;
   flex-direction: column;
-  padding: 20px 12px;
-  gap: 6px;
+  padding: 0;
+  gap: 0;
 }
 
 @media (min-width: 1024px) {
@@ -292,31 +317,68 @@ button {
   }
 }
 
+.sidebar-group {
+  margin: 0;
+  padding: 16px 20px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 .sidebar-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  font-size: 15px;
+  padding: 0 18px;
+  min-height: 44px;
+  border: 0;
+  border-bottom: 1px solid var(--border-light);
+  border-left: 3px solid transparent;
+  background: var(--bg-card);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-muted);
-  transition: all 0.2s ease;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease, border-color .14s ease;
 }
 
 .sidebar-item:hover {
-  background: var(--bg-main);
+  background: var(--bg-card-hover);
   color: var(--text-dark);
 }
 
 .sidebar-item.active {
-  background: var(--agri-green-light);
-  color: var(--agri-green-dark);
-  font-weight: 800;
+  background: var(--bg-main);
+  border-left-color: var(--text-dark);
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
-.sidebar-item-icon {
-  font-size: 20px;
+.sidebar-out {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color .14s ease, background .14s ease;
+}
+
+.sidebar-out:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-dark);
 }
 
 /* Mobile Bottom Nav */
@@ -325,14 +387,13 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 72px;
-  background: var(--bg-card);
-  border-top: 1px solid var(--border-light);
+  height: 68px;
+  background: var(--bg-main);
+  border-top: 1px solid var(--text-dark);
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items: stretch;
   z-index: 200;
-  box-shadow: 0 -4px 15px rgba(0,0,0,0.06);
+  box-shadow: none;
 }
 
 @media (min-width: 1024px) {
@@ -342,25 +403,35 @@ button {
 }
 
 .bottom-nav-link {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 5px;
+  border: 0;
+  border-left: 1px solid var(--border-light);
+  background: transparent;
   color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  min-width: 60px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  min-height: 62px;
+  cursor: pointer;
+  transition: background .14s ease, color .14s ease;
 }
+
+.bottom-nav-link:first-child { border-left: 0; }
 
 .bottom-nav-link.active {
-  color: var(--agri-green-dark);
+  background: var(--text-dark);
+  color: var(--bg-main);
 }
 
-.bottom-nav-link-icon {
-  font-size: 22px;
-}
+/* Icons inherit colour from the control they sit in. */
+.icon { display: block; flex-shrink: 0; }
 
 /* Shared UI Components */
 
@@ -411,12 +482,12 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
-.farmer-metric-card.accent-temp { border-color: #38BDF8; background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%); }
-.farmer-metric-card.accent-humid { border-color: #3B82F6; background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 100%); }
-.farmer-metric-card.accent-battery { border-color: #10B981; background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%); }
-.farmer-metric-card.accent-solar { border-color: #F59E0B; background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 100%); }
-.farmer-metric-card.accent-produce { border-color: #84CC16; background: linear-gradient(180deg, #F7FEE7 0%, #FFFFFF 100%); }
-.farmer-metric-card.accent-life { border-color: #8B5CF6; background: linear-gradient(180deg, #F5F3FF 0%, #FFFFFF 100%); }
+.farmer-metric-card.accent-temp { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
+.farmer-metric-card.accent-humid { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
+.farmer-metric-card.accent-battery { border-color: var(--border-light); border-left: 3px solid var(--agri-green); background: var(--bg-card); }
+.farmer-metric-card.accent-solar { border-color: var(--border-light); border-left: 3px solid var(--solar-yellow); background: var(--bg-card); }
+.farmer-metric-card.accent-produce { border-color: var(--border-light); border-left: 3px solid var(--agri-green); background: var(--bg-card); }
+.farmer-metric-card.accent-life { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
 
 .metric-card-header {
   display: flex;
@@ -425,18 +496,23 @@ button {
 }
 
 .metric-title {
-  font-size: 14px;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 0.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .metric-icon {
-  font-size: 28px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
 }
+.metric-icon .icon { width: 20px; height: 20px; }
 
 .metric-value-huge {
   font-size: 42px;
@@ -463,14 +539,14 @@ button {
   align-self: flex-start;
 }
 
-.metric-status-badge.safe { background: #D1FAE5; color: #047857; }
-.metric-status-badge.warning { background: #FEF3C7; color: #B45309; }
-.metric-status-badge.critical { background: #FEE2E2; color: #B91C1C; }
+.metric-status-badge.safe { background: #EAF1EE; color: #047857; }
+.metric-status-badge.warning { background: #FBF3E2; color: #B45309; }
+.metric-status-badge.critical { background: #F7E4E4; color: #B91C1C; }
 
 /* Cold Storage Health Circular Gauge */
 .health-score-card {
   grid-column: 1 / -1;
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  background: var(--panel);
   color: white;
   border-radius: var(--radius-lg);
   padding: 32px;
@@ -505,12 +581,12 @@ button {
   font-size: 40px;
   font-weight: 900;
   font-family: var(--font-display);
-  color: #10B981;
+  color: #047857;
 }
 
 .score-label {
   font-size: 12px;
-  color: #94A3B8;
+  color: #6B7683;
   font-weight: 700;
 }
 
@@ -528,7 +604,7 @@ button {
 
 .score-desc {
   font-size: 16px;
-  color: #CBD5E1;
+  color: #D5D9DE;
 }
 
 .score-breakdown-list {
@@ -539,10 +615,11 @@ button {
 }
 
 .score-chip {
-  background: rgba(255,255,255,0.1);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  font-size: 13px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--panel-rule);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -551,10 +628,10 @@ button {
 
 /* Cold Chamber Illustrated Visualizer */
 .chamber-visual-box {
-  background: #1E293B;
+  background: #1B2026;
   border-radius: var(--radius-lg);
   padding: 24px;
-  border: 3px solid #334155;
+  border: 3px solid #2E3742;
   position: relative;
   min-height: 320px;
   display: flex;
@@ -567,7 +644,7 @@ button {
 .chamber-wall-insulation {
   position: absolute;
   inset: 0;
-  border: 12px solid #38BDF8;
+  border: 12px solid #6B7683;
   opacity: 0.15;
   border-radius: var(--radius-lg);
   pointer-events: none;
@@ -580,7 +657,7 @@ button {
   transform: translateX(-50%);
   display: flex;
   gap: 16px;
-  color: #38BDF8;
+  color: #6B7683;
   font-size: 20px;
   animation: floatDown 2s infinite ease-in-out;
 }
@@ -596,13 +673,14 @@ button {
   position: fixed;
   bottom: 84px;
   right: 24px;
-  background: #F59E0B;
-  color: #0F172A;
+  background: var(--bg-main);
+  color: var(--text-dark);
+  border: 1.5px solid var(--text-dark);
   padding: 12px 20px;
   border-radius: var(--radius-full);
   font-weight: 800;
   font-size: 14px;
-  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+  box-shadow: none;
   z-index: 300;
   display: flex;
   align-items: center;
@@ -666,7 +744,7 @@ button {
 
 /* Primary Button Styling */
 .btn-primary {
-  background: linear-gradient(135deg, var(--agri-green), var(--agri-green-dark));
+  background: var(--text-dark);
   color: white;
   padding: 14px 28px;
   border-radius: var(--radius-md);
@@ -676,14 +754,14 @@ button {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+  box-shadow: none;
   transition: all 0.2s ease;
   min-height: 50px;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.4);
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -715,6 +793,20 @@ button {
   display: inline-block;
 }
 
-.data-honesty-badge.live { background: #D1FAE5; color: #047857; }
-.data-honesty-badge.simulated { background: #FEF3C7; color: #B45309; }
-.data-honesty-badge.estimated { background: #E0F2FE; color: #0369A1; }
+.data-honesty-badge.live { background: #EAF1EE; color: #047857; }
+.data-honesty-badge.simulated { background: #FBF3E2; color: #B45309; }
+.data-honesty-badge.estimated { background: #EEF0EC; color: #4A5461; }
+
+/* Status indicator — the square the site uses in place of a coloured dot. */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  vertical-align: baseline;
+  margin-right: 2px;
+}
+.dot-ok { background: var(--status-safe); }
+.dot-warn { background: var(--status-warning); }
+.dot-danger { background: var(--status-danger); }
+.dot-mute { background: var(--text-muted); }

@@ -9,10 +9,10 @@ export function renderAlertsPage(state, currentLang) {
     const isCrit = alt.type === 'critical';
     const isWarn = alt.type === 'warning';
     const badgeColor = isCrit ? 'critical' : isWarn ? 'warning' : 'safe';
-    const icon = isCrit ? '🔴' : isWarn ? '🟡' : '🟢';
+    const icon = isCrit ? '<i class="dot dot-danger"></i>' : isWarn ? '<i class="dot dot-warn"></i>' : '<i class="dot dot-ok"></i>';
 
     return `
-      <div class="card" style="border-left: 6px solid ${isCrit ? '#EF4444' : isWarn ? '#F59E0B' : '#10B981'}; display: flex; flex-direction: column; gap: 14px;">
+      <div class="card" style="border-left: 6px solid ${isCrit ? '#B91C1C' : isWarn ? '#B45309' : '#047857'}; display: flex; flex-direction: column; gap: 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 24px;">${icon}</span>
@@ -23,19 +23,19 @@ export function renderAlertsPage(state, currentLang) {
 
         <p style="font-size: 15px; color: var(--text-dark);">${alt.message}</p>
 
-        <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; border: 1px solid var(--border-light);">
+        <div style="background: var(--bg-main); padding: 12px; font-size: 13px; border: 1px solid var(--border-light);">
           <strong>Recommended Action:</strong> ${alt.action}
         </div>
 
         <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px;">
           <button class="btn-secondary btn-alert-speak" data-text="${alt.title}. ${alt.message}. ${alt.action}">
-            🔊 ${getTranslation(currentLang, 'playAlert')}
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg> ${getTranslation(currentLang, 'playAlert')}
           </button>
           <button class="btn-secondary btn-alert-ack" data-id="${alt.id}">
             ✓ ${getTranslation(currentLang, 'acknowledge')}
           </button>
-          <button class="btn-secondary" style="border-color: #DC2626; color: #DC2626;" onclick="alert('Calling FPO Village Operator: +91 98620 XXXXX')">
-            📞 ${getTranslation(currentLang, 'callOperator')}
+          <button class="btn-secondary" style="border-color: #B91C1C; color: #B91C1C;" onclick="alert('Calling FPO Village Operator: +91 98620 XXXXX')">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.5c0 8 5.5 13.5 13.5 13.5l2-3-4-2.5-2 2a15 15 0 0 1-6-6l2-2L7.5 3.5z"/></svg> ${getTranslation(currentLang, 'callOperator')}
           </button>
         </div>
       </div>
@@ -46,7 +46,7 @@ export function renderAlertsPage(state, currentLang) {
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div>
-        <h1 style="font-size: 28px; margin-bottom: 4px;">🔔 ${getTranslation(currentLang, 'navAlerts')}</h1>
+        <h1 style="font-size: 28px; margin-bottom: 4px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10.5 19a1.8 1.8 0 0 0 3 0"/></svg> ${getTranslation(currentLang, 'navAlerts')}</h1>
         <p style="color: var(--text-muted); font-size: 15px;">Real-time hardware warnings, door notifications, and power alerts.</p>
       </div>
 

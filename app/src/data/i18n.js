@@ -3,6 +3,10 @@
 
 export const TRANSLATIONS = {
   en: {
+    navGroupMonitor: "Monitor",
+    navGroupProduce: "Produce",
+    navGroupSystem: "System",
+    navAboutProject: "About the project",
     appName: "NAVONMESH",
     subTitle: "Smart Solar Mini Cold Storage",
     tagline: "Keep it Fresh. Store Smart. Earn More.",

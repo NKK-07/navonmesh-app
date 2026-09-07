@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #F4F5F3; -webkit-font-smoothing: antialiased; }
+    a { color: #047857; text-decoration: none; }
+    a:hover { color: #14181D; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #F4F5F3; font-family: 'Inter', -apple-system, sans-serif; color: #14181D; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 26px; background: #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #A3ADB8;">UNIT NM-004 / RI-BHOI</span>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 1.1px; color: #7C8895;">8 CROP PROFILES</span>
+  </div>
+
+  <div style="height: 54px; border-bottom: 1px solid #14181D; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0;">
+    <div style="display: flex; flex-direction: column; gap: 2px;">
+      <span style="font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1;">Crop profiles</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 1.1px; color: #6B7683;">SET-POINTS PER CROP</span>
+    </div>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px; color: #6B7683; border: 1px solid #D5D9DE; padding: 6px 9px;">EN</span>
+  </div>
+
+  <div style="flex-shrink: 0; background: #FFFFFF; border-bottom: 1px solid #14181D;">
+    <sc-for list="{{crops}}" as="c" hint-placeholder-count="5">
+      <button onClick="{{ c.pick }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border: 0; border-bottom: 1px solid #E4E7E4; border-left: 3px solid {{c.mark}}; background: {{c.bg}}; text-align: left; min-height: 56px; cursor: pointer; font-family: inherit;">
+        <span style="display: flex; flex-direction: column; gap: 3px;">
+          <span style="font-size: 14.5px; font-weight: 700; color: #14181D;">{{c.name}}</span>
+          <span style="font-size: 11.5px; font-weight: 500; color: {{c.sub}};">{{c.local}}</span>
+        </span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; color: {{c.sub}}; white-space: nowrap;">{{c.range}}</span>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1; background: #FFFFFF; padding: 18px 16px; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
+
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #D5D9DE; padding-bottom: 14px;">
+      <div>
+        <h3 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.15;">{{sel.name}}</h3>
+        <span style="font-size: 12.5px; font-weight: 500; color: #4A5461; margin-top: 5px; display: block;">{{sel.local}}</span>
+      </div>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.1px; padding: 6px 9px; border: 1px solid {{sel.ethBd}}; background: {{sel.ethBg}}; color: {{sel.ethFg}}; white-space: nowrap;">{{sel.eth}}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #D5D9DE; border: 1px solid #D5D9DE;">
+      <div style="background: #FFFFFF; padding: 14px 12px; display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">TEMP</span>
+        <span style="font-family: 'Outfit', sans-serif; font-size: 21px; font-weight: 800; line-height: 1.1; letter-spacing: -0.6px; font-variant-numeric: tabular-nums;">{{sel.range}}</span>
+      </div>
+      <div style="background: #FFFFFF; padding: 14px 12px; display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">HUMIDITY</span>
+        <span style="font-family: 'Outfit', sans-serif; font-size: 21px; font-weight: 800; line-height: 1.1; letter-spacing: -0.6px; font-variant-numeric: tabular-nums;">{{sel.rh}}</span>
+      </div>
+      <div style="background: #FFFFFF; padding: 14px 12px; display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.1px; color: #6B7683;">SHELF LIFE</span>
+        <span style="font-family: 'Outfit', sans-serif; font-size: 21px; font-weight: 800; line-height: 1.1; letter-spacing: -0.6px; font-variant-numeric: tabular-nums;">{{sel.days}}</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 11px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.3px; color: #6B7683; border-bottom: 1px solid #14181D; padding-bottom: 9px;">AMBIENT VS COLD STORAGE</span>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px; color: #6B7683; width: 74px; flex-shrink: 0;">AMBIENT</span>
+        <span style="flex: 1; height: 20px; background: #EEF0EC; border: 1px solid #D5D9DE; display: block;"><i style="display: block; height: 18px; width: {{sel.ambFill}}; background: #A3ADB8;"></i></span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; width: 52px; text-align: right;">{{sel.amb}}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 1px; color: #6B7683; width: 74px; flex-shrink: 0;">NAVONMESH</span>
+        <span style="flex: 1; height: 20px; background: #EEF0EC; border: 1px solid #D5D9DE; display: block;"><i style="display: block; height: 18px; width: 100%; background: {{accent}};"></i></span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; width: 52px; text-align: right;">{{sel.days}}</span>
+      </div>
+    </div>
+
+    <div style="border-left: 3px solid #14181D; padding: 3px 0 3px 14px;">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 1.2px; color: #6B7683; display: block; margin-bottom: 6px;">HANDLING NOTE</span>
+      <p style="margin: 0; font-size: 13px; line-height: 1.65; color: #14181D;">{{sel.tip}}</p>
+    </div>
+
+  </div>
+
+  <div style="display: flex; border-top: 1px solid #14181D; background: #F4F5F3; flex-shrink: 0;">
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V21h13V9.5"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">HOME</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="15"/><path d="M3.5 9.5h17M9.5 4.5v15"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">STORE</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ENERGY</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; background: #14181D; color: #F4F5F3;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c0-7 3-12 8-14 0 8-3 13-8 14Z"/><path d="M12 21c0-5-2-9-6-11 0 6 2 10 6 11Z"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">CROPS</span>
+    </div>
+    <div style="flex: 1; min-height: 62px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-left: 1px solid #D5D9DE; color: #4A5461;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10.5 19a1.8 1.8 0 0 0 3 0"/></svg>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; font-weight: 600; letter-spacing: 0.7px;">ALERTS</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#047857","options":["#047857","#B45309","#14181D","#B91C1C"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#047857';
+    const DATA = [
+      { id: 'cabbage', name: 'Cabbage', local: 'Phan bandhakobi', range: '0-2°C', rh: '92%', days: '35 d',
+        eth: 'ETHYLENE LOW', amb: '8 d', ambFill: '23%',
+        tip: 'Keep bags ventilated. Avoid storing with high ethylene producers like Mandarin oranges.' },
+      { id: 'king_chilli', name: 'King Chilli', local: 'Bhut Jolokia', range: '5-7°C', rh: '92%', days: '28 d',
+        eth: 'ETHYLENE MOD', amb: '6 d', ambFill: '21%',
+        tip: 'Do not cool below 4°C to prevent chilling injury. High humidity maintains capsaicin integrity.' },
+      { id: 'tomato', name: 'Tomato', local: 'Bilahi', range: '8-10°C', rh: '88%', days: '18 d',
+        eth: 'ETHYLENE HIGH', amb: '4 d', ambFill: '22%',
+        tip: 'Ripens itself and everything near it. Store apart from cabbage and beans.' },
+      { id: 'ginger', name: 'Ginger', local: 'Nadia / Local', range: '12-14°C', rh: '88%', days: '120 d',
+        eth: 'ETHYLENE LOW', amb: '30 d', ambFill: '25%',
+        tip: 'Maintain stable humidity to prevent rhizome shrivelling or sprout development.' },
+      { id: 'khasi_mandarin', name: 'Khasi Mandarin', local: 'Soh Niamtra', range: '4-7°C', rh: '88%', days: '45 d',
+        eth: 'ETHYLENE HIGH', amb: '12 d', ambFill: '27%',
+        tip: 'A strong ethylene producer. Keep in its own chamber section, away from leafy crops.' }
+    ];
+    const ETH = {
+      'ETHYLENE LOW': { ethBg: '#FFFFFF', ethBd: '#D5D9DE', ethFg: '#6B7683' },
+      'ETHYLENE MOD': { ethBg: '#FBF3E2', ethBd: '#D9A441', ethFg: '#92400E' },
+      'ETHYLENE HIGH': { ethBg: '#FBF3E2', ethBd: '#D9A441', ethFg: '#92400E' }
+    };
+    const key = this.state.crop ?? 'king_chilli';
+    const raw = DATA.find((c) => c.id === key) ?? DATA[1];
+    const sel = Object.assign({}, raw, ETH[raw.eth]);
+    const crops = DATA.map((c) => ({
+      name: c.name,
+      local: c.local,
+      range: c.range,
+      pick: () => this.setState({ crop: c.id }),
+      bg: c.id === key ? '#F4F5F3' : '#FFFFFF',
+      mark: c.id === key ? '#14181D' : 'transparent',
+      sub: c.id === key ? '#4A5461' : '#6B7683'
+    }));
+    return { accent, crops, sel };
+  }
+}
+</script>
+</body>
+</html>
