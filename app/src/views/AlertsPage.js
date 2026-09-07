@@ -12,7 +12,7 @@ export function renderAlertsPage(state, currentLang) {
     const icon = isCrit ? '<i class="dot dot-danger"></i>' : isWarn ? '<i class="dot dot-warn"></i>' : '<i class="dot dot-ok"></i>';
 
     return `
-      <div class="card" style="border-left: 6px solid ${isCrit ? '#B91C1C' : isWarn ? '#B45309' : '#047857'}; display: flex; flex-direction: column; gap: 14px;">
+      <div class="card" style="border-left: 6px solid ${isCrit ? '#A6321F' : isWarn ? '#A9601F' : '#04785C'}; display: flex; flex-direction: column; gap: 14px;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 24px;">${icon}</span>
@@ -34,7 +34,7 @@ export function renderAlertsPage(state, currentLang) {
           <button class="btn-secondary btn-alert-ack" data-id="${alt.id}">
             ✓ ${getTranslation(currentLang, 'acknowledge')}
           </button>
-          <button class="btn-secondary" style="border-color: #B91C1C; color: #B91C1C;" onclick="alert('Calling FPO Village Operator: +91 98620 XXXXX')">
+          <button class="btn-secondary" style="border-color: #A6321F; color: #A6321F;" onclick="alert('Calling FPO Village Operator: +91 98620 XXXXX')">
             <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.5c0 8 5.5 13.5 13.5 13.5l2-3-4-2.5-2 2a15 15 0 0 1-6-6l2-2L7.5 3.5z"/></svg> ${getTranslation(currentLang, 'callOperator')}
           </button>
         </div>

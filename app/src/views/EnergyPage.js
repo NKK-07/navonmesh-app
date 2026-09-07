@@ -16,17 +16,17 @@ export function renderEnergyPage(state, currentLang) {
       </div>
 
       <!-- Active Mode Prominent Display Card -->
-      <div class="card" style="background: linear-gradient(135deg, #14181D 0%, #1B2026 100%); color: white; padding: 28px; border-left: 8px solid var(--solar-yellow);">
+      <div class="card" style="background: linear-gradient(135deg, #241F1B 0%, #231F1C 100%); color: white; padding: 28px; border-left: 8px solid var(--solar-yellow);">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
           <div>
-            <span style="font-size: 12px; color: #6B7683; font-weight: 800; letter-spacing: 1px;">CURRENT SYSTEM POWER MODE</span>
+            <span style="font-size: 12px; color: #8C7F73; font-weight: 800; letter-spacing: 1px;">CURRENT SYSTEM POWER MODE</span>
             <h2 style="font-size: 28px; color: var(--solar-yellow); margin-top: 4px;">${mode.modeTitle}</h2>
-            <p style="color: #D5D9DE; font-size: 15px; margin-top: 4px;">${mode.modeDesc}</p>
+            <p style="color: #E5DDD2; font-size: 15px; margin-top: 4px;">${mode.modeDesc}</p>
           </div>
 
           <div style="text-align: right;">
-            <span style="font-size: 12px; color: #6B7683;">LiFePO4 SOC</span>
-            <div style="font-size: 38px; font-weight: 900; color: #047857;">${Math.round(soc)}%</div>
+            <span style="font-size: 12px; color: #8C7F73;">LiFePO4 SOC</span>
+            <div style="font-size: 38px; font-weight: 900; color: #04785C;">${Math.round(soc)}%</div>
           </div>
         </div>
       </div>
@@ -111,33 +111,33 @@ export function renderEnergyPage(state, currentLang) {
               </tr>
             </thead>
             <tbody>
-              <tr style="border-bottom: 1px solid var(--border-light); ${soc > 80 ? 'background: #EAF1EE; font-weight: bold;' : ''}">
+              <tr style="border-bottom: 1px solid var(--border-light); ${soc > 80 ? 'background: #E4EFE9; font-weight: bold;' : ''}">
                 <td style="padding: 12px;">&gt; 80%</td>
                 <td style="padding: 12px; color: var(--agri-green-dark);">MODE A — Full Solar</td>
                 <td style="padding: 12px;">100% Solar Generation</td>
                 <td style="padding: 12px;">Thermal Charge PCM</td>
               </tr>
-              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 50 && soc <= 80 ? 'background: #EAF1EE; font-weight: bold;' : ''}">
+              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 50 && soc <= 80 ? 'background: #E4EFE9; font-weight: bold;' : ''}">
                 <td style="padding: 12px;">50% – 80%</td>
                 <td style="padding: 12px; color: var(--cooling-blue-dark);">MODE B — Solar + Battery</td>
                 <td style="padding: 12px;">Solar PV + Battery Supplement</td>
                 <td style="padding: 12px;">PCM Standby Reserve</td>
               </tr>
-              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 30 && soc < 50 ? 'background: #FBF3E2; font-weight: bold;' : ''}">
+              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 30 && soc < 50 ? 'background: #F8EEDF; font-weight: bold;' : ''}">
                 <td style="padding: 12px;">30% – 50%</td>
                 <td style="padding: 12px; color: var(--solar-yellow-dark);">MODE C — Battery Only</td>
                 <td style="padding: 12px;">LiFePO4 Reserve</td>
                 <td style="padding: 12px;">PCM Standby Reserve</td>
               </tr>
-              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 15 && soc < 30 ? 'background: #EEF0EC; font-weight: bold;' : ''}">
+              <tr style="border-bottom: 1px solid var(--border-light); ${soc >= 15 && soc < 30 ? 'background: #F1EBE3; font-weight: bold;' : ''}">
                 <td style="padding: 12px;">15% – 30%</td>
                 <td style="padding: 12px; color: var(--pcm-purple);">MODE D — PCM ONLY</td>
                 <td style="padding: 12px;">Battery Off (Protect)</td>
                 <td style="padding: 12px; color: var(--pcm-purple); font-weight: bold;">ACTIVE Thermal Discharge</td>
               </tr>
-              <tr style="${soc < 15 ? 'background: #F7E4E4; font-weight: bold;' : ''}">
+              <tr style="${soc < 15 ? 'background: #F6E4E0; font-weight: bold;' : ''}">
                 <td style="padding: 12px;">&lt; 15%</td>
-                <td style="padding: 12px; color: #B91C1C;">MODE E — Emergency</td>
+                <td style="padding: 12px; color: #A6321F;">MODE E — Emergency</td>
                 <td style="padding: 12px;">Emergency Shutoff</td>
                 <td style="padding: 12px;">LoRa / SMS Emergency Dispatch</td>
               </tr>

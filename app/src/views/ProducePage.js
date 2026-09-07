@@ -12,7 +12,7 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
     const crop = getCropById(batch.cropId);
     const isUrgent = batch.urgency === 'SELL_FIRST';
     return `
-      <div class="card" style="border: 2px solid ${isUrgent ? '#B45309' : 'var(--border-light)'}; background: ${isUrgent ? '#FBF3E2' : 'var(--bg-card)'}; position: relative;">
+      <div class="card" style="border: 2px solid ${isUrgent ? '#A9601F' : 'var(--border-light)'}; background: ${isUrgent ? '#F8EEDF' : 'var(--bg-card)'}; position: relative;">
         ${isUrgent ? '<span class="metric-status-badge warning" style="position: absolute; top: 16px; right: 16px; font-weight: 900;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> SELL FIRST</span>' : ''}
         
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
@@ -84,7 +84,7 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
       </div>
 
       <!-- Live Weight Capacity Card -->
-      <div class="card" style="border: 2px solid var(--agri-green); background: linear-gradient(180deg, #EAF1EE 0%, #FFFFFF 100%);">
+      <div class="card" style="border: 2px solid var(--agri-green); background: linear-gradient(180deg, #E4EFE9 0%, #FFFDFA 100%);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <div>
             <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL CURRENT LOAD</span>
@@ -96,15 +96,15 @@ export function renderProducePage(state, currentLang, isAddModalOpen) {
         </div>
 
         <!-- Load cell capacity bar -->
-        <div style="width: 100%; height: 16px; background: #D5D9DE; overflow: hidden;">
-          <div style="width: ${loadPct}%; height: 100%; background: ${loadPct > 90 ? '#B45309' : 'var(--agri-green)'};"></div>
+        <div style="width: 100%; height: 16px; background: #E5DDD2; overflow: hidden;">
+          <div style="width: ${loadPct}%; height: 100%; background: ${loadPct > 90 ? '#A9601F' : 'var(--agri-green)'};"></div>
         </div>
         <span style="font-size: 12px; color: var(--text-muted); margin-top: 8px; display: block;">
           Available Capacity: ${state.maxCapacityKg - state.produceWeightKg} kg
         </span>
 
         ${loadPct > 90 ? `
-          <div style="margin-top: 12px; background: #FBF3E2; padding: 10px; color: #B45309; font-weight: bold; font-size: 13px;">
+          <div style="margin-top: 12px; background: #F8EEDF; padding: 10px; color: #A9601F; font-weight: bold; font-size: 13px;">
             <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21.5 20h-19zM12 10v4.5M12 17.2h.01"/></svg> Storage almost full (>90% capacity).
           </div>
         ` : ''}

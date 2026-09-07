@@ -35,16 +35,16 @@ export function renderStorageMonitor(state, currentLang) {
             <!-- Inside Chamber Visual Parameters Overlay -->
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 50px; z-index: 2;">
               
-              <div style="background: rgba(15, 23, 42, 0.85); padding: 16px; border: 1px solid #6B7683;">
-                <span style="font-size: 12px; color: #6B7683; font-weight: bold;">INSIDE TEMP</span>
+              <div style="background: rgba(15, 23, 42, 0.85); padding: 16px; border: 1px solid #8C7F73;">
+                <span style="font-size: 12px; color: #8C7F73; font-weight: bold;">INSIDE TEMP</span>
                 <div style="font-size: 32px; font-weight: 900; color: white;">${state.temperature.toFixed(1)} °C</div>
-                <span style="font-size: 11px; color: #6B7683;">Target: ${state.targetTemperature}°C</span>
+                <span style="font-size: 11px; color: #8C7F73;">Target: ${state.targetTemperature}°C</span>
               </div>
 
-              <div style="background: rgba(15, 23, 42, 0.85); padding: 16px; border: 1px solid #6B7683;">
-                <span style="font-size: 12px; color: #6B7683; font-weight: bold;">RELATIVE HUMIDITY</span>
+              <div style="background: rgba(15, 23, 42, 0.85); padding: 16px; border: 1px solid #8C7F73;">
+                <span style="font-size: 12px; color: #8C7F73; font-weight: bold;">RELATIVE HUMIDITY</span>
                 <div style="font-size: 32px; font-weight: 900; color: white;">${Math.round(state.humidity)} % RH</div>
-                <span style="font-size: 11px; color: #6B7683;">Target: 85-95%</span>
+                <span style="font-size: 11px; color: #8C7F73;">Target: 85-95%</span>
               </div>
 
             </div>
@@ -55,7 +55,7 @@ export function renderStorageMonitor(state, currentLang) {
                 <span style="font-size: 32px;">${state.activeCrop.icon}</span>
                 <div>
                   <div style="font-weight: 800; font-size: 16px; color: white;">${state.activeCrop.name}</div>
-                  <div style="font-size: 12px; color: #D5D9DE;">${state.produceWeightKg} kg Stored (${Math.round((state.produceWeightKg/state.maxCapacityKg)*100)}% Full)</div>
+                  <div style="font-size: 12px; color: #E5DDD2;">${state.produceWeightKg} kg Stored (${Math.round((state.produceWeightKg/state.maxCapacityKg)*100)}% Full)</div>
                 </div>
               </div>
               <span class="metric-status-badge safe">SAFE PROFILE</span>

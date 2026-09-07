@@ -134,8 +134,8 @@ export function renderFarmerDashboard(state, currentLang) {
         <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
           <div class="score-circle-wrapper">
             <svg viewBox="0 0 100 100" style="width: 130px; height: 130px; transform: rotate(-90deg);">
-              <circle cx="50" cy="50" r="42" stroke="#2E3742" stroke-width="12" fill="none"/>
-              <circle cx="50" cy="50" r="42" stroke="${isSafe ? '#047857' : isWarning ? '#B45309' : '#B91C1C'}" stroke-width="12" fill="none" stroke-dasharray="264" stroke-dashoffset="${264 - (264 * state.conditionScore) / 100}"/>
+              <circle cx="50" cy="50" r="42" stroke="#3C352F" stroke-width="12" fill="none"/>
+              <circle cx="50" cy="50" r="42" stroke="${isSafe ? '#04785C' : isWarning ? '#A9601F' : '#A6321F'}" stroke-width="12" fill="none" stroke-dasharray="264" stroke-dashoffset="${264 - (264 * state.conditionScore) / 100}"/>
             </svg>
             <div style="position: absolute; display: flex; flex-direction: column; align-items: center;">
               <span class="score-number">${state.conditionScore}</span>
@@ -144,7 +144,7 @@ export function renderFarmerDashboard(state, currentLang) {
           </div>
 
           <div class="score-text-area">
-            <span style="font-size: 13px; color: #6B7683; font-weight: 800; text-transform: uppercase;">Overall System Score</span>
+            <span style="font-size: 13px; color: #8C7F73; font-weight: 800; text-transform: uppercase;">Overall System Score</span>
             <h3 class="score-main-title">
               ${state.conditionScore > 85 ? 'EXCELLENT COLD STORAGE STATE' : 'MONITORING REQUIRED'}
             </h3>

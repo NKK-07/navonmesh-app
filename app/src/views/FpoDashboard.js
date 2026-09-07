@@ -11,7 +11,7 @@ export function renderFpoDashboard() {
   ];
 
   const unitsCardsHtml = units.map(u => `
-    <div class="card" style="border-top: 4px solid ${u.status.includes('Healthy') ? '#047857' : u.status.includes('Warning') ? '#B45309' : '#B91C1C'};">
+    <div class="card" style="border-top: 4px solid ${u.status.includes('Healthy') ? '#04785C' : u.status.includes('Warning') ? '#A9601F' : '#A6321F'};">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
         <strong style="font-size: 18px; color: var(--text-dark);">${u.id}</strong>
         <span class="metric-status-badge ${u.status.includes('Healthy') ? 'safe' : u.status.includes('Warning') ? 'warning' : 'critical'}">${u.status}</span>
@@ -48,7 +48,7 @@ export function renderFpoDashboard() {
         <div class="card">
           <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL DEPLOYED UNITS</span>
           <div style="font-size: 32px; font-weight: 900; color: var(--text-dark); margin-top: 4px;">12 Units</div>
-          <span style="font-size: 12px; color: #047857; font-weight: bold;">9 Healthy | 2 Warning | 1 Critical</span>
+          <span style="font-size: 12px; color: #04785C; font-weight: bold;">9 Healthy | 2 Warning | 1 Critical</span>
         </div>
         <div class="card">
           <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL PRODUCE SAVED</span>

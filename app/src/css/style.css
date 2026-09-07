@@ -13,54 +13,66 @@
    ========================================================================== */
 
 :root {
-  /* Core palette — paper, ink, rules */
-  --bg-main: #F4F5F3;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #FAFBF9;
-  --text-dark: #14181D;
-  --text-muted: #4A5461;
-  --border-light: #D5D9DE;
+  /* Core palette — warm paper and a soft brown-black ink.
+     The site's neutrals are cool (#F7F4EF over #241F1B); at app density,
+     across six panels on one screen, that cool grey reads clinical. These
+     are the same values rotated warm and lightened a little: the ink keeps
+     its contrast against paper but stops looking like printer toner. */
+  --bg-main: #F7F4EF;
+  --bg-card: #FFFDFA;
+  --bg-card-hover: #FBF7F1;
+  --text-dark: #241F1B;
+  --text-muted: #6B5F55;
+  --border-light: #E5DDD2;
 
-  /* Panel — the dark instrument surface */
-  --panel: #14181D;
-  --panel-rule: #2E3742;
-  --panel-dim: #7C8895;
-  --panel-text: #D3D9DF;
-  --panel-mute: #A3ADB8;
+  /* Panel — the dark instrument surface, warmed to match */
+  --panel: #231F1C;
+  --panel-rule: #3C352F;
+  --panel-dim: #9C8F82;
+  --panel-text: #E4DCD2;
+  --panel-mute: #B5A899;
 
-  /* The one accent */
-  --agri-green: #047857;
-  --agri-green-light: #EAF1EE;
-  --agri-green-dark: #14181D;
+  /* Primary accent — the brand green, carried over from the site */
+  --agri-green: #04785C;
+  --agri-green-light: #E4EFE9;
+  --agri-green-dark: #241F1B;
+
+  /* Second accent — clay. Same lightness and chroma as the green, hue
+     rotated, so the two sit together without either shouting. This is the
+     one that adds warmth: use it for highlight, never for alarm. */
+  --clay: #B4622F;
+  --clay-light: #F6EAE0;
 
   /* Warning register */
-  --solar-yellow: #B45309;
-  --solar-yellow-light: #FBF3E2;
-  --solar-yellow-dark: #92400E;
+  --solar-yellow: #A9601F;
+  --solar-yellow-light: #F8EEDF;
+  --solar-yellow-dark: #7F4715;
 
-  /* Formerly blue / purple — now neutral ink, so colour stays meaningful */
-  --cooling-blue: #4A5461;
-  --cooling-blue-light: #EEF0EC;
-  --cooling-blue-dark: #14181D;
+  /* Neutral supporting tones (formerly blue / purple) */
+  --cooling-blue: #6B5F55;
+  --cooling-blue-light: #F1EBE3;
+  --cooling-blue-dark: #241F1B;
 
-  --pcm-purple: #4A5461;
-  --pcm-purple-light: #EEF0EC;
+  --pcm-purple: #6B5F55;
+  --pcm-purple-light: #F1EBE3;
 
   /* Status */
-  --status-safe: #047857;
-  --status-warning: #B45309;
-  --status-danger: #B91C1C;
+  --status-safe: #04785C;
+  --status-warning: #A9601F;
+  --status-danger: #A6321F;
 
-  /* No depth: the site separates with 1px rules, never shadow */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
+  /* Barely-there depth. Warm-tinted, so edges soften without the page
+     turning into floating cards again. */
+  --shadow-sm: 0 1px 2px rgba(60, 45, 33, 0.04);
+  --shadow-md: 0 2px 6px rgba(60, 45, 33, 0.05);
+  --shadow-lg: 0 6px 20px rgba(60, 45, 33, 0.07);
 
-  /* No radii */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-full: 0;
+  /* A little softening. Not the old 16/24px pills — just enough that a
+     screen of panels stops reading as a grid of boxes. */
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 7px;
+  --radius-full: 999px;
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -70,16 +82,16 @@
 
 /* High-contrast night mode: the whole surface becomes the instrument panel. */
 body.dark-theme {
-  --bg-main: #14181D;
-  --bg-card: #1B2026;
-  --bg-card-hover: #232931;
-  --text-dark: #F4F5F3;
-  --text-muted: #A3ADB8;
-  --border-light: #2E3742;
-  --agri-green-light: #16241F;
-  --solar-yellow-light: #2A2117;
-  --cooling-blue-light: #232931;
-  --pcm-purple-light: #232931;
+  --bg-main: #1B1815;
+  --bg-card: #231F1C;
+  --bg-card-hover: #2C2723;
+  --text-dark: #F7F4EF;
+  --text-muted: #B5A899;
+  --border-light: #3C352F;
+  --agri-green-light: #172B23;
+  --solar-yellow-light: #2E2117;
+  --cooling-blue-light: #2C2723;
+  --pcm-purple-light: #2C2723;
 }
 
 /* Reset & Base Setup */
@@ -133,7 +145,7 @@ button {
 
 .main-content {
   flex: 1;
-  padding: 24px;
+  padding: 40px 36px;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -243,8 +255,8 @@ button {
 }
 
 .system-status-pill.critical {
-  background: #F7E4E4;
-  color: #B91C1C;
+  background: #F6E4E0;
+  color: #A6321F;
 }
 
 .pulse-dot {
@@ -320,26 +332,25 @@ button {
 .sidebar-group {
   margin: 0;
   padding: 16px 20px 8px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
   text-transform: uppercase;
   color: var(--text-muted);
+  opacity: .75;
 }
 
 .sidebar-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 18px;
-  min-height: 44px;
+  padding: 0 20px;
+  min-height: 48px;
   border: 0;
-  border-bottom: 1px solid var(--border-light);
   border-left: 3px solid transparent;
   background: var(--bg-card);
   text-align: left;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -366,11 +377,8 @@ button {
   gap: 10px;
   padding: 14px 18px;
   border-top: 1px solid var(--border-light);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
   color: var(--text-muted);
   text-decoration: none;
   transition: color .14s ease, background .14s ease;
@@ -413,12 +421,10 @@ button {
   border-left: 1px solid var(--border-light);
   background: transparent;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 8.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  min-height: 62px;
+  letter-spacing: 0.1px;
+  min-height: 64px;
   cursor: pointer;
   transition: background .14s ease, color .14s ease;
 }
@@ -440,7 +446,7 @@ button {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 30px 28px;
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
 }
@@ -472,8 +478,8 @@ button {
 .farmer-metric-card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  border: 2px solid var(--border-light);
+  padding: 30px 28px;
+  border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -485,9 +491,9 @@ button {
 .farmer-metric-card.accent-temp { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
 .farmer-metric-card.accent-humid { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
 .farmer-metric-card.accent-battery { border-color: var(--border-light); border-left: 3px solid var(--agri-green); background: var(--bg-card); }
-.farmer-metric-card.accent-solar { border-color: var(--border-light); border-left: 3px solid var(--solar-yellow); background: var(--bg-card); }
+.farmer-metric-card.accent-solar { border-color: var(--border-light); border-left: 3px solid var(--clay); background: var(--bg-card); }
 .farmer-metric-card.accent-produce { border-color: var(--border-light); border-left: 3px solid var(--agri-green); background: var(--bg-card); }
-.farmer-metric-card.accent-life { border-color: var(--border-light); border-left: 3px solid var(--text-muted); background: var(--bg-card); }
+.farmer-metric-card.accent-life { border-color: var(--border-light); border-left: 3px solid var(--clay); background: var(--bg-card); }
 
 .metric-card-header {
   display: flex;
@@ -496,12 +502,10 @@ button {
 }
 
 .metric-title {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
+  letter-spacing: 0.1px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -515,8 +519,9 @@ button {
 .metric-icon .icon { width: 20px; height: 20px; }
 
 .metric-value-huge {
-  font-size: 42px;
-  font-weight: 900;
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: -1.4px;
   font-family: var(--font-display);
   color: var(--text-dark);
   line-height: 1;
@@ -539,9 +544,9 @@ button {
   align-self: flex-start;
 }
 
-.metric-status-badge.safe { background: #EAF1EE; color: #047857; }
-.metric-status-badge.warning { background: #FBF3E2; color: #B45309; }
-.metric-status-badge.critical { background: #F7E4E4; color: #B91C1C; }
+.metric-status-badge.safe { background: #E4EFE9; color: #04785C; }
+.metric-status-badge.warning { background: #F8EEDF; color: #A9601F; }
+.metric-status-badge.critical { background: #F6E4E0; color: #A6321F; }
 
 /* Cold Storage Health Circular Gauge */
 .health-score-card {
@@ -581,12 +586,12 @@ button {
   font-size: 40px;
   font-weight: 900;
   font-family: var(--font-display);
-  color: #047857;
+  color: #04785C;
 }
 
 .score-label {
   font-size: 12px;
-  color: #6B7683;
+  color: #8C7F73;
   font-weight: 700;
 }
 
@@ -599,12 +604,12 @@ button {
 .score-main-title {
   font-size: 26px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #FFFDFA;
 }
 
 .score-desc {
   font-size: 16px;
-  color: #D5D9DE;
+  color: #E5DDD2;
 }
 
 .score-breakdown-list {
@@ -628,10 +633,10 @@ button {
 
 /* Cold Chamber Illustrated Visualizer */
 .chamber-visual-box {
-  background: #1B2026;
+  background: #231F1C;
   border-radius: var(--radius-lg);
   padding: 24px;
-  border: 3px solid #2E3742;
+  border: 3px solid #3C352F;
   position: relative;
   min-height: 320px;
   display: flex;
@@ -644,7 +649,7 @@ button {
 .chamber-wall-insulation {
   position: absolute;
   inset: 0;
-  border: 12px solid #6B7683;
+  border: 12px solid #8C7F73;
   opacity: 0.15;
   border-radius: var(--radius-lg);
   pointer-events: none;
@@ -657,7 +662,7 @@ button {
   transform: translateX(-50%);
   display: flex;
   gap: 16px;
-  color: #6B7683;
+  color: #8C7F73;
   font-size: 20px;
   animation: floatDown 2s infinite ease-in-out;
 }
@@ -793,9 +798,9 @@ button {
   display: inline-block;
 }
 
-.data-honesty-badge.live { background: #EAF1EE; color: #047857; }
-.data-honesty-badge.simulated { background: #FBF3E2; color: #B45309; }
-.data-honesty-badge.estimated { background: #EEF0EC; color: #4A5461; }
+.data-honesty-badge.live { background: #E4EFE9; color: #04785C; }
+.data-honesty-badge.simulated { background: #F8EEDF; color: #A9601F; }
+.data-honesty-badge.estimated { background: #F1EBE3; color: #6B5F55; }
 
 /* Status indicator — the square the site uses in place of a coloured dot. */
 .dot {

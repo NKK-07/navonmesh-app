@@ -77,7 +77,7 @@ export function renderCropProfilesPage(state, currentLang, selectedCropId) {
               <div style="font-size: 26px; font-weight: 900; color: var(--agri-green-dark); margin-top: 4px;">
                 ${currentCrop.shelfLifeDays} Days
               </div>
-              <span style="font-size: 11px; color: #B91C1C;">(Ambient: ${currentCrop.ambientShelfLifeDays} Days)</span>
+              <span style="font-size: 11px; color: #A6321F;">(Ambient: ${currentCrop.ambientShelfLifeDays} Days)</span>
             </div>
 
             <div>
@@ -91,7 +91,7 @@ export function renderCropProfilesPage(state, currentLang, selectedCropId) {
           </div>
 
           <!-- Storage Tips -->
-          <div style="background: #FBF3E2; padding: 14px; border: 1px solid var(--solar-yellow); font-size: 13px; color: var(--solar-yellow-dark);">
+          <div style="background: #F8EEDF; padding: 14px; border: 1px solid var(--solar-yellow); font-size: 13px; color: var(--solar-yellow-dark);">
             <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3Z"/></svg> <strong>Farmer Storage Tip:</strong> ${currentCrop.tips}
           </div>
 

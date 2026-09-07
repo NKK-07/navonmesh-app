@@ -54,10 +54,10 @@ export function renderPcmPage(state, currentLang) {
         <h3 style="font-size: 18px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M3.5 7l17 10M20.5 7l-17 10"/></svg> How Phase Change Material (PCM) Thermal Storage Works</h3>
 
         <div style="display: grid; grid-template-columns: 1fr; gap: 24px;" class="pcm-grid-diagram">
-          <div style="background: #1B2026; padding: 24px; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px;">
+          <div style="background: #231F1C; padding: 24px; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px;">
             <div style="font-size: 64px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M3.5 7l17 10M20.5 7l-17 10"/></svg> ➔ <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5c3.5 4 5.5 6.6 5.5 9.3a5.5 5.5 0 0 1-11 0c0-2.7 2-5.3 5.5-9.3Z"/></svg></div>
-            <h4 style="font-size: 20px; color: #6B7683;">Latent Heat Absorption</h4>
-            <p style="font-size: 14px; color: #D5D9DE; max-width: 450px;">
+            <h4 style="font-size: 20px; color: #8C7F73;">Latent Heat Absorption</h4>
+            <p style="font-size: 14px; color: #E5DDD2; max-width: 450px;">
               During peak sunny hours, surplus solar power freezes the 70kg inorganic salt-hydrate PCM eutectic pack at 0°C.
               When solar & battery power drop at night or during heavy monsoon rain, the PCM absorbs heat from the cold room as it slowly melts, keeping vegetables at 8°C for over 8 hours without compressor electricity.
             </p>

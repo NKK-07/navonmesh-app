@@ -9,11 +9,11 @@ export function renderRetailerDashboard(state) {
   const sellFirstCards = sellFirstItems.map(b => {
     const crop = getCropById(b.cropId);
     return `
-      <div style="background: #FBF3E2; border: 2px solid #B45309; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <div style="background: #F8EEDF; border: 2px solid #A9601F; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
         <div style="display: flex; align-items: center; gap: 14px;">
           <span style="font-size: 36px;">${crop.icon}</span>
           <div>
-            <h4 style="font-size: 16px; font-weight: 800; color: #B45309;">${crop.name}</h4>
+            <h4 style="font-size: 16px; font-weight: 800; color: #A9601F;">${crop.name}</h4>
             <span style="font-size: 12px; color: var(--text-muted);">${b.weightKg} kg Stored | Owner: ${b.owner}</span>
           </div>
         </div>
@@ -34,8 +34,8 @@ export function renderRetailerDashboard(state) {
       </div>
 
       <!-- Urgent Sell First Highlight Container -->
-      <div class="card" style="border: 2px solid #B45309; background: linear-gradient(180deg, #FBF3E2 0%, #FFFFFF 100%);">
-        <h3 style="font-size: 18px; color: #B45309; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+      <div class="card" style="border: 2px solid #A9601F; background: linear-gradient(180deg, #F8EEDF 0%, #FFFDFA 100%);">
+        <h3 style="font-size: 18px; color: #A9601F; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
           <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> SELL FIRST — Prevent Spoilage
         </h3>
 

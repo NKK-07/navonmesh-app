@@ -70,7 +70,7 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
               </select>
             </div>
 
-            <button class="btn-secondary" id="btnResetDemoData" style="border-color: #B91C1C; color: #B91C1C; margin-top: 10px;">
+            <button class="btn-secondary" id="btnResetDemoData" style="border-color: #A6321F; color: #A6321F; margin-top: 10px;">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 0 1 14.6-6M20.5 12a8.5 8.5 0 0 1-14.6 6M18.5 3v3.5H15M5.5 21v-3.5H9"/></svg> Reset Demo Hardware State
             </button>
           </div>
