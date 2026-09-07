@@ -1,46 +1,34 @@
-// NAVONMESH PWA Service Worker for Offline First Operation
+/* NAVONMESH — service worker kill switch (site root).
+ *
+ * The PWA used to live at this origin's root and registered a cache-first
+ * service worker here. Because its CACHE_NAME never changed, every browser
+ * that ever opened the old build stayed pinned to it: `caches.match()` won
+ * on every request, so new deploys were invisible.
+ *
+ * The PWA now lives under /app/ and registers its worker at /app/sw.js,
+ * scoped to /app/. This file replaces the old root worker: it takes over,
+ * deletes every cache, unregisters itself, and reloads any open tab so the
+ * visitor lands on the current site. It has no fetch handler, so while it
+ * is alive every request goes straight to the network.
+ *
+ * Keep this file here. Deleting it would leave the old worker in place on
+ * any browser that has not yet updated.
+ */
 
-const CACHE_NAME = 'navonmesh-v1';
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './src/css/style.css',
-  './src/app.js',
-  './src/data/crops.js',
-  './src/data/i18n.js',
-  './src/data/mockHardware.js',
-  './src/utils/audio.js'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS);
-    })
-  );
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      );
-    })
-  );
-  self.clients.claim();
-});
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map((key) => caches.delete(key)));
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request).catch(() => {
-        return caches.match('./index.html');
-      });
-    })
-  );
+    await self.registration.unregister();
+
+    const clients = await self.clients.matchAll({ type: 'window' });
+    for (const client of clients) {
+      client.navigate(client.url);
+    }
+  })());
 });
