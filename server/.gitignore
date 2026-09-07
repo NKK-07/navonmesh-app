@@ -1,0 +1,5 @@
+# Secrets and runtime state. Regenerating vapid.json invalidates every
+# subscription already handed out, so it must never be shared or replaced.
+vapid.json
+subscriptions.json
+node_modules/

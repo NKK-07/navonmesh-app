@@ -2,6 +2,7 @@
 // SIH 2026 Problem Statement 26005 Hardware Control Interface
 
 import { hardwareService } from './data/mockHardware.js';
+import * as notify from './utils/notifications.js';
 
 // Components
 import { renderHeader, bindHeaderEvents } from './components/Header.js';
@@ -43,8 +44,27 @@ class NavonmeshApp {
       });
     }
 
+    // A notification tap asks for the Alerts tab, either through a message
+    // from the worker (app already open) or through ?tab= (cold start).
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data && event.data.type === 'open-tab') this.setTab(event.data.tab);
+      });
+    }
+    const requestedTab = new URLSearchParams(location.search).get('tab');
+    if (requestedTab) {
+      this.currentTab = requestedTab;
+      history.replaceState({}, '', location.pathname);
+    }
+
     // Subscribe to hardware telemetry state updates
-    hardwareService.subscribe(this.render.bind(this));
+    hardwareService.subscribe(state => {
+      // Notifications ride the same tick as the render, so an alert raised by
+      // the hardware reaches the phone without a second polling loop.
+      notify.syncFromState(state);
+      this.render(state);
+    });
+    notify.syncFromState(hardwareService.getState());
 
     // Initial Render
     this.render();

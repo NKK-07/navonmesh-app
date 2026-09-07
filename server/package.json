@@ -1,0 +1,15 @@
+{
+  "name": "navonmesh-push",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web Push relay for the NAVONMESH cold storage app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\""
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

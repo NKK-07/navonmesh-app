@@ -2,6 +2,7 @@
 
 import { getTranslation } from '../data/i18n.js';
 import { hardwareService } from '../data/mockHardware.js';
+import * as notify from '../utils/notifications.js';
 
 export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C') {
   return `
@@ -13,6 +14,40 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        
+        <!-- Notifications -->
+        <div class="card">
+          <h3 style="font-size: 18px; margin-bottom: 6px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10.5 19a1.8 1.8 0 0 0 3 0"/></svg> Alerts on your phone</h3>
+          <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 16px;">
+            Your unit already sends SMS over the LoRa link. Turn this on and it will also reach this phone directly, which is faster and costs nothing.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <span style="font-size: 14px; font-weight: 600;">Notifications</span>
+              <button id="btnToggleNotify" class="btn-secondary" style="min-height: 40px; padding: 8px 16px;">Checking</button>
+            </div>
+
+            <p id="notifyState" style="font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted); letter-spacing: 0.04em;">Checking this device</p>
+
+            <div id="notifyOptions" style="display: none; flex-direction: column; gap: 12px; border-top: 1px solid var(--border-light); padding-top: 14px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;">
+                <input type="checkbox" id="notifyAction" style="width: 18px; height: 18px;">
+                <span>Things needing action <span style="color: var(--text-muted);">(temperature, door, power)</span></span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;">
+                <input type="checkbox" id="notifyInfo" style="width: 18px; height: 18px;">
+                <span>Routine updates <span style="color: var(--text-muted);">(daily summaries)</span></span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer;">
+                <input type="checkbox" id="notifyQuiet" style="width: 18px; height: 18px;">
+                <span>Quiet from 9pm to 5am <span style="color: var(--text-muted);">(urgent still comes through)</span></span>
+              </label>
+              <button id="btnTestNotify" class="btn-secondary" style="min-height: 44px;">Send me a test</button>
+            </div>
+          </div>
+        </div>
+
         
         <!-- Language & Audio Settings -->
         <div class="card">
@@ -83,6 +118,75 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
 }
 
 export function bindSettingsEvents(currentLang, onLangChange, onSelectRole) {
+  /* ---- notifications ---- */
+  const toggleBtn = document.getElementById('btnToggleNotify');
+  const stateLine = document.getElementById('notifyState');
+  const options = document.getElementById('notifyOptions');
+
+  const LABELS = {
+    unsupported: ['Not available', 'This browser cannot show notifications.'],
+    denied: ['Blocked', 'Notifications are blocked. Allow them in your browser settings for this site, then come back.'],
+    default: ['Turn on', 'Not set up yet on this phone.'],
+    'local-only': ['Turn off', 'On. Alerts reach you while the app is open or in the background.'],
+    subscribed: ['Turn off', 'On. Alerts reach you even with the app closed.']
+  };
+
+  async function paintNotify() {
+    if (!toggleBtn) return;
+    const prefs = notify.getPrefs();
+    let key = await notify.pushState();
+    if (key === 'granted') key = 'local-only';
+    if (!prefs.enabled && (key === 'local-only' || key === 'subscribed')) key = 'default';
+
+    const [btn, line] = LABELS[key] || LABELS.default;
+    toggleBtn.textContent = btn;
+    stateLine.textContent = line;
+    toggleBtn.disabled = (key === 'unsupported' || key === 'denied');
+
+    const on = prefs.enabled && (key === 'local-only' || key === 'subscribed');
+    options.style.display = on ? 'flex' : 'none';
+    if (on) {
+      document.getElementById('notifyAction').checked = !!prefs.levels.action;
+      document.getElementById('notifyInfo').checked = !!prefs.levels.info;
+      document.getElementById('notifyQuiet').checked = !!prefs.quietHours.on;
+    }
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', async () => {
+      const prefs = notify.getPrefs();
+      toggleBtn.disabled = true;
+      if (prefs.enabled) {
+        await notify.disable();
+      } else {
+        const res = await notify.enable({ lang: currentLang });
+        if (!res.ok && res.reason === 'denied') {
+          stateLine.textContent = LABELS.denied[1];
+        }
+      }
+      await paintNotify();
+    });
+
+    ['notifyAction', 'notifyInfo', 'notifyQuiet'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('change', () => {
+        const prefs = notify.getPrefs();
+        if (id === 'notifyQuiet') {
+          notify.setPrefs({ quietHours: { ...prefs.quietHours, on: el.checked } });
+        } else {
+          const level = id === 'notifyAction' ? 'action' : 'info';
+          notify.setPrefs({ levels: { ...prefs.levels, [level]: el.checked } });
+        }
+      });
+    });
+
+    const testBtn = document.getElementById('btnTestNotify');
+    if (testBtn) testBtn.addEventListener('click', () => notify.sendTest());
+
+    paintNotify();
+  }
+
   const langSel = document.getElementById('selectSettingsLang');
   if (langSel) langSel.addEventListener('change', (e) => onLangChange(e.target.value));
 

@@ -12,3 +12,7 @@ Thumbs.db
 node_modules/
 dist/
 build/
+
+# Push relay secrets and runtime state
+server/vapid.json
+server/subscriptions.json
