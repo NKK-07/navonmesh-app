@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NAVONMESH — ten crops, one cold room</title>
-<meta name="description" content="A 200 kg solar cold room for the hills of the North East. Ten NER crop profiles, each with its own set point, shipped with the unit.">
-<meta name="theme-color" content="#046F52">
+<title>NAVONMESH — thirty one outside, eight inside</title>
+<meta name="description" content="A 200 kg solar cold room for the hills of the North East. Eight degrees held through the night with no grid behind it, so a tomato lasts eighteen days instead of four.">
+<meta name="theme-color" content="#04241E">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%23046F52'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.8'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.8'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' fill='%2304241E'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.8'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.8'/></svg>">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,140 +19,91 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- ============================== HERO ============================== -->
-<section class="stage" id="stage">
+<!-- ============================ THE SPLIT ============================ -->
+<section class="split" id="split">
+
+  <!-- OUTSIDE sits underneath and is always fully painted -->
+  <div class="side hot" aria-hidden="true">
+    <div class="sun"></div>
+    <svg class="shimmer" viewBox="0 0 600 200" preserveAspectRatio="none">
+      <path d="M0 40q75-18 150 0t150 0 150 0 150 0"/>
+      <path d="M0 96q75 18 150 0t150 0 150 0 150 0"/>
+      <path d="M0 152q75-16 150 0t150 0 150 0 150 0"/>
+    </svg>
+    <svg class="hill" viewBox="0 0 800 220" preserveAspectRatio="none">
+      <path d="M0 220V150q120-58 230-30t190 44 190-52 190 24v84Z"/>
+    </svg>
+  </div>
+
+  <!-- INSIDE is clipped from the left by --x, so dragging reveals it -->
+  <div class="side cold" id="coldSide" aria-hidden="true">
+    <svg class="frost" viewBox="0 0 600 600">
+      <g class="fx">
+        <path d="M300 120v360M300 300H140M300 300h160M188 188l224 224M412 188 188 412"/>
+        <path d="M300 170l-30-34M300 170l30-34M300 430l-30 34M300 430l30 34
+                 M232 232l-44-8M232 232l-8-44M368 368l44 8M368 368l8 44
+                 M368 232l44-8M368 232l8-44M232 368l-44 8M232 368l-8 44
+                 M232 300h-40M408 300h40M300 232v-40M300 408v40"/>
+      </g>
+      <g class="fx fx2">
+        <path d="M96 470v120M96 530H44M96 530h52M60 494l72 72M132 494l-72 72"/>
+      </g>
+      <g class="fx fx3">
+        <path d="M492 90v92M492 136h-40M492 136h40M464 108l56 56M520 108l-56 56"/>
+      </g>
+    </svg>
+    <div class="grid" ></div>
+  </div>
+
+  <!-- the two readings -->
+  <div class="read read-out" id="readOut">
+    <p class="r-tag">OUTSIDE</p>
+    <p class="r-deg">31<span>&deg;</span></p>
+    <p class="r-note">Ri-Bhoi, a typical afternoon</p>
+    <p class="r-life">A tomato has <b>4 days</b></p>
+  </div>
+
+  <div class="read read-in" id="readIn">
+    <p class="r-tag">INSIDE</p>
+    <p class="r-deg">8<span>&deg;</span></p>
+    <p class="r-note">Unit NM-004, held all night</p>
+    <p class="r-life">A tomato has <b>18 days</b></p>
+  </div>
+
+  <!-- the handle: dragging it is the whole idea -->
+  <div class="handle" id="handle" role="slider" tabindex="0"
+       aria-label="Drag to reveal the inside of the cold room"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+    <span class="h-line"></span>
+    <span class="h-grip">
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
+        <path d="M7 2 2 7l5 5M15 2l5 5-5 5" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="h-hint" id="hHint">drag</span>
+  </div>
 
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="../index.html">
-      <svg width="26" height="26" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-        <circle cx="13" cy="19" r="4.5" stroke="currentColor" stroke-width="1.8"/>
-        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="currentColor" stroke-width="1.8"/>
+      <svg width="24" height="24" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+        <circle cx="13" cy="19" r="4.5" stroke="currentColor" stroke-width="1.9"/>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="currentColor" stroke-width="1.9"/>
       </svg>
-      <span class="brand-text">
-        <span class="brand-name">NAVONMESH.</span>
-        <span class="brand-sub">Cold that runs on sunlight.</span>
-      </span>
+      <span class="brand-name">NAVONMESH</span>
     </a>
-
     <div class="navlinks">
       <a href="../how-it-works.html">How it works</a>
       <a href="../built-for-ner.html">Built for NER</a>
       <a href="../impact.html">Impact</a>
-      <a href="../project.html">The project</a>
     </div>
-
-    <div class="nav-right">
-      <span class="nav-langs">8 LANGUAGES</span>
-      <a class="nav-cta" href="../app/">Open the app <span aria-hidden="true">&#8594;</span></a>
-    </div>
+    <a class="nav-cta" href="../app/">Open the app <span aria-hidden="true">&#8594;</span></a>
   </nav>
 
-  <!-- the fanned deck: every crop the unit ships knowing -->
-  <div class="deck" id="deck" aria-label="Crop profiles shipped with the unit">
-
-    <article class="card" style="--i:0">
-      <p class="c-kick">0&ndash;2 &deg;C &nbsp;//&nbsp; 92% RH</p>
-      <h3 class="c-name">Cabbage</h3>
-      <p class="c-role">Phan, winter crop</p>
-      <p class="c-place">Ri-Bhoi, ML</p>
-      <div class="c-read">
-        <div class="c-read-top">
-          <span class="c-read-l">SHELF LIFE</span>
-          <span class="c-badge">IN RANGE</span>
-        </div>
-        <span class="c-read-v">35 <u>days</u></span>
-      </div>
-      <p class="c-foot"><span>INSPECT PROFILE</span><i class="c-go" aria-hidden="true">&#8594;</i></p>
-      <span class="c-dot" aria-hidden="true"></span>
-    </article>
-
-    <article class="card" style="--i:1">
-      <p class="c-kick">5&ndash;7 &deg;C &nbsp;//&nbsp; 92% RH</p>
-      <h3 class="c-name">King Chilli</h3>
-      <p class="c-role">Bhut Jolokia</p>
-      <p class="c-place">Ri-Bhoi, ML</p>
-      <div class="c-read">
-        <div class="c-read-top">
-          <span class="c-read-l">SHELF LIFE</span>
-          <span class="c-badge warn">NEVER &lt; 4 &deg;C</span>
-        </div>
-        <span class="c-read-v">28 <u>days</u></span>
-      </div>
-      <p class="c-foot"><span>INSPECT PROFILE</span><i class="c-go" aria-hidden="true">&#8594;</i></p>
-      <span class="c-dot" aria-hidden="true"></span>
-    </article>
-
-    <article class="card" style="--i:2">
-      <p class="c-kick">12&ndash;14 &deg;C &nbsp;//&nbsp; 88% RH</p>
-      <h3 class="c-name">Ginger</h3>
-      <p class="c-role">Nadia / local</p>
-      <p class="c-place">Ri-Bhoi, ML</p>
-      <div class="c-read">
-        <div class="c-read-top">
-          <span class="c-read-l">SHELF LIFE</span>
-          <span class="c-badge">IN RANGE</span>
-        </div>
-        <span class="c-read-v">120 <u>days</u></span>
-      </div>
-      <p class="c-foot"><span>INSPECT PROFILE</span><i class="c-go" aria-hidden="true">&#8594;</i></p>
-      <span class="c-dot" aria-hidden="true"></span>
-    </article>
-
-    <article class="card" style="--i:3">
-      <p class="c-kick">4&ndash;7 &deg;C &nbsp;//&nbsp; 88% RH</p>
-      <h3 class="c-name">Khasi Mandarin</h3>
-      <p class="c-role">Orange, hill grown</p>
-      <p class="c-place">Ri-Bhoi, ML</p>
-      <div class="c-read">
-        <div class="c-read-top">
-          <span class="c-read-l">SHELF LIFE</span>
-          <span class="c-badge warn">ETHYLENE HIGH</span>
-        </div>
-        <span class="c-read-v">45 <u>days</u></span>
-      </div>
-      <p class="c-foot"><span>INSPECT PROFILE</span><i class="c-go" aria-hidden="true">&#8594;</i></p>
-      <span class="c-dot" aria-hidden="true"></span>
-    </article>
-
-    <article class="card" style="--i:4">
-      <p class="c-kick">8&ndash;10 &deg;C &nbsp;//&nbsp; 88% RH</p>
-      <h3 class="c-name">Tomato</h3>
-      <p class="c-role">Bilahi</p>
-      <p class="c-place">Ri-Bhoi, ML</p>
-      <div class="c-read">
-        <div class="c-read-top">
-          <span class="c-read-l">SHELF LIFE</span>
-          <span class="c-badge">IN RANGE</span>
-        </div>
-        <span class="c-read-v">18 <u>days</u></span>
-      </div>
-      <p class="c-foot"><span>INSPECT PROFILE</span><i class="c-go" aria-hidden="true">&#8594;</i></p>
-      <span class="c-dot" aria-hidden="true"></span>
-    </article>
-
-  </div>
-
-  <!-- the wordmark rides over the deck -->
-  <h1 class="wordmark" id="wordmark" aria-label="NAVONMESH">NAVONMESH</h1>
-
-  <svg class="spark" viewBox="0 0 60 60" aria-hidden="true">
-    <path d="M30 0c2 20 8 26 30 30-22 4-28 10-30 30-2-20-8-26-30-30 22-4 28-10 30-30Z"/>
-  </svg>
-
-  <div class="statement">
-    <p class="st-line">One roof. One cold room. <span class="st-arrow" aria-hidden="true">&#8600;</span></p>
-    <p class="st-sub">200 KG &nbsp;&middot;&nbsp; 2.4 KW SOLAR &nbsp;&middot;&nbsp; OFF GRID</p>
-  </div>
-
-  <a class="pill" href="#book">
-    Book a unit free
-    <span class="pill-go" aria-hidden="true">&#8594;</span>
-  </a>
-
-  <div class="hud" aria-hidden="true">
-    <span class="hud-l">HUD</span>
-    <span class="hud-rail"><i id="hudFill"></i></span>
-    <span class="hud-plus">+</span>
+  <div class="say">
+    <h1 class="say-line">Twenty three degrees<br>is the whole product.</h1>
+    <p class="say-sub">200 KG &nbsp;&middot;&nbsp; 2.4 KW ON THE ROOF &nbsp;&middot;&nbsp; NO GRID, NO DIESEL</p>
+    <a class="pill" href="#book">Book a unit <span class="pill-go" aria-hidden="true">&#8594;</span></a>
   </div>
 
 </section>
@@ -161,17 +112,17 @@
 <main id="main">
 
   <section class="band">
-    <p class="kick">01 / THE PROBLEM</p>
+    <p class="kick">01 / WHY IT MATTERS</p>
     <h2 class="big">The loss is not the harvest. It is the week you cannot wait.</h2>
-    <p class="lede">Twenty five to thirty percent of what the North East grows never gets sold. At harvest everyone sells at once, the price drops, and produce that cannot be stored has to move that day.</p>
+    <p class="lede">Twenty five to thirty percent of what the North East grows never gets sold. At harvest everyone sells at once, the price drops, and produce that cannot be stored has to move that day. Cooling does not grow more food. It buys the week that lets you choose when to sell.</p>
   </section>
 
   <section class="band band-figs">
     <div class="figs">
-      <div class="fig"><p class="fig-n">200</p><p class="fig-l">KG PER UNIT</p></div>
-      <div class="fig"><p class="fig-n">8.6</p><p class="fig-l">HOURS WITH NO POWER</p></div>
-      <div class="fig"><p class="fig-n">10</p><p class="fig-l">NER CROP PROFILES</p></div>
-      <div class="fig"><p class="fig-n">8</p><p class="fig-l">LANGUAGES, READ ALOUD</p></div>
+      <div class="fig"><p class="fig-n">4&times;</p><p class="fig-l">LONGER FOR A TOMATO</p></div>
+      <div class="fig"><p class="fig-n">8.6</p><p class="fig-l">HOURS AFTER THE SUN GOES</p></div>
+      <div class="fig"><p class="fig-n">10</p><p class="fig-l">NER CROPS, EACH ITS OWN SET POINT</p></div>
+      <div class="fig"><p class="fig-n">0</p><p class="fig-l">RUPEES OF GRID POWER</p></div>
     </div>
   </section>
 

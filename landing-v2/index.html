@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAVONMESH — Solar-Powered Smart Mini Cold Storage</title>
+<meta name="description" content="A 200 kg solar-powered mini cold room for the hills of the North East. 100 mm PUF envelope, 2.4 kW rooftop array, LiFePO₄ batteries with a 70 kg phase-change thermal store, and a farmer-facing app in eight regional languages.">
+<meta name="theme-color" content="#0A0F14">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'><rect width='38' height='38' rx='8' fill='%23047857'/><circle cx='13' cy='19' r='4.5' fill='none' stroke='white' stroke-width='1.8'/><path d='M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7' stroke='white' stroke-width='1.8'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ============================= HERO ============================= -->
+<section class="hero" id="hero">
+
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="../index.html">
+      <svg width="28" height="28" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+        <circle cx="13" cy="19" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M13 10.5v2.2M13 25.3v2.2M6.5 19h2.2M17.3 19h2.2M8.4 14.4l1.6 1.6M16 22l1.6 1.6M17.6 14.4L16 16M10 22l-1.6 1.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">NAVONMESH</span>
+        <span class="brand-sub">SOLAR MINI COLD STORAGE</span>
+      </span>
+    </a>
+
+    <div class="nav-links">
+      <a href="../how-it-works.html">How it works</a>
+      <a href="../built-for-ner.html">Built for NER</a>
+      <a href="../impact.html">Impact</a>
+      <a href="../project.html">The project</a>
+    </div>
+
+    <div class="nav-right">
+      <span class="nav-tag">SIH 2026</span>
+      <a class="nav-cta" href="../app/">
+        Open the app
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <p class="hero-kicker">
+      <span class="hero-dot" aria-hidden="true"></span>
+      SMART INDIA HACKATHON 2026 &nbsp;/&nbsp; PS 26005
+    </p>
+    <h1 class="hero-title" id="heroTitle">
+      Cold storage that runs on<br>
+      <span class="hero-highlight">sunlight, not the grid.</span>
+    </h1>
+    <p class="hero-sub" id="heroSub">A 200&nbsp;kg mini cold room for the hills of the North East. Solar-powered. Off-grid. Eight languages. Zero compromise.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="../app/">
+        See the live demo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn-ghost" href="#exploded">
+        Explore the unit
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true" id="scrollHint">
+    <span>SCROLL TO EXPLORE</span>
+    <div class="scroll-line"><i></i></div>
+  </div>
+</section>
+
+<!-- ====================== EXPLODED VIEW SECTION ====================== -->
+<section class="exploded-wrap" id="exploded">
+  <div class="exploded-sticky">
+
+    <!-- Progress indicator -->
+    <div class="exploded-progress" aria-hidden="true">
+      <div class="exploded-progress-track"><i id="progressFill"></i></div>
+      <span class="exploded-progress-label" id="progressLabel">ASSEMBLED</span>
+    </div>
+
+    <!-- The SVG unit — each component is a <g> that will translate outward -->
+    <div class="exploded-canvas">
+      <svg id="unitSvg" viewBox="0 0 800 600" role="img" aria-label="Exploded view of the NAVONMESH cold storage unit">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Connection lines (visible when exploded) -->
+        <g class="conn-lines" id="connLines" opacity="0">
+          <line x1="400" y1="168" x2="400" y2="220" stroke="#047857" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="185" y1="260" x2="260" y2="310" stroke="#047857" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="185" y1="370" x2="260" y2="370" stroke="#047857" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="310" y1="490" x2="360" y2="440" stroke="#047857" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="400" y1="240" x2="400" y2="220" stroke="#047857" stroke-width="1" stroke-dasharray="4 4"/>
+        </g>
+
+        <!-- 01: Solar Array -->
+        <g class="unit-part" id="part-solar" data-part="0">
+          <rect x="290" y="118" width="220" height="52" rx="3" fill="none" stroke="#34D399" stroke-width="1.6"/>
+          <line x1="310" y1="118" x2="310" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="330" y1="118" x2="330" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="350" y1="118" x2="350" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="370" y1="118" x2="370" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="390" y1="118" x2="390" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="410" y1="118" x2="410" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="430" y1="118" x2="430" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="450" y1="118" x2="450" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="470" y1="118" x2="470" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <line x1="490" y1="118" x2="490" y2="170" stroke="#34D399" stroke-width="0.8" opacity="0.5"/>
+          <!-- Sun rays -->
+          <circle cx="400" cy="90" r="12" fill="none" stroke="#F59E0B" stroke-width="1.2" opacity="0.6"/>
+          <line x1="400" y1="72" x2="400" y2="66" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="412" y1="78" x2="416" y2="74" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="418" y1="90" x2="424" y2="90" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="412" y1="102" x2="416" y2="106" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="388" y1="78" x2="384" y2="74" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="382" y1="90" x2="376" y2="90" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+          <line x1="388" y1="102" x2="384" y2="106" stroke="#F59E0B" stroke-width="1.2" opacity="0.5"/>
+        </g>
+
+        <!-- 02: MPPT Controller -->
+        <g class="unit-part" id="part-mppt" data-part="1">
+          <rect x="260" y="200" width="80" height="50" rx="3" fill="none" stroke="#60A5FA" stroke-width="1.6"/>
+          <rect x="270" y="210" width="26" height="14" rx="2" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0.6"/>
+          <rect x="302" y="210" width="26" height="14" rx="2" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="283" cy="238" r="4" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="300" cy="238" r="4" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0.6"/>
+          <circle cx="317" cy="238" r="4" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0.6"/>
+        </g>
+
+        <!-- 03: Battery Bank -->
+        <g class="unit-part" id="part-battery" data-part="2">
+          <rect x="260" y="270" width="80" height="80" rx="3" fill="none" stroke="#A78BFA" stroke-width="1.6"/>
+          <rect x="272" y="282" width="56" height="22" rx="2" fill="none" stroke="#A78BFA" stroke-width="0.8" opacity="0.6"/>
+          <rect x="272" y="312" width="56" height="22" rx="2" fill="none" stroke="#A78BFA" stroke-width="0.8" opacity="0.6"/>
+          <!-- + and - terminals -->
+          <text x="278" y="298" fill="#A78BFA" font-size="10" font-family="monospace" opacity="0.8">+</text>
+          <text x="318" y="298" fill="#A78BFA" font-size="10" font-family="monospace" opacity="0.8">−</text>
+          <text x="278" y="328" fill="#A78BFA" font-size="10" font-family="monospace" opacity="0.8">+</text>
+          <text x="318" y="328" fill="#A78BFA" font-size="10" font-family="monospace" opacity="0.8">−</text>
+        </g>
+
+        <!-- 04: ESP32 Controller -->
+        <g class="unit-part" id="part-controller" data-part="3">
+          <rect x="360" y="200" width="80" height="50" rx="3" fill="none" stroke="#F472B6" stroke-width="1.6"/>
+          <rect x="378" y="212" width="20" height="20" rx="1" fill="none" stroke="#F472B6" stroke-width="1" opacity="0.7"/>
+          <line x1="378" y1="222" x2="370" y2="222" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <line x1="378" y1="218" x2="370" y2="218" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <line x1="378" y1="226" x2="370" y2="226" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <line x1="398" y1="222" x2="406" y2="222" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <line x1="398" y1="218" x2="406" y2="218" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <line x1="398" y1="226" x2="406" y2="226" stroke="#F472B6" stroke-width="0.6" opacity="0.5"/>
+          <!-- Antenna -->
+          <line x1="418" y1="210" x2="430" y2="195" stroke="#F472B6" stroke-width="1" opacity="0.7"/>
+          <circle cx="430" cy="193" r="3" fill="none" stroke="#F472B6" stroke-width="0.8" opacity="0.5"/>
+        </g>
+
+        <!-- 05: Compressor -->
+        <g class="unit-part" id="part-compressor" data-part="4">
+          <rect x="340" y="400" width="60" height="68" rx="3" fill="none" stroke="#FB923C" stroke-width="1.6"/>
+          <circle cx="370" cy="440" r="18" fill="none" stroke="#FB923C" stroke-width="1" opacity="0.7"/>
+          <circle cx="370" cy="440" r="6" fill="none" stroke="#FB923C" stroke-width="0.8" opacity="0.5"/>
+          <line x1="370" y1="422" x2="370" y2="416" stroke="#FB923C" stroke-width="1" opacity="0.6"/>
+          <line x1="370" y1="458" x2="370" y2="464" stroke="#FB923C" stroke-width="1" opacity="0.6"/>
+        </g>
+
+        <!-- 06: PCM Thermal Store -->
+        <g class="unit-part" id="part-pcm" data-part="5">
+          <rect x="260" y="370" width="60" height="58" rx="3" fill="none" stroke="#22D3EE" stroke-width="1.6"/>
+          <!-- Phase change crystals pattern -->
+          <circle cx="278" cy="390" r="5" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.5"/>
+          <circle cx="294" cy="395" r="5" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.5"/>
+          <circle cx="286" cy="410" r="5" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.5"/>
+          <circle cx="304" cy="408" r="5" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.5"/>
+          <circle cx="272" cy="414" r="3" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.4"/>
+          <circle cx="308" cy="385" r="3" fill="none" stroke="#22D3EE" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- 07: Cold Chamber (the main body) -->
+        <g class="unit-part" id="part-chamber" data-part="6">
+          <rect x="420" y="260" width="180" height="210" rx="4" fill="none" stroke="#34D399" stroke-width="2"/>
+          <!-- Inner wall (insulation gap) -->
+          <rect x="434" y="274" width="152" height="182" rx="3" fill="none" stroke="#34D399" stroke-width="0.8" opacity="0.4"/>
+          <!-- Insulation hatching -->
+          <line x1="420" y1="280" x2="434" y2="294" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="420" y1="310" x2="434" y2="324" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="420" y1="340" x2="434" y2="354" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="420" y1="370" x2="434" y2="384" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="420" y1="400" x2="434" y2="414" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="420" y1="430" x2="434" y2="444" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="274" x2="600" y2="260" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="304" x2="600" y2="290" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="334" x2="600" y2="320" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="364" x2="600" y2="350" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="394" x2="600" y2="380" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <line x1="586" y1="424" x2="600" y2="410" stroke="#34D399" stroke-width="0.5" opacity="0.25"/>
+          <!-- Produce crates inside -->
+          <rect x="450" y="370" width="44" height="40" rx="2" fill="none" stroke="#34D399" stroke-width="0.7" opacity="0.35"/>
+          <rect x="502" y="370" width="44" height="40" rx="2" fill="none" stroke="#34D399" stroke-width="0.7" opacity="0.35"/>
+          <rect x="450" y="416" width="44" height="30" rx="2" fill="none" stroke="#34D399" stroke-width="0.7" opacity="0.35"/>
+          <rect x="502" y="416" width="44" height="30" rx="2" fill="none" stroke="#34D399" stroke-width="0.7" opacity="0.35"/>
+          <!-- Evaporator unit at top of chamber -->
+          <rect x="446" y="282" width="132" height="26" rx="2" fill="none" stroke="#34D399" stroke-width="1"/>
+          <line x1="456" y1="282" x2="456" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="468" y1="282" x2="468" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="480" y1="282" x2="480" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="492" y1="282" x2="492" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="504" y1="282" x2="504" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="516" y1="282" x2="516" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="528" y1="282" x2="528" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="540" y1="282" x2="540" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="552" y1="282" x2="552" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <line x1="564" y1="282" x2="564" y2="308" stroke="#34D399" stroke-width="0.5" opacity="0.4"/>
+          <!-- Door line -->
+          <line x1="510" y1="274" x2="510" y2="456" stroke="#34D399" stroke-width="1" opacity="0.5"/>
+          <!-- Door handle -->
+          <rect x="502" y="360" width="4" height="14" rx="1" fill="#34D399" opacity="0.5"/>
+        </g>
+
+        <!-- Ground line -->
+        <line x1="220" y1="488" x2="620" y2="488" stroke="#34D399" stroke-width="1.5" opacity="0.3"/>
+      </svg>
+
+      <!-- Part labels — positioned absolutely, fade in when their part is active -->
+      <div class="part-label" id="label-0" data-label="0">
+        <span class="part-num">01</span>
+        <h3 class="part-name">Solar Array</h3>
+        <p class="part-spec">2.4 kW&ensp;·&ensp;Rooftop-mounted</p>
+        <p class="part-desc">Six panels on the roof generate all the power the unit needs. Sized against NER irradiance of 3–5 kWh/m²/day, not a sunny plains average.</p>
+      </div>
+
+      <div class="part-label" id="label-1" data-label="1">
+        <span class="part-num">02</span>
+        <h3 class="part-name">MPPT Controller</h3>
+        <p class="part-spec">48V DC Bus&ensp;·&ensp;Continuous tracking</p>
+        <p class="part-desc">Tracks the array through broken monsoon cloud to extract every watt. Protects the battery bank from over-charge and deep discharge.</p>
+      </div>
+
+      <div class="part-label" id="label-2" data-label="2">
+        <span class="part-num">03</span>
+        <h3 class="part-name">Battery Bank</h3>
+        <p class="part-spec">48V / 100 Ah&ensp;·&ensp;LiFePO₄</p>
+        <p class="part-desc">Lithium iron phosphate handles deep cycling and heat without a ventilated battery room. BMS reports health to the app.</p>
+      </div>
+
+      <div class="part-label" id="label-3" data-label="3">
+        <span class="part-num">04</span>
+        <h3 class="part-name">ESP32 Controller</h3>
+        <p class="part-spec">Dual Core&ensp;·&ensp;LoRa 868 MHz</p>
+        <p class="part-desc">Reads every sensor, decides compressor speed, raises alerts, and pushes telemetry over LoRa. The only part that makes decisions.</p>
+      </div>
+
+      <div class="part-label" id="label-4" data-label="4">
+        <span class="part-num">05</span>
+        <h3 class="part-name">BLDC Compressor</h3>
+        <p class="part-spec">~420 W&ensp;·&ensp;42% duty cycle</p>
+        <p class="part-desc">Variable-speed brushless DC runs off the DC bus. No inrush surge means a smaller array and battery can do the job.</p>
+      </div>
+
+      <div class="part-label" id="label-5" data-label="5">
+        <span class="part-num">06</span>
+        <h3 class="part-name">Thermal Store</h3>
+        <p class="part-spec">70 kg PCM&ensp;·&ensp;8.6 hrs reserve</p>
+        <p class="part-desc">Phase-change material freezes on surplus solar and releases cold after dark. Storing cold is far cheaper than storing the electricity to make it.</p>
+      </div>
+
+      <div class="part-label" id="label-6" data-label="6">
+        <span class="part-num">07</span>
+        <h3 class="part-name">Cold Chamber</h3>
+        <p class="part-spec">200 kg&ensp;·&ensp;100 mm PUF</p>
+        <p class="part-desc">Hermetic polyurethane envelope holds 90–95% humidity. Sized to fit on a pickup truck so it can reach high-altitude collection centres.</p>
+      </div>
+    </div>
+
+    <!-- Section title that transitions -->
+    <div class="exploded-title">
+      <p class="exploded-kicker">SCROLL TO DISASSEMBLE</p>
+      <h2 class="exploded-heading" id="explodedHeading">Seven components. Zero grid dependency.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== KEY FIGURES ======================== -->
+<section class="stats" id="stats">
+  <div class="stats-inner">
+    <div class="stat" data-reveal>
+      <span class="stat-val" data-count-target="200">0</span>
+      <span class="stat-unit">KG</span>
+      <span class="stat-label">Chamber capacity, mixed vegetables</span>
+    </div>
+    <div class="stat" data-reveal>
+      <span class="stat-val" data-count-target="2.4" data-decimals="1">0</span>
+      <span class="stat-unit">KW</span>
+      <span class="stat-label">Rooftop solar array, no separate land</span>
+    </div>
+    <div class="stat" data-reveal>
+      <span class="stat-val" data-count-target="8.6" data-decimals="1">0</span>
+      <span class="stat-unit">HRS</span>
+      <span class="stat-label">Cooling with the compressor off</span>
+    </div>
+    <div class="stat" data-reveal>
+      <span class="stat-val" data-count-target="8">0</span>
+      <span class="stat-unit">LANGUAGES</span>
+      <span class="stat-label">All with speech output</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== DESIGN DECISIONS ====================== -->
+<section class="decisions" id="decisions">
+  <div class="decisions-head" data-reveal>
+    <span class="section-kicker">DESIGN DECISIONS</span>
+    <h2 class="section-title">Four decisions that make it work where nothing else does.</h2>
+  </div>
+
+  <div class="decision-grid">
+    <article class="decision-card" data-reveal>
+      <div class="decision-top">
+        <span class="decision-num">D-01</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M12 2.6v3.2M12 18.2v3.2M2.6 12h3.2M18.2 12h3.2M5.4 5.4l2.3 2.3M16.3 16.3l2.3 2.3M18.6 5.4l-2.3 2.3M7.7 16.3l-2.3 2.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <h3>100% solar, off-grid</h3>
+      <p>2.4 kW array into an MPPT controller and a 48 V LiFePO₄ pack. No grid connection, no diesel, no monthly bill.</p>
+    </article>
+
+    <article class="decision-card" data-reveal>
+      <div class="decision-top">
+        <span class="decision-num">D-02</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.6v18.8M4.1 7.1l15.8 9.8M19.9 7.1L4.1 16.9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <h3>200 kg PUF chamber</h3>
+      <p>100 mm polyurethane foam and a hermetic seal hold 90–95% RH without letting the monsoon in.</p>
+    </article>
+
+    <article class="decision-card" data-reveal>
+      <div class="decision-top">
+        <span class="decision-num">D-03</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9.6v4.8h3.3L12 18.4V5.6L7.3 9.6H4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M15.6 9.3a4 4 0 010 5.4M18.3 6.6a8 8 0 010 10.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Eight languages, read aloud</h3>
+      <p>Hindi, Assamese, Nepali, Meitei, Khasi, Mizo, Nagamese and English, with speech output.</p>
+    </article>
+
+    <article class="decision-card" data-reveal>
+      <div class="decision-top">
+        <span class="decision-num">D-04</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.4V11.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="9.2" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M8 5.2a6.6 6.6 0 000 8M16 5.2a6.6 6.6 0 010 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <h3>LoRa first, offline always</h3>
+      <p>868 MHz LoRa carries telemetry where cell towers do not reach. The app works fully offline.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ========================= CROP PROFILES ========================= -->
+<section class="crops" id="crops">
+  <div class="crops-head" data-reveal>
+    <span class="section-kicker">CROP PROFILES</span>
+    <h2 class="section-title">Ten NER crop profiles, shipped with the unit.</h2>
+    <p class="section-lede">Each carries its own set-point, humidity band and chilling limit.</p>
+  </div>
+
+  <div class="crop-grid">
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag">0–2 °C</span>
+        <h3>Cabbage</h3>
+        <p class="crop-local">বন্ধাকপি · बन्दागोभी · Kobi</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:17%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">6 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:100%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">35 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag warn">5–7 °C</span>
+        <h3>King Chilli</h3>
+        <p class="crop-local">ভোট জলকীয়া · U-Morok</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:18%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">5 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:80%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">28 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag">4–7 °C</span>
+        <h3>Khasi Mandarin</h3>
+        <p class="crop-local">Soh Niamtra · कमला सुन्तला</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:18%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">8 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:100%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">45 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag">12–14 °C</span>
+        <h3>Ginger</h3>
+        <p class="crop-local">আদা · अदुवा · Sying</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:17%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">20 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:100%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">120 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag">8–10 °C</span>
+        <h3>Tomato</h3>
+        <p class="crop-local">বিলাহী · गोलभेँडा</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:22%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">4 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:100%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">18 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="crop-card" data-reveal>
+      <div class="crop-card-inner">
+        <span class="crop-tag">10–15 °C</span>
+        <h3>Large Cardamom</h3>
+        <p class="crop-local">বৰ ইলাচী · अलैंची</p>
+        <div class="crop-bar-wrap">
+          <div class="crop-bar-row">
+            <span>Open shed</span>
+            <div class="crop-bar"><i style="width:19%;background:#EF4444"></i></div>
+            <span class="crop-bar-v" style="color:#EF4444">45 d</span>
+          </div>
+          <div class="crop-bar-row">
+            <span>NAVONMESH</span>
+            <div class="crop-bar"><i style="width:100%;background:#10B981"></i></div>
+            <span class="crop-bar-v" style="color:#10B981">240 d</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CTA ============================== -->
+<section class="cta" id="cta">
+  <div class="cta-inner" data-reveal>
+    <span class="section-kicker">PILOT PROGRAMME</span>
+    <h2 class="cta-title">Bring a unit to your village cluster.</h2>
+    <p class="cta-sub">We are looking for FPOs, collection centres and horticulture departments across the North East to host the first pilot chambers.</p>
+    <div class="cta-actions">
+      <a class="btn-primary btn-lg" href="../app/">
+        Open the live app
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn-ghost" href="../how-it-works.html">Technical documentation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <svg width="28" height="28" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+        <circle cx="13" cy="19" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M27 11v16M21.1 14.5l11.8 7M32.9 14.5l-11.8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span>NAVONMESH</span>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../how-it-works.html">How it works</a>
+      <a href="../built-for-ner.html">Built for NER</a>
+      <a href="../impact.html">Impact</a>
+      <a href="../project.html">The project</a>
+      <a href="../app/">The app</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>SIH 2026 / PS 26005 / PROTOTYPE</span>
+    <span>NORTH EASTERN REGION, INDIA</span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
