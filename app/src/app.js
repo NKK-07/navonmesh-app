@@ -74,13 +74,6 @@ class NavonmeshApp {
 
     const hwState = hardwareService.getState();
 
-    // Offline Banner if applicable
-    const offlineBanner = !hwState.isOnline ? `
-      <div style="background: #FEE2E2; border-bottom: 2px solid #EF4444; color: #B91C1C; text-align: center; padding: 10px; font-weight: 800; font-size: 14px;">
-        <i class="dot dot-danger"></i> OFFLINE MODE — Your cold storage is still working safely. Viewing locally cached hardware telemetry.
-      </div>
-    ` : '';
-
     // Render active tab view
     let mainViewHtml = '';
     if (this.currentTab === 'dashboard') mainViewHtml = renderFarmerDashboard(hwState, this.currentLang);
@@ -101,7 +94,6 @@ class NavonmeshApp {
 
     appEl.innerHTML = `
       ${renderHeader(hwState, this.currentLang, this.setLang.bind(this), (open) => { this.isDemoModalOpen = open; this.render(); })}
-      ${offlineBanner}
       
       <div class="app-wrapper">
         ${renderSidebar(this.currentTab, this.currentLang, this.userRole)}

@@ -18,7 +18,7 @@ export function renderFarmerDashboard(state, currentLang) {
       <!-- Top Question Answer Header Banner -->
       <div style="background: var(--bg-card); padding: 20px; border: 2px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
         <div style="display: flex; align-items: center; gap: 16px;">
-          <div style="font-size: 40px;">${isSafe ? '<i class="dot dot-ok"></i>' : isWarning ? '<i class="dot dot-warn"></i>' : '<i class="dot dot-danger"></i>'}</div>
+          <div style="font-size: 22px;">${isSafe ? '<i class="dot dot-ok"></i>' : isWarning ? '<i class="dot dot-warn"></i>' : '<i class="dot dot-danger"></i>'}</div>
           <div>
             <h2 style="font-size: 24px; font-weight: 900; color: var(--text-dark);">
               ${isSafe ? 'STORAGE SAFE' : isWarning ? 'ATTENTION NEEDED' : 'CRITICAL ALERT'}
@@ -29,7 +29,7 @@ export function renderFarmerDashboard(state, currentLang) {
           </div>
         </div>
 
-        <button class="btn-primary" id="btnDashboardSpeak" style="font-size: 18px; padding: 14px 28px;">
+        <button class="btn-primary" id="btnDashboardSpeak" style="font-size: 15px; padding: 10px 18px;">
           <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></svg> <span>${getTranslation(currentLang, 'hearStatus')}</span>
         </button>
       </div>
@@ -133,7 +133,7 @@ export function renderFarmerDashboard(state, currentLang) {
       <div class="health-score-card">
         <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
           <div class="score-circle-wrapper">
-            <svg viewBox="0 0 100 100" style="width: 130px; height: 130px; transform: rotate(-90deg);">
+            <svg viewBox="0 0 100 100" style="width: 96px; height: 96px; transform: rotate(-90deg);">
               <circle cx="50" cy="50" r="42" stroke="#3C352F" stroke-width="12" fill="none"/>
               <circle cx="50" cy="50" r="42" stroke="${isSafe ? '#04785C' : isWarning ? '#A9601F' : '#A6321F'}" stroke-width="12" fill="none" stroke-dasharray="264" stroke-dashoffset="${264 - (264 * state.conditionScore) / 100}"/>
             </svg>
