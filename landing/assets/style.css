@@ -99,9 +99,26 @@ svg{display:block}
     repeating-linear-gradient(to bottom,rgba(143,217,196,.10) 0 1px,transparent 1px 46px);
 }
 
+/* ------------------------------------------------------------- crops */
+.crops{
+  position:absolute;top:78px;left:50%;transform:translateX(-50%);z-index:40;
+  display:flex;gap:7px;flex-wrap:wrap;justify-content:center;
+  padding:0 16px;
+}
+.crop{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  padding:8px 13px;min-height:34px;
+  background:rgba(0,0,0,.24);color:var(--paper-dim);
+  border:1px solid rgba(255,253,248,.34);border-radius:999px;cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:background .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease);
+}
+.crop:hover{color:var(--paper);border-color:var(--paper)}
+.crop.is-on{background:var(--paper);color:var(--cold);border-color:var(--paper)}
+
 /* ---------------------------------------------------------- the readings */
 .read{
-  position:absolute;top:50%;transform:translateY(-58%);z-index:12;
+  position:absolute;top:46%;transform:translateY(-50%);z-index:12;
   pointer-events:none;
 }
 .read-out{left:clamp(24px,6vw,92px);text-align:left}
@@ -113,10 +130,25 @@ svg{display:block}
 }
 .r-deg{
   font-family:var(--display);
-  font-size:clamp(96px,17vw,244px);line-height:.78;letter-spacing:-.02em;
-  color:var(--paper);
+  font-size:clamp(84px,13.5vw,196px);line-height:.78;letter-spacing:-.02em;
+  color:var(--paper);font-variant-numeric:tabular-nums;
 }
-.r-deg span{font-size:.42em;vertical-align:super;letter-spacing:0}
+.r-deg i{font-style:normal;font-size:.4em;vertical-align:super;letter-spacing:0}
+
+/* the produce: same silhouette both sides, only its condition differs */
+.prod{width:clamp(72px,7vw,104px);height:auto;margin-top:16px}
+.read-in .prod{margin-left:auto}
+.prod path{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.prod-hot path{stroke:#FFE2BC}
+.prod-hot{
+  /* it loses condition with the heat: smaller, slumped, duller */
+  --wilt:0;
+  transform:scale(calc(1 - var(--wilt)*.12)) skewX(calc(var(--wilt)*4deg));
+  opacity:calc(1 - var(--wilt)*.34);
+  transition:transform .3s var(--ease),opacity .3s var(--ease);
+}
+.prod-cold path{stroke:var(--frost)}
+.prod .wrinkle{stroke-width:1.6}
 .r-note{font-size:14px;color:var(--paper-dim);margin-top:12px}
 .r-life{font-size:15px;color:var(--paper-dim);margin-top:4px}
 .r-life b{color:var(--paper);font-weight:700}
@@ -171,25 +203,55 @@ svg{display:block}
 }
 .nav-cta:hover{background:var(--paper);color:var(--cold);border-color:var(--paper)}
 
+/* ----------------------------------------------------------- the day */
+.day{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:clamp(212px,27vh,268px);z-index:40;
+  width:min(760px,88vw);
+}
+.day-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:7px}
+.day-t{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--paper-dim)}
+.day-clock{font-family:var(--display);font-size:22px;letter-spacing:.05em;color:var(--paper);font-variant-numeric:tabular-nums}
+
+.day-plot{
+  position:relative;height:82px;cursor:ew-resize;
+  background:rgba(0,0,0,.26);
+  border:1px solid rgba(255,253,248,.2);border-radius:10px;
+  backdrop-filter:blur(8px);overflow:hidden;
+}
+.day-plot svg{position:absolute;inset:8px;width:calc(100% - 16px);height:calc(100% - 16px)}
+#traceOut{stroke:#FFC98A}
+#traceIn{stroke:var(--frost)}
+.day-head-line{
+  position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;
+  background:var(--paper);box-shadow:0 0 12px rgba(255,253,248,.6);
+}
+.day-lab{
+  position:absolute;right:10px;
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;
+}
+.day-lab-out{top:7px;color:#FFC98A}
+.day-lab-in{bottom:7px;color:var(--frost)}
+.day-ticks{
+  display:flex;justify-content:space-between;margin-top:6px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--paper-faint);
+}
+
 /* --------------------------------------------------------------- the say */
 .say{
-  position:absolute;left:50%;bottom:clamp(26px,5vh,54px);transform:translateX(-50%);
+  position:absolute;left:50%;bottom:clamp(22px,4vh,44px);transform:translateX(-50%);
   z-index:40;text-align:center;width:min(760px,90vw);
 }
 .say-line{
   font-family:var(--display);
-  font-size:clamp(30px,4.6vw,64px);line-height:.94;letter-spacing:.01em;
+  font-size:clamp(26px,3.5vw,48px);line-height:.94;letter-spacing:.01em;
   text-shadow:0 2px 22px rgba(0,0,0,.45);
 }
-.say-sub{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;
-  color:var(--paper-dim);margin-top:14px;text-shadow:0 1px 8px rgba(0,0,0,.5);
-}
 .pill{
-  display:inline-flex;align-items:center;gap:13px;margin-top:22px;
+  display:inline-flex;align-items:center;gap:13px;margin-top:16px;
   background:var(--paper);color:var(--cold);
   font-family:var(--display);font-size:21px;letter-spacing:.03em;
-  padding:15px 24px;border-radius:999px;
+  padding:13px 22px;border-radius:999px;
   box-shadow:0 14px 34px rgba(0,0,0,.3);
   transition:transform .22s var(--ease);
 }
@@ -201,6 +263,26 @@ svg{display:block}
 
 /* ------------------------------------------------------------ below fold */
 main{position:relative;z-index:2;background:var(--cold-deep)}
+
+/* the argument keeps its two sides all the way down */
+.vs{display:grid;grid-template-columns:1fr 1fr}
+.vs-col{padding:clamp(56px,9vh,104px) clamp(24px,4vw,60px)}
+.vs-hot{background:linear-gradient(168deg,#8E3A0D,#5E2408)}
+.vs-cold{background:linear-gradient(168deg,var(--cold),var(--cold-deep))}
+.vs-tag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;margin-bottom:18px}
+.vs-hot .vs-tag{color:#FFC98A}
+.vs-cold .vs-tag{color:var(--frost)}
+.vs-h{font-family:var(--display);font-size:clamp(28px,3.4vw,46px);line-height:.98;max-width:16ch;margin-bottom:18px}
+.vs-p{color:var(--paper-dim);font-size:15.5px;max-width:44ch}
+.vs-f{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.17em;
+  margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,253,248,.18);
+  color:var(--paper-faint);
+}
+.hot-n{color:#FFC98A}
+.close-note{color:var(--paper-faint);font-size:13.5px;margin-top:18px}
+
+@media (max-width:860px){.vs{grid-template-columns:1fr}}
 .band{
   max-width:1100px;margin:0 auto;
   padding:clamp(72px,11vh,132px) clamp(22px,4vw,56px);
@@ -251,7 +333,14 @@ main{position:relative;z-index:2;background:var(--cold-deep)}
   .read-in{right:auto;left:clamp(20px,6vw,40px);top:auto;bottom:clamp(210px,30vh,280px);text-align:left}
   .r-deg{font-size:clamp(72px,22vw,120px)}
   .say{width:calc(100% - 40px)}
-  .say-line{font-size:clamp(26px,7vw,36px)}
+  .say-line{font-size:clamp(22px,6vw,30px)}
+  .crops{top:64px;gap:5px}
+  .crop{font-size:9.5px;padding:6px 10px;min-height:30px}
+  .day{bottom:clamp(126px,17vh,166px);width:calc(100% - 32px)}
+  .day-plot{height:64px;cursor:ns-resize}
+  .prod{width:clamp(54px,13vw,74px);margin-top:10px}
+  .read-out{top:clamp(112px,16vh,150px)}
+  .read-in{bottom:auto;top:auto}
 }
 
 /* ------------------------------------------------------- reduced motion */
