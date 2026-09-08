@@ -95,13 +95,21 @@ async function setPassword() {
   const pw = process.env.APP_DB_PASSWORD ||
              crypto.randomBytes(24).toString('base64url');
 
-  /* A role password cannot be parameterised, so it is quoted with Postgres's
-     own literal quoting rather than interpolated by hand. */
-  await withOwner(c => c.query(
-    `do $do$ begin
-       execute format('alter role navonmesh_app with login password %L', $1);
-     end $do$`, [pw]
-  ));
+  /* ALTER ROLE is DDL and cannot take a bind parameter, and a DO block cannot
+     either: $1 inside $do$...$do$ is just text in the block body, which is why
+     the earlier version of this failed with "bind message supplies 1
+     parameters, but prepared statement requires 0".
+
+     So the quoting happens in a statement that can take a parameter. format
+     %L is Postgres quoting its own literal, which is the part that must not be
+     done by hand, and the DDL it returns is then executed as a plain
+     statement. The password never goes through string concatenation here. */
+  await withOwner(async c => {
+    const { rows } = await c.query(
+      `select format('alter role navonmesh_app with login password %L', $1::text)
+              as ddl`, [pw]);
+    await c.query(rows[0].ddl);
+  });
 
   const direct = appUrl(process.env.DATABASE_URL || '', pw);
 
@@ -133,16 +141,23 @@ async function setPassword() {
     const target = process.env.NEON_BRANCH ? 'server/.env.neon' : 'server/.env.app';
     const file = path.join(HERE, '..', target);
     const body = [
-      '# Written by `npm run neon:provision -- --write-env`.',
-      '# The direct endpoint, because everything that reads this file is',
-      '# schema work or the RLS suite. The deployment takes the pooled URL',
-      '# printed above, set as an environment variable rather than a file.',
+      '# Written by `npm run neon:provision -- --write-env`. Gitignored.',
+      '#',
+      '# Both spellings of the same role. They are not interchangeable.',
+      '#',
+      '# DATABASE_URL_APP is the direct endpoint and the only line read from',
+      '# here, by schema work and the RLS suite on this machine.',
       'DATABASE_URL_APP=' + direct,
+      '',
+      '# The pooled endpoint, for copying into the deployment as its own',
+      '# DATABASE_URL_APP. Nothing reads it from this file; short lived',
+      '# functions need the pooler, laptop scripts must not use it.',
+      'DATABASE_URL_APP_POOLED=' + (pooled || direct),
       ''
     ].join('\n');
-    fs.writeFileSync(file, body);
-    console.log('Wrote ' + target + ', so the password did not have to be');
-    console.log('copied by hand. It is gitignored.');
+    fs.writeFileSync(file, body, { mode: 0o600 });
+    console.log('Wrote ' + target + ' with both URLs, so the password did not');
+    console.log('have to be copied by hand. It is gitignored.');
     console.log();
   }
 
