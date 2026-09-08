@@ -1,9 +1,10 @@
-# Vercel serves the static site at the repo root. Everything below either does
-# not belong on a CDN or actively confuses the build.
+# Vercel serves the static site from the repo root and runs /api/* as one
+# function. Everything below is neither.
 
-# The API. It has its own package.json, which is enough to make Vercel treat
-# this repo as a Node project that needs building, and it deploys to Railway
-# rather than here.
+# Migrations, seeding, the RLS test suite and the local http server. They run
+# from your machine against the deployed database, never inside a request.
+# api/_lib holds the code the function actually needs, so nothing here is
+# imported at runtime.
 server/
 
 # Working files, not the website.

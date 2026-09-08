@@ -16,3 +16,6 @@ build/
 # Push relay secrets and runtime state
 server/vapid.json
 server/subscriptions.json
+
+# Vercel CLI local state
+.vercel/

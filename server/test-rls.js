@@ -14,8 +14,8 @@
  * rather than passing green.
  */
 
-import { pool, appPool, withUser, withDevice, withAnon, withOwner } from './db.js';
-import { hashDeviceKey } from './auth.js';
+import { pool, appPool, withUser, withDevice, withAnon, withOwner } from '../api/_lib/db.js';
+import { hashDeviceKey } from '../api/_lib/auth.js';
 
 let pass = 0, fail = 0;
 

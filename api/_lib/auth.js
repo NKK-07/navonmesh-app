@@ -9,7 +9,7 @@
  *           write that unit's alerts and readings and read nothing at all.
  *
  * PINs are hashed with scrypt from node:crypto. No native build step, which
- * matters on Railway, and no dependency to keep patched.
+ * matters on a serverless runtime, and no dependency to keep patched.
  */
 
 import crypto from 'node:crypto';
@@ -30,7 +30,7 @@ const SECRET = process.env.JWT_SECRET;
 if (!SECRET || SECRET.length < 32) {
   console.error(
     '[auth] JWT_SECRET is missing or too short. Set a random 32+ character ' +
-    'value in the Railway environment before this serves anyone.'
+    'value in the deployment environment before this serves anyone.'
   );
 }
 const TOKEN_TTL = process.env.JWT_TTL || '30d';   // a farmer should not be

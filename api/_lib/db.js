@@ -6,47 +6,66 @@
  * pooled connection physically cannot carry one request's identity into the
  * next, which is the failure mode that quietly turns RLS into decoration.
  *
+ * That design happens to be exactly what a serverless deployment needs. Neon
+ * puts PgBouncer in front of the database in transaction pooling mode, where
+ * session state does not survive between statements. Anything that stamped
+ * identity per connection would break there. Per transaction is the only
+ * shape that is both correct and poolable.
+ *
  * There is a third helper, withOwner(), for migrations and provisioning. It
  * runs as the migration role and bypasses policies. Nothing that serves an
- * HTTP request may use it.
+ * HTTP request may use it, with one deliberate exception: login, which has no
+ * identity to scope by yet, and push fan out, which is a system job.
  */
 
 import pg from 'pg';
 
 const { Pool } = pg;
 
-/* Railway hands you DATABASE_URL. Locally it points at the docker container. */
-const connectionString =
+const OWNER_URL =
   process.env.DATABASE_URL ||
   'postgres://postgres:devpass@localhost:55432/navonmesh';
-
-/* Railway's internal network does not need TLS; its public proxy does. */
-const needsSsl = /[?&]sslmode=require/.test(connectionString) ||
-                 process.env.PGSSL === 'require';
-
-export const pool = new Pool({
-  connectionString,
-  ssl: needsSsl ? { rejectUnauthorized: false } : undefined,
-  max: Number(process.env.PG_POOL_MAX || 8),
-  idleTimeoutMillis: 30_000,
-  connectionTimeoutMillis: 8_000
-});
-
-pool.on('error', err => {
-  console.error('[db] idle client error:', err.message);
-});
 
 /* The app role. Distinct from the migration role on purpose: it owns no
  * tables, so FORCE ROW LEVEL SECURITY actually binds it. */
 const APP_URL = process.env.DATABASE_URL_APP || null;
 
-export const appPool = APP_URL
-  ? new Pool({
-      connectionString: APP_URL,
-      ssl: needsSsl ? { rejectUnauthorized: false } : undefined,
-      max: Number(process.env.PG_POOL_MAX || 8)
-    })
-  : pool;
+/* On a serverless platform each warm instance holds its own pool, and there
+ * may be many instances. One connection each keeps well inside Neon's limit;
+ * concurrency comes from instances, not from sockets per instance. Locally,
+ * one process serves everything, so it wants a real pool. */
+const SERVERLESS = !!process.env.VERCEL;
+const POOL_MAX = Number(process.env.PG_POOL_MAX || (SERVERLESS ? 1 : 8));
+
+/* Anything not on this machine is reached over the public internet, so the
+ * certificate gets verified. Neon presents a normally trusted chain, so this
+ * needs no extra configuration; PGSSL_INSECURE exists only for a host that
+ * presents a self signed certificate. */
+function sslFor(url) {
+  let host = '';
+  try { host = new URL(url).hostname; } catch { /* not a URL we can read */ }
+  const local = host === 'localhost' || host === '127.0.0.1' || host === '::1';
+  if (local && process.env.PGSSL !== 'require') return undefined;
+  return { rejectUnauthorized: process.env.PGSSL_INSECURE !== '1' };
+}
+
+function makePool(url, max) {
+  return new Pool({
+    connectionString: url,
+    ssl: sslFor(url),
+    max,
+    idleTimeoutMillis: SERVERLESS ? 10_000 : 30_000,
+    connectionTimeoutMillis: 10_000
+  });
+}
+
+export const pool = makePool(OWNER_URL, POOL_MAX);
+
+export const appPool = APP_URL ? makePool(APP_URL, POOL_MAX) : pool;
+
+for (const p of new Set([pool, appPool])) {
+  p.on('error', err => console.error('[db] idle client error:', err.message));
+}
 
 if (!APP_URL) {
   console.warn(

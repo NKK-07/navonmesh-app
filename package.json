@@ -1,0 +1,24 @@
+{
+  "name": "navonmesh",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solar powered mini cold storage for the North East: the site, the offline first app, and the API behind them",
+  "scripts": {
+    "dev": "node server/server.js",
+    "migrate": "node server/migrate.js",
+    "migrate:status": "node server/migrate.js --status",
+    "seed": "node server/seed.js",
+    "provision": "node server/provision.js",
+    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\"",
+    "test:rls": "node server/test-rls.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1",
+    "web-push": "^3.6.7",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

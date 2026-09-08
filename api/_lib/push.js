@@ -14,11 +14,16 @@ import webpush from 'web-push';
 import { withOwner } from './db.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const VAPID_FILE = path.join(HERE, 'vapid.json');
+const VAPID_FILE = path.join(HERE, '..', '..', 'server', 'vapid.json');
+const SERVERLESS = !!process.env.VERCEL;
 
-/* On Railway the keys come from the environment, because the filesystem is
- * ephemeral and regenerating them would silently invalidate every phone
- * already subscribed. Locally, a file is friendlier. */
+/* Loading is lazy and cached rather than done at import time. If it ran at
+ * import, a deployment with the keys not yet set would fail every route,
+ * including /api/health and login, and the first thing you would want to do
+ * on such a deployment is check its health. Push is the only thing that
+ * should break when push is unconfigured. */
+let cached = null;
+
 function loadVapid() {
   if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
     return {
@@ -26,25 +31,48 @@ function loadVapid() {
       privateKey: process.env.VAPID_PRIVATE_KEY
     };
   }
-  if (fs.existsSync(VAPID_FILE)) return JSON.parse(fs.readFileSync(VAPID_FILE, 'utf8'));
+
+  /* In deployment the keys come from the environment. The filesystem is read
+     only, and even where it is not, generating a fresh pair would silently
+     invalidate every phone already subscribed. */
+  if (SERVERLESS) {
+    throw new Error(
+      'VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY are not set. Generate a pair ' +
+      'with `npm run keys` and set both as environment variables.'
+    );
+  }
+
+  if (fs.existsSync(VAPID_FILE)) {
+    return JSON.parse(fs.readFileSync(VAPID_FILE, 'utf8'));
+  }
 
   const keys = webpush.generateVAPIDKeys();
   fs.writeFileSync(VAPID_FILE, JSON.stringify(keys, null, 2));
   console.warn(
-    '[push] Generated a new VAPID pair into server/vapid.json. On Railway set ' +
-    'VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY instead: the filesystem there is ' +
-    'ephemeral, and new keys invalidate every existing subscription.'
+    '[push] Generated a new VAPID pair into server/vapid.json. In deployment ' +
+    'set VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY instead: the filesystem there ' +
+    'is ephemeral, and new keys invalidate every existing subscription.'
   );
   return keys;
 }
 
-export const vapid = loadVapid();
+export function vapid() {
+  if (!cached) {
+    cached = loadVapid();
+    webpush.setVapidDetails(
+      process.env.VAPID_CONTACT || 'mailto:team@navonmesh.example',
+      cached.publicKey,
+      cached.privateKey
+    );
+  }
+  return cached;
+}
 
-webpush.setVapidDetails(
-  process.env.VAPID_CONTACT || 'mailto:team@navonmesh.example',
-  vapid.publicKey,
-  vapid.privateKey
-);
+/** The public key, or null when push is not configured. Never throws: the
+ *  browser asking for it is allowed to learn that push is unavailable. */
+export function vapidPublicKey() {
+  try { return vapid().publicKey; } catch { return null; }
+}
 
 /* A farmer asleep at 2am does not need to know the battery dipped. Anything
  * needing action still goes through: quiet hours mute noise, not emergencies. */
@@ -85,8 +113,19 @@ async function logDelivery(alertId, userId, status, detail) {
  * Returns { sent, skipped, expired, failed }.
  */
 export async function fanOut(alert) {
-  const subs = await audienceFor(alert.unit_id);
   const tally = { sent: 0, skipped: 0, expired: 0, failed: 0 };
+
+  /* An alert is worth more than its notification. If push is unconfigured the
+     alert is still recorded and still shows in the app on next open, so this
+     reports the miss rather than failing the gateway's call. */
+  try {
+    vapid();
+  } catch (err) {
+    console.error('[push]', err.message);
+    return { ...tally, error: 'push not configured' };
+  }
+
+  const subs = await audienceFor(alert.unit_id);
 
   const payload = JSON.stringify({
     id: alert.id,

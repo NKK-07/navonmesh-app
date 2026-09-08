@@ -12,8 +12,8 @@
  */
 
 import crypto from 'node:crypto';
-import { pool, withOwner } from './db.js';
-import { hashPin, hashDeviceKey } from './auth.js';
+import { pool, withOwner } from '../api/_lib/db.js';
+import { hashPin, hashDeviceKey } from '../api/_lib/auth.js';
 
 const RESET = process.argv.includes('--reset');
 

@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pool, withOwner } from './db.js';
+import { pool, withOwner } from '../api/_lib/db.js';
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 

@@ -1,21 +1,21 @@
 /* Sets the app role's password and prints the connection string to use.
  *
  * This exists because of one trap that will otherwise cost you an afternoon.
- * Railway's DATABASE_URL is a superuser, and superusers bypass row level
- * security unconditionally. Point the API at it and every policy in
- * 002_rls.sql silently does nothing: the app works, the tests pass, and every
- * farmer can read every other FPO.
+ * The role a managed Postgres hands you owns the schema, and usually is a
+ * superuser as well. Either way it bypasses row level security. Point the API
+ * at it and every policy in 002_rls.sql silently does nothing: the app works,
+ * the tests pass, and every farmer can read every other FPO.
  *
  * So the API runs as navonmesh_app, which owns no tables and is not superuser.
  * The migration creates that role with a placeholder password. This sets a
  * real one and hands you the URL to paste into DATABASE_URL_APP.
  *
- *   APP_DB_PASSWORD='...' node provision.js
- *   node provision.js --check     verify the app role really is constrained
+ *   APP_DB_PASSWORD='...' npm run provision
+ *   npm run provision -- --check   verify the app role really is constrained
  */
 
 import crypto from 'node:crypto';
-import { pool, withOwner } from './db.js';
+import { pool, withOwner } from '../api/_lib/db.js';
 
 const CHECK = process.argv.includes('--check');
 
