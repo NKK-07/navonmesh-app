@@ -24,12 +24,23 @@ local development is one command.
 
 ## The one thing that will bite you
 
-**The database's own role bypasses row level security.** It owns the tables,
-and an owner ignores its own policies unless the table is FORCEd; on most
-managed Postgres the role you are given is a superuser too, and a superuser
-bypasses RLS unconditionally, FORCE or not. Point the API at it and every
-policy in `migrations/002_rls.sql` silently does nothing. The app will work.
-The tests will pass. Every farmer will be able to read every other FPO.
+**The role your provider hands you bypasses row level security.** Point the API
+at it and every policy in `migrations/002_rls.sql` silently does nothing. The
+app will work. The tests will pass. Every farmer will be able to read every
+other FPO.
+
+It is worth knowing *how* it bypasses, because the obvious check misses it.
+On Neon, `neondb_owner` is **not** a superuser, so anything that tests
+`rolsuper` reports all clear. It carries `rolbypassrls` instead, which is just
+as total. Measured on this project's own branch:
+
+```
+role                 superuser  bypasses RLS
+  neondb_owner       false      true
+  navonmesh_app      false      false
+```
+
+That is the entire reason for the second connection.
 
 So there are two connections, on purpose:
 
@@ -42,6 +53,28 @@ So there are two connections, on purpose:
 `npm run provision -- --check` proves the role cannot bypass RLS and that every
 table is both enabled and FORCEd. Run it after any migration that adds a table.
 
+## Which database a command talks to
+
+Nothing sources a `.env` file by hand, because there are two and both define
+`DATABASE_URL`: ours at `server/.env.local` points at the Docker container,
+and the Neon CLI writes its own at the repo root and rewrites it on every
+`neon link` and `neon deploy`. Whichever got sourced last would decide which
+database a migration rewrites.
+
+So the target is a word in the command, and `scripts/db.mjs` prints the host
+it resolved before it runs anything:
+
+| | |
+|---|---|
+| `npm run migrate` | Docker |
+| `npm run neon:migrate` | Neon |
+
+Same for `seed`, `provision`, `test:rls` and `migrate:status`. The runner also
+swaps in the **direct** endpoint for Neon, since everything it launches is
+schema work, and drops `DATABASE_URL_APP` unless the target defines its own —
+otherwise a Neon run would leave the owner pool on Neon and the app pool on
+Docker, and the RLS suite would report on neither.
+
 ## Run it locally
 
 ```bash
@@ -49,9 +82,8 @@ docker run -d --name navonmesh-pg \
   -e POSTGRES_PASSWORD=devpass -e POSTGRES_USER=postgres -e POSTGRES_DB=navonmesh \
   -p 55432:5432 postgres:16-alpine
 
-npm install                    # from the repo root
+npm install                                  # from the repo root
 cp server/.env.example server/.env.local     # fill in JWT_SECRET
-set -a; . ./server/.env.local; set +a
 
 npm run migrate
 npm run seed                   # prints demo logins and the gateway keys
@@ -70,33 +102,36 @@ Postgres on **Neon**, the API as a **Vercel function** on the same project that
 already serves the site. Same origin, so the app's `API_BASE` stays empty and
 there is no CORS anywhere.
 
-1. **Create a Neon project.** Copy the **pooled** connection string, the host
-   with `-pooler` in it. Transaction pooling is correct here because every
-   query already runs inside its own transaction; a direct endpoint will run
-   out of connections once functions scale.
+1. **Link the project**, which writes both connection strings into
+   `.env.local` and gitignores it:
+   ```bash
+   neon link --project-id <id> --branch production
+   ```
 
 2. **Migrate and seed from your machine.** There is no build step on the
    platform that could do it, which is a feature: a migration should be a thing
    you ran, not a thing a deploy did to you.
    ```bash
-   export DATABASE_URL='postgres://...neon.tech/neondb?sslmode=require'
-   npm run migrate
-   npm run seed
+   npm run neon:migrate
+   npm run neon:seed
    ```
 
 3. **Provision the app role** against that same database:
    ```bash
-   APP_DB_PASSWORD='<something long>' npm run provision
+   APP_DB_PASSWORD='<something long>' npm run neon:provision -- --write-env
    ```
-   Keep the URL it prints.
+   It prints two URLs for the same role and they are not interchangeable. The
+   **pooled** one goes to the deployment, below. The **direct** one is written
+   to `server/.env.neon` for the RLS suite, so the password never has to be
+   copied by hand.
 
 4. **Set the environment variables** on the Vercel project, for Production,
    Preview and Development:
 
    | | |
    |---|---|
-   | `DATABASE_URL` | the Neon pooled string |
-   | `DATABASE_URL_APP` | what step 3 printed |
+   | `DATABASE_URL` | the Neon **pooled** string, from `.env.local` |
+   | `DATABASE_URL_APP` | the **pooled** URL step 3 printed |
    | `JWT_SECRET` | `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"` |
    | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | `npm run keys` |
    | `VAPID_CONTACT` | `mailto:` you |
@@ -109,9 +144,13 @@ there is no CORS anywhere.
 5. **Verify** before trusting it:
    ```bash
    curl https://<your-app>.vercel.app/api/health   # ok true, db up, push true
-   npm run provision -- --check
-   npm run test:rls                                # against DATABASE_URL_APP
+   npm run neon:provision -- --check
+   npm run neon:test:rls
    ```
+
+   `--check` is the one that matters. It proves the app role cannot bypass RLS
+   and that every table is both enabled and FORCEd, which is the property the
+   whole tenancy model rests on and the one that fails silently.
 
 ## The tenancy model
 

@@ -4,3 +4,5 @@ vapid.json
 subscriptions.json
 node_modules/
 .env.local
+.env.neon
+.env.app

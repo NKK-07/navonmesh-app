@@ -5,18 +5,25 @@
   "type": "module",
   "description": "Solar powered mini cold storage for the North East: the site, the offline first app, and the API behind them",
   "scripts": {
-    "dev": "node server/server.js",
-    "migrate": "node server/migrate.js",
-    "migrate:status": "node server/migrate.js --status",
-    "seed": "node server/seed.js",
-    "provision": "node server/provision.js",
-    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\"",
-    "test:rls": "node server/test-rls.js"
+    "dev": "node scripts/db.mjs local server/server.js",
+    "migrate": "node scripts/db.mjs local server/migrate.js",
+    "migrate:status": "node scripts/db.mjs local server/migrate.js --status",
+    "seed": "node scripts/db.mjs local server/seed.js",
+    "provision": "node scripts/db.mjs local server/provision.js",
+    "test:rls": "node scripts/db.mjs local server/test-rls.js",
+    "neon:migrate": "node scripts/db.mjs neon server/migrate.js",
+    "neon:migrate:status": "node scripts/db.mjs neon server/migrate.js --status",
+    "neon:seed": "node scripts/db.mjs neon server/seed.js",
+    "neon:provision": "node scripts/db.mjs neon server/provision.js",
+    "neon:test:rls": "node scripts/db.mjs neon server/test-rls.js",
+    "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\""
   },
   "dependencies": {
+    "@neon/config": "^1.3.0",
+    "@neon/env": "^1.2.1",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "web-push": "^3.6.7",
-    "jsonwebtoken": "^9.0.2"
+    "web-push": "^3.6.7"
   },
   "engines": {
     "node": ">=20"

@@ -1,10 +1,15 @@
 /* Sets the app role's password and prints the connection string to use.
  *
  * This exists because of one trap that will otherwise cost you an afternoon.
- * The role a managed Postgres hands you owns the schema, and usually is a
- * superuser as well. Either way it bypasses row level security. Point the API
- * at it and every policy in 002_rls.sql silently does nothing: the app works,
- * the tests pass, and every farmer can read every other FPO.
+ * The role a managed Postgres hands you bypasses row level security. Point the
+ * API at it and every policy in 002_rls.sql silently does nothing: the app
+ * works, the tests pass, and every farmer can read every other FPO.
+ *
+ * Note how it bypasses, because the obvious check misses it. On Neon,
+ * neondb_owner is NOT a superuser, so testing rolsuper reports all clear. It
+ * carries rolbypassrls instead, which is just as total. --check tests both,
+ * and tests FORCE on every table, since an owner also ignores its own
+ * policies on any table that was merely ENABLEd.
  *
  * So the API runs as navonmesh_app, which owns no tables and is not superuser.
  * The migration creates that role with a placeholder password. This sets a
@@ -15,8 +20,12 @@
  */
 
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { pool, withOwner } from '../api/_lib/db.js';
 
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CHECK = process.argv.includes('--check');
 
 async function check() {
@@ -70,6 +79,18 @@ async function check() {
   if (unforced.length || unprotected.length) process.exitCode = 1;
 }
 
+/** The same app role, spelled for one connection string. */
+function appUrl(base, password) {
+  try {
+    const u = new URL(base);
+    u.username = 'navonmesh_app';
+    u.password = password;
+    return u.toString();
+  } catch {
+    return 'postgres://navonmesh_app:' + password + '@<host>:<port>/<database>';
+  }
+}
+
 async function setPassword() {
   const pw = process.env.APP_DB_PASSWORD ||
              crypto.randomBytes(24).toString('base64url');
@@ -82,20 +103,52 @@ async function setPassword() {
      end $do$`, [pw]
   ));
 
-  const base = process.env.DATABASE_URL || '';
-  let hint = 'postgres://navonmesh_app:' + pw + '@<host>:<port>/<database>';
-  try {
-    const u = new URL(base);
-    u.username = 'navonmesh_app';
-    u.password = pw;
-    hint = u.toString();
-  } catch { /* no DATABASE_URL to model it on */ }
+  const direct = appUrl(process.env.DATABASE_URL || '', pw);
 
-  console.log('\nnavonmesh_app password set.\n');
-  console.log('Set this as DATABASE_URL_APP on the service:\n');
-  console.log('  ' + hint + '\n');
+  /* Two hosts, one role. Schema work and the RLS suite run from a laptop and
+     want the direct endpoint; the deployed app is a swarm of short lived
+     functions and wants the pooled one. Printing only the connected one is
+     how the wrong string ends up in a dashboard. */
+  const pooledBase = process.env.DATABASE_URL_POOLED;
+  const pooled = pooledBase ? appUrl(pooledBase, pw) : null;
+
+  console.log();
+  console.log('navonmesh_app password set.');
+  console.log();
+
+  if (pooled) {
+    console.log('For the deployment, as DATABASE_URL_APP (pooled):');
+    console.log();
+    console.log('  ' + pooled);
+    console.log();
+    console.log('For schema work and the RLS suite from here (direct):');
+  } else {
+    console.log('Set this as DATABASE_URL_APP:');
+  }
+  console.log();
+  console.log('  ' + direct);
+  console.log();
+
+  if (process.argv.includes('--write-env')) {
+    const target = process.env.NEON_BRANCH ? 'server/.env.neon' : 'server/.env.app';
+    const file = path.join(HERE, '..', target);
+    const body = [
+      '# Written by `npm run neon:provision -- --write-env`.',
+      '# The direct endpoint, because everything that reads this file is',
+      '# schema work or the RLS suite. The deployment takes the pooled URL',
+      '# printed above, set as an environment variable rather than a file.',
+      'DATABASE_URL_APP=' + direct,
+      ''
+    ].join('\n');
+    fs.writeFileSync(file, body);
+    console.log('Wrote ' + target + ', so the password did not have to be');
+    console.log('copied by hand. It is gitignored.');
+    console.log();
+  }
+
   console.log('Leave DATABASE_URL pointing at the owner: migrations need it,');
-  console.log('and nothing that serves a request uses it.\n');
+  console.log('and nothing that serves a request uses it.');
+  console.log();
 }
 
 (CHECK ? check() : setPassword())

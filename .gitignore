@@ -19,3 +19,5 @@ server/subscriptions.json
 
 # Vercel CLI local state
 .vercel/
+.neon
+.env.local
