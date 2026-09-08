@@ -2,11 +2,13 @@
 // Phase Change Material 70kg thermal storage buffer details
 
 import { getTranslation } from '../data/i18n.js';
+import { demoBanner, hasRealReadings } from '../data/live.js';
 
 export function renderPcmPage(state, currentLang) {
   const isPcmActive = state.pcmStatus === 'ACTIVE' || state.batterySoc < 30;
 
   return `
+    ${hasRealReadings() ? '' : demoBanner('Phase change thermal store charge')}
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div>

@@ -1,144 +1,325 @@
-// NAVONMESH Inventory Management ("My Produce") View
-// FIFO batch cards with color-coded SELL FIRST urgency indicators & Add Produce modal
+// My produce: what is in the chamber, and what the farmer wants to do with it.
+//
+// This screen used to list four batches out of mockHardware.js, one of which
+// belonged to a different farmer at a different unit, and offered no way to
+// change any of it. Storing produce is only half of what a cold room is for;
+// the other half is deciding what to sell and at what price, which is the half
+// that turns preservation into income.
+//
+// Everything here is the database. A farmer sees their own batches and the
+// ones stored alongside them at the same unit, and can edit only their own,
+// which is not enforced in this file: the batches_update policy refuses the
+// rest, and the buttons simply are not drawn for produce that is not theirs.
 
 import { CROPS_DATA, getCropById } from '../data/crops.js';
-import { hardwareService } from '../data/mockHardware.js';
 import { getTranslation } from '../data/i18n.js';
+import { live, describeAge, isStale, unitFor } from '../data/live.js';
+import { icon } from '../components/icons.js';
 
-export function renderProducePage(state, currentLang, isAddModalOpen) {
-  const loadPct = Math.round((state.produceWeightKg / state.maxCapacityKg) * 100);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  const batchesHtml = state.batches.map(batch => {
-    const crop = getCropById(batch.cropId);
-    const isUrgent = batch.urgency === 'SELL_FIRST';
-    return `
-      <div class="card" style="border: 2px solid ${isUrgent ? '#A9601F' : 'var(--border-light)'}; background: ${isUrgent ? '#F8EEDF' : 'var(--bg-card)'}; position: relative;">
-        ${isUrgent ? '<span class="metric-status-badge warning" style="position: absolute; top: 16px; right: 16px; font-weight: 900;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c3.6 0 6.5-2.7 6.5-6 0-4.5-6.5-9-6.5-9S5.5 10.5 5.5 15c0 3.3 2.9 6 6.5 6Z"/></svg> SELL FIRST</span>' : ''}
-        
-        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-          <span style="font-size: 40px;">${crop.icon}</span>
-          <div>
-            <span style="font-size: 11px; color: var(--text-muted); font-weight: 800;">${batch.id}</span>
-            <h3 style="font-size: 18px; color: var(--text-dark);">${crop.name}</h3>
-            <span style="font-size: 13px; color: var(--text-muted);">Owner: ${batch.owner}</span>
-          </div>
-        </div>
+function cropName(cropId, lang) {
+  const crop = getCropById(cropId);
+  if (!crop) return cropId;
+  return (crop.nameLocal && crop.nameLocal[lang]) || crop.name || cropId;
+}
 
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: var(--bg-main); padding: 12px; font-size: 13px;">
-          <div><strong>Quantity:</strong> ${batch.weightKg} kg</div>
-          <div><strong>Stored Date:</strong> ${batch.storedDate}</div>
-          <div style="grid-column: 1 / -1; color: var(--agri-green-dark); font-weight: 800;">
-            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17M12 7.5V12l3 2"/></svg> Estimated Days Left: ${batch.estDaysLeft} Days
-          </div>
-        </div>
+const rupees = n => n === null || n === undefined
+  ? null
+  : '₹' + Number(n).toFixed(Number(n) % 1 ? 2 : 0);
+
+export function renderProducePage(state, currentLang, isAddModalOpen, editingId = null) {
+  const L = live();
+  const unit = unitFor(L);
+  const batches = L.batches;
+
+  /* Null is not zero. Null means we have never had an answer, and an empty
+     list means the chamber is genuinely empty. Those are different things to
+     tell a farmer. */
+  if (batches === null) {
+    return shell(currentLang, `
+      <div class="card produce-empty">
+        <p class="produce-empty-t">${L.loading ? 'Loading your produce' : 'No connection yet'}</p>
+        <p class="produce-empty-p">
+          ${L.loading
+            ? 'Reading what is in the chamber.'
+            : 'Your produce is stored on the unit. Reconnect and it will appear here.'}
+        </p>
       </div>
-    `;
-  }).join('');
+    `, unit, null);
+  }
 
-  const modalHtml = isAddModalOpen ? `
-    <div class="demo-modal-overlay" id="addProduceOverlay">
-      <div class="demo-modal-card" style="max-width: 500px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h2 style="font-size: 20px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> Add Stored Produce Batch</h2>
-          <button id="btnCloseProduceModal" style="font-size: 22px; font-weight: bold;">✕</button>
-        </div>
+  const mine = batches.filter(b => b.is_mine);
+  const others = batches.filter(b => !b.is_mine);
+  const myKg = mine.reduce((n, b) => n + Number(b.weight_kg), 0);
+  const totalKg = batches.reduce((n, b) => n + Number(b.weight_kg), 0);
+  const capacity = unit ? Number(unit.capacity_kg) : null;
+  const forSale = mine.filter(b => b.for_sale);
 
-        <form id="formAddProduce" style="display: flex; flex-direction: column; gap: 16px;">
-          <div>
-            <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px;">Select Crop</label>
-            <select id="selectProduceCrop" class="lang-select" style="width: 100%;">
-              ${CROPS_DATA.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('')}
-            </select>
-          </div>
-
-          <div>
-            <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px;">Weight (kg)</label>
-            <input type="number" id="inputProduceWeight" class="lang-select" style="width: 100%;" value="25" min="1" max="100"/>
-          </div>
-
-          <div>
-            <label style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px;">Farmer / Owner Name</label>
-            <input type="text" id="inputProduceOwner" class="lang-select" style="width: 100%;" value="Farmer Cooperative Member"/>
-          </div>
-
-          <button type="submit" class="btn-primary" style="margin-top: 10px; width: 100%;">
-            ✓ Confirm Storage Batch
-          </button>
-        </form>
+  const summary = `
+    <div class="produce-summary">
+      <div class="card produce-stat">
+        <p class="produce-stat-n">${myKg.toFixed(0)}<span>kg</span></p>
+        <p class="produce-stat-l">Yours, in store</p>
       </div>
+      <div class="card produce-stat">
+        <p class="produce-stat-n">${forSale.length}</p>
+        <p class="produce-stat-l">Offered for sale</p>
+      </div>
+      <div class="card produce-stat">
+        <p class="produce-stat-n">${capacity ? Math.round(100 * totalKg / capacity) : '—'}<span>%</span></p>
+        <p class="produce-stat-l">
+          Chamber full${capacity ? ' · ' + totalKg.toFixed(0) + ' of ' + capacity + ' kg' : ''}
+        </p>
+      </div>
+    </div>
+  `;
+
+  const list = mine.length
+    ? mine.map(b => batchCard(b, currentLang, editingId === b.id)).join('')
+    : `<div class="card produce-empty">
+         <p class="produce-empty-t">Nothing of yours in store</p>
+         <p class="produce-empty-p">Add produce when you put a crate in the chamber.</p>
+       </div>`;
+
+  const neighbours = others.length ? `
+    <h2 class="produce-h2">Also in this chamber</h2>
+    <p class="produce-sub">
+      Stored by other farmers at ${esc(unit ? unit.code : 'this unit')}. You can
+      see what is taking up space; only the owner can change it.
+    </p>
+    <div class="produce-list produce-list-muted">
+      ${others.map(b => neighbourCard(b, currentLang)).join('')}
     </div>
   ` : '';
 
+  return shell(currentLang, `
+    ${summary}
+    <div class="produce-head">
+      <h2 class="produce-h2">Your produce</h2>
+      <button class="btn-primary" id="btnAddProduce" type="button">
+        ${icon('produce', 17)} Add produce
+      </button>
+    </div>
+    <div class="produce-list">${list}</div>
+    ${neighbours}
+    ${isAddModalOpen ? addModal(currentLang, unit) : ''}
+  `, unit, L);
+}
+
+function shell(currentLang, inner, unit, L) {
+  const age = L ? describeAge(currentLang) : null;
+  const stale = L ? isStale() : true;
+
   return `
-    <div style="display: flex; flex-direction: column; gap: 24px;">
-      
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div class="produce-wrap">
+      <div class="produce-title">
         <div>
-          <h1 style="font-size: 28px; margin-bottom: 4px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> ${getTranslation(currentLang, 'navProduce')}</h1>
-          <p style="color: var(--text-muted); font-size: 15px;">Manage stored vegetable batches with automated FIFO sale indicators.</p>
+          <h1>${getTranslation(currentLang, 'navProduce')}</h1>
+          <p class="produce-sub">
+            ${unit ? esc(unit.code) + ' · ' + esc(unit.label) : 'Your unit'}
+            ${unit && unit.setpoint_c !== null && unit.setpoint_c !== undefined
+              ? ' · held at ' + Number(unit.setpoint_c).toFixed(1) + '°C'
+              : ''}
+          </p>
         </div>
-
-        <button class="btn-primary" id="btnOpenAddProduceModal">
-          ${getTranslation(currentLang, 'addProduce')}
-        </button>
+        ${age ? `<p class="data-age ${stale ? 'is-stale' : ''}">
+                   ${L && L.lastError ? 'Not refreshed · ' : stale ? 'Last confirmed ' : 'Updated '}${age}
+                 </p>` : ''}
       </div>
-
-      <!-- Live Weight Capacity Card -->
-      <div class="card" style="border: 2px solid var(--agri-green); background: linear-gradient(180deg, #E4EFE9 0%, #FFFDFA 100%);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <div>
-            <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL CURRENT LOAD</span>
-            <div style="font-size: 36px; font-weight: 900; color: var(--agri-green-dark);">${state.produceWeightKg} kg / ${state.maxCapacityKg} kg</div>
-          </div>
-          <span class="metric-status-badge ${loadPct > 90 ? 'warning' : 'safe'}" style="font-size: 16px; padding: 8px 18px;">
-            ${loadPct}% FULL
-          </span>
-        </div>
-
-        <!-- Load cell capacity bar -->
-        <div style="width: 100%; height: 16px; background: #E5DDD2; overflow: hidden;">
-          <div style="width: ${loadPct}%; height: 100%; background: ${loadPct > 90 ? '#A9601F' : 'var(--agri-green)'};"></div>
-        </div>
-        <span style="font-size: 12px; color: var(--text-muted); margin-top: 8px; display: block;">
-          Available Capacity: ${state.maxCapacityKg - state.produceWeightKg} kg
-        </span>
-
-        ${loadPct > 90 ? `
-          <div style="margin-top: 12px; background: #F8EEDF; padding: 10px; color: #A9601F; font-weight: bold; font-size: 13px;">
-            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 21.5 20h-19zM12 10v4.5M12 17.2h.01"/></svg> Storage almost full (>90% capacity).
-          </div>
-        ` : ''}
-      </div>
-
-      <!-- Batches Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-        ${batchesHtml}
-      </div>
-
-      ${modalHtml}
-
+      ${inner}
     </div>
   `;
 }
 
-export function bindProduceEvents(onToggleModal) {
-  const openBtn = document.getElementById('btnOpenAddProduceModal');
-  if (openBtn) openBtn.addEventListener('click', () => onToggleModal(true));
+function batchCard(b, lang, isEditing) {
+  const price = rupees(b.ask_price_inr);
 
-  const closeBtn = document.getElementById('btnCloseProduceModal');
-  if (closeBtn) closeBtn.addEventListener('click', () => onToggleModal(false));
+  if (isEditing) {
+    return `
+      <div class="card produce-card is-editing" data-batch="${esc(b.id)}">
+        <p class="produce-crop">${esc(cropName(b.crop_id, lang))}</p>
+        <div class="produce-edit">
+          <label>
+            <span>Weight in the chamber</span>
+            <input class="lang-select" type="number" inputmode="decimal" min="0.1" max="10000"
+                   step="0.5" id="editWeight" value="${esc(b.weight_kg)}">
+          </label>
+          <label class="produce-check">
+            <input type="checkbox" id="editForSale" ${b.for_sale ? 'checked' : ''}>
+            <span>Offer this for sale</span>
+          </label>
+          <label>
+            <span>Asking price per kg (optional)</span>
+            <input class="lang-select" type="number" inputmode="decimal" min="0" step="1"
+                   id="editPrice" placeholder="e.g. 110"
+                   value="${b.ask_price_inr === null || b.ask_price_inr === undefined ? '' : esc(b.ask_price_inr)}">
+          </label>
+          <p class="produce-err" id="editError" hidden></p>
+          <div class="produce-actions">
+            <button class="btn-primary" type="button" data-save="${esc(b.id)}">Save</button>
+            <button class="btn-secondary" type="button" data-cancel="1">Cancel</button>
+            <button class="btn-secondary produce-remove" type="button" data-remove="${esc(b.id)}">
+              Take out of store
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
-  const form = document.getElementById('formAddProduce');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const cropId = document.getElementById('selectProduceCrop').value;
-      const weightKg = document.getElementById('inputProduceWeight').value;
-      const owner = document.getElementById('inputProduceOwner').value;
+  return `
+    <div class="card produce-card" data-batch="${esc(b.id)}">
+      <div class="produce-card-top">
+        <div>
+          <p class="produce-crop">${esc(cropName(b.crop_id, lang))}</p>
+          <p class="produce-meta">
+            Stored ${esc(String(b.stored_on).slice(0, 10))}
+            ${b.note ? ' · ' + esc(b.note) : ''}
+          </p>
+        </div>
+        <p class="produce-kg">${Number(b.weight_kg).toFixed(1)}<span>kg</span></p>
+      </div>
+      <div class="produce-card-bottom">
+        ${b.for_sale
+          ? `<span class="produce-tag is-sale">
+               For sale${price ? ' · ' + price + '/kg' : ''}
+             </span>`
+          : '<span class="produce-tag">Storing</span>'}
+        <button class="btn-secondary produce-edit-btn" type="button" data-edit="${esc(b.id)}">
+          Adjust
+        </button>
+      </div>
+    </div>
+  `;
+}
 
-      hardwareService.addProduceBatch({ cropId, weightKg, owner });
-      onToggleModal(false);
-      alert('✓ New produce batch stored into NAVONMESH cold room!');
+function neighbourCard(b, lang) {
+  return `
+    <div class="card produce-card is-muted">
+      <div class="produce-card-top">
+        <div>
+          <p class="produce-crop">${esc(cropName(b.crop_id, lang))}</p>
+          <p class="produce-meta">
+            ${b.owner_name ? esc(b.owner_name) : 'Another farmer'}
+          </p>
+        </div>
+        <p class="produce-kg">${Number(b.weight_kg).toFixed(1)}<span>kg</span></p>
+      </div>
+    </div>
+  `;
+}
+
+function addModal(lang, unit) {
+  const options = CROPS_DATA.map(c =>
+    `<option value="${esc(c.id)}">${esc((c.nameLocal && c.nameLocal[lang]) || c.name)}</option>`
+  ).join('');
+
+  return `
+    <div class="produce-modal" id="produceModal">
+      <div class="card produce-modal-card">
+        <h3>Add produce</h3>
+        <p class="produce-sub">
+          Into ${unit ? esc(unit.code) : 'your unit'}. This is recorded against
+          your name, so only you can change it afterwards.
+        </p>
+        <label>
+          <span>Crop</span>
+          <select class="lang-select" id="addCrop">${options}</select>
+        </label>
+        <label>
+          <span>Weight in kg</span>
+          <input class="lang-select" type="number" inputmode="decimal" min="0.1" max="10000"
+                 step="0.5" id="addWeight" placeholder="e.g. 35">
+        </label>
+        <label class="produce-check">
+          <input type="checkbox" id="addForSale">
+          <span>Offer this for sale straight away</span>
+        </label>
+        <label>
+          <span>Asking price per kg (optional)</span>
+          <input class="lang-select" type="number" inputmode="decimal" min="0" step="1"
+                 id="addPrice" placeholder="e.g. 110">
+        </label>
+        <p class="produce-err" id="addError" hidden></p>
+        <div class="produce-actions">
+          <button class="btn-primary" id="btnAddSave" type="button">Add to store</button>
+          <button class="btn-secondary" id="btnAddCancel" type="button">Cancel</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * @param handlers.onToggleModal open/close the add form
+ * @param handlers.onEdit        start editing one batch, or null to stop
+ * @param handlers.onSave        persist changes, returns a promise
+ * @param handlers.onCreate      add a batch, returns a promise
+ * @param handlers.onRemove      take a batch out of store, returns a promise
+ */
+export function bindProduceEvents(handlers = {}) {
+  const {
+    onToggleModal = () => {}, onEdit = () => {},
+    onSave = async () => {}, onCreate = async () => {}, onRemove = async () => {}
+  } = handlers;
+
+  const add = document.getElementById('btnAddProduce');
+  if (add) add.addEventListener('click', () => onToggleModal(true));
+
+  document.querySelectorAll('[data-edit]').forEach(el =>
+    el.addEventListener('click', () => onEdit(el.dataset.edit)));
+
+  document.querySelectorAll('[data-cancel]').forEach(el =>
+    el.addEventListener('click', () => onEdit(null)));
+
+  /* A save takes a moment against a database that may be waking up. The button
+     says so and stops accepting a second press, because two taps on "Save"
+     used to be two writes. */
+  const guard = async (btn, errEl, run) => {
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Saving';
+    if (errEl) errEl.hidden = true;
+    try {
+      await run();
+    } catch (err) {
+      if (errEl) { errEl.textContent = err.message; errEl.hidden = false; }
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  };
+
+  document.querySelectorAll('[data-save]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      const weight = document.getElementById('editWeight');
+      const sale = document.getElementById('editForSale');
+      const price = document.getElementById('editPrice');
+      guard(btn, document.getElementById('editError'), () => onSave(btn.dataset.save, {
+        weight_kg: Number(weight.value),
+        for_sale: !!sale.checked,
+        ask_price_inr: price.value === '' ? null : Number(price.value)
+      }));
+    }));
+
+  document.querySelectorAll('[data-remove]').forEach(btn =>
+    btn.addEventListener('click', () =>
+      guard(btn, document.getElementById('editError'), () => onRemove(btn.dataset.remove))));
+
+  const addSave = document.getElementById('btnAddSave');
+  if (addSave) {
+    addSave.addEventListener('click', () => {
+      const price = document.getElementById('addPrice');
+      guard(addSave, document.getElementById('addError'), () => onCreate({
+        crop_id: document.getElementById('addCrop').value,
+        weight_kg: Number(document.getElementById('addWeight').value),
+        for_sale: !!document.getElementById('addForSale').checked,
+        ask_price_inr: price.value === '' ? null : Number(price.value)
+      }));
     });
   }
+
+  const addCancel = document.getElementById('btnAddCancel');
+  if (addCancel) addCancel.addEventListener('click', () => onToggleModal(false));
 }

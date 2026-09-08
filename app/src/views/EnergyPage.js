@@ -2,12 +2,14 @@
 // Animated Energy Flow Schematic & SOC Operating Mode Logic (Mode A-E)
 
 import { getTranslation } from '../data/i18n.js';
+import { demoBanner, hasRealReadings } from '../data/live.js';
 
 export function renderEnergyPage(state, currentLang) {
   const mode = state.operatingMode;
   const soc = state.batterySoc;
 
   return `
+    ${hasRealReadings() ? '' : demoBanner('Solar generation, battery and load')}
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div>

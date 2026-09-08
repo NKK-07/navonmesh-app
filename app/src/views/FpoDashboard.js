@@ -1,72 +1,189 @@
-// NAVONMESH FPO & Cooperative Manager Fleet Dashboard View
+// The FPO manager's view.
+//
+// This used to be a page of invented totals: "12 units, 1.82 tonnes saved,
+// 76% utilisation", identical in structure to the farmer screen and reachable
+// by any farmer who clicked a button in Settings. It is now the manager's
+// actual FPO, and the only reason it holds more than the farmer view is that
+// row level security returns more rows to this token. Nothing here filters by
+// role; app_can_see_unit already did.
+//
+// The one thing a manager can do that a farmer cannot is set the target
+// temperature, which then applies to every unit in the FPO and shows on every
+// farmer's screen.
 
-export function renderFpoDashboard() {
-  const units = [
-    { id: 'NVM-001', location: 'Shillong Village Hub', status: '<i class="dot dot-ok"></i> Healthy', produceKg: 186, capKg: 200, temp: 8.2, bat: 78 },
-    { id: 'NVM-002', location: 'Tura Cluster Centre', status: '<i class="dot dot-ok"></i> Healthy', produceKg: 140, capKg: 200, temp: 7.8, bat: 92 },
-    { id: 'NVM-003', location: 'Aizawl Mountain Route', status: '<i class="dot dot-warn"></i> Warning', produceKg: 192, capKg: 200, temp: 10.2, bat: 35 },
-    { id: 'NVM-004', location: 'Kohima Collection Post', status: '<i class="dot dot-ok"></i> Healthy', produceKg: 165, capKg: 200, temp: 8.0, bat: 84 },
-    { id: 'NVM-005', location: 'Imphal Valley Hub', status: '<i class="dot dot-ok"></i> Healthy', produceKg: 178, capKg: 200, temp: 7.5, bat: 89 },
-    { id: 'NVM-006', location: 'Gangtok High Altitude', status: '<i class="dot dot-danger"></i> Critical', produceKg: 198, capKg: 200, temp: 13.4, bat: 18 }
-  ];
+import { live, describeAge, isStale } from '../data/live.js';
+import { getTranslation } from '../data/i18n.js';
+import { icon } from '../components/icons.js';
 
-  const unitsCardsHtml = units.map(u => `
-    <div class="card" style="border-top: 4px solid ${u.status.includes('Healthy') ? '#04785C' : u.status.includes('Warning') ? '#A9601F' : '#A6321F'};">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <strong style="font-size: 18px; color: var(--text-dark);">${u.id}</strong>
-        <span class="metric-status-badge ${u.status.includes('Healthy') ? 'safe' : u.status.includes('Warning') ? 'warning' : 'critical'}">${u.status}</span>
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+export function renderFpoDashboard(currentLang = 'en', notice = null) {
+  const L = live();
+  const units = L.units;
+
+  if (units === null) {
+    return `
+      <div class="fleet-wrap">
+        <h1>Fleet</h1>
+        <div class="card produce-empty">
+          <p class="produce-empty-t">${L.loading ? 'Loading your fleet' : 'No connection yet'}</p>
+          <p class="produce-empty-p">The units your FPO owns will appear here.</p>
+        </div>
       </div>
-      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5"/></svg> ${u.location}</div>
+    `;
+  }
 
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: var(--bg-main); padding: 10px; font-size: 12px; text-align: center;">
-        <div>
-          <span style="color: var(--text-muted);">Weight</span>
-          <div style="font-weight: bold; color: var(--agri-green-dark);">${u.produceKg}/${u.capKg}kg</div>
-        </div>
-        <div>
-          <span style="color: var(--text-muted);">Temp</span>
-          <div style="font-weight: bold; color: var(--cooling-blue-dark);">${u.temp}°C</div>
-        </div>
-        <div>
-          <span style="color: var(--text-muted);">Battery</span>
-          <div style="font-weight: bold;">${u.bat}%</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
+  const alerts = L.alerts || [];
+  const openAlerts = alerts.filter(a => !a.cleared_at);
+  const stored = units.reduce((n, u) => n + Number(u.stored_kg || 0), 0);
+  const capacity = units.reduce((n, u) => n + Number(u.capacity_kg || 0), 0);
+  const batches = units.reduce((n, u) => n + Number(u.batch_count || 0), 0);
+
+  /* One setpoint if every unit agrees, otherwise say they differ rather than
+     picking one and quietly overwriting the rest on the next save. */
+  const setpoints = [...new Set(units.map(u =>
+    u.setpoint_c === null || u.setpoint_c === undefined ? null : Number(u.setpoint_c)))];
+  const common = setpoints.length === 1 ? setpoints[0] : null;
+  const mixed = setpoints.length > 1;
+
+  const age = describeAge(currentLang);
+  const stale = isStale();
+  const L2 = L;   // named for the shared age-line snippet below
 
   return `
-    <div style="display: flex; flex-direction: column; gap: 24px;">
-      
-      <div>
-        <h1 style="font-size: 28px; margin-bottom: 4px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5V6l7-2.5V20.5M10.5 20.5h10V10h-10M13.5 13.5h1M17 13.5h1M13.5 17h1M17 17h1M6 8.5h1.5M6 12h1.5M6 15.5h1.5"/></svg> FPO / Cooperative Regional Fleet Manager</h1>
-        <p style="color: var(--text-muted); font-size: 15px;">Monitoring 12 NAVONMESH Mini Cold Storage units across North Eastern states.</p>
+    <div class="fleet-wrap">
+      <div class="produce-title">
+        <div>
+          <h1>${getTranslation(currentLang, 'roleFpoManager')}</h1>
+          <p class="produce-sub">
+            ${units.length} unit${units.length === 1 ? '' : 's'} in your FPO
+          </p>
+        </div>
+        ${age ? `<p class="data-age ${stale ? 'is-stale' : ''}">
+                   ${L2 && L2.lastError ? 'Not refreshed · ' : stale ? 'Last confirmed ' : 'Updated '}${age}
+                 </p>` : ''}
       </div>
 
-      <!-- Fleet Stats Banner -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
-        <div class="card">
-          <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL DEPLOYED UNITS</span>
-          <div style="font-size: 32px; font-weight: 900; color: var(--text-dark); margin-top: 4px;">12 Units</div>
-          <span style="font-size: 12px; color: #04785C; font-weight: bold;">9 Healthy | 2 Warning | 1 Critical</span>
+      <div class="produce-summary">
+        <div class="card produce-stat">
+          <p class="produce-stat-n">${units.length}</p>
+          <p class="produce-stat-l">Units</p>
         </div>
-        <div class="card">
-          <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">TOTAL PRODUCE SAVED</span>
-          <div style="font-size: 32px; font-weight: 900; color: var(--agri-green-dark); margin-top: 4px;">1.82 Tonnes</div>
-          <span style="font-size: 12px; color: var(--text-muted);">Fresh produce preserved</span>
+        <div class="card produce-stat">
+          <p class="produce-stat-n">${stored.toFixed(0)}<span>kg</span></p>
+          <p class="produce-stat-l">
+            In store${capacity ? ' · ' + Math.round(100 * stored / capacity) + '% of capacity' : ''}
+          </p>
         </div>
-        <div class="card">
-          <span style="font-size: 12px; color: var(--text-muted); font-weight: 800;">AVG CAPACITY UTILIZATION</span>
-          <div style="font-size: 32px; font-weight: 900; color: var(--cooling-blue-dark); margin-top: 4px;">76%</div>
-          <span style="font-size: 12px; color: var(--text-muted);">Optimal storage loading</span>
+        <div class="card produce-stat">
+          <p class="produce-stat-n">${batches}</p>
+          <p class="produce-stat-l">Batches</p>
+        </div>
+        <div class="card produce-stat ${openAlerts.length ? 'is-warn' : ''}">
+          <p class="produce-stat-n">${openAlerts.length}</p>
+          <p class="produce-stat-l">Open alerts</p>
         </div>
       </div>
 
-      <!-- Unit Grid -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-        ${unitsCardsHtml}
+      <div class="card fleet-setpoint">
+        <h2 class="produce-h2">${icon('pcm', 17)} Target temperature</h2>
+        <p class="produce-sub">
+          Applies to every unit in your FPO and shows on every farmer's screen.
+          ${mixed
+            ? '<strong>Your units are currently set differently.</strong>'
+            : common === null
+              ? 'No target is set yet.'
+              : 'Currently ' + common.toFixed(1) + '°C everywhere.'}
+        </p>
+        <div class="fleet-setpoint-row">
+          <input class="lang-select" id="fleetSetpoint" type="number"
+                 inputmode="decimal" min="0" max="25" step="0.5"
+                 value="${common === null ? '' : esc(common)}"
+                 placeholder="8.0">
+          <span class="fleet-unit">°C</span>
+          <button class="btn-primary" id="btnSaveSetpoint" type="button">
+            Apply to all units
+          </button>
+        </div>
+        <p class="produce-sub fleet-band">
+          Between 0 and 25. Most produce here takes chilling injury below 4°C;
+          king chilli should not go under it at all.
+        </p>
+        <p class="produce-err" id="setpointError" hidden></p>
+        ${notice ? `<p class="fleet-ok">${esc(notice)}</p>` : ''}
       </div>
 
+      <h2 class="produce-h2">Units</h2>
+      <div class="fleet-list">
+        ${units.map(u => unitCard(u, alerts)).join('')}
+      </div>
     </div>
   `;
+}
+
+function unitCard(u, alerts) {
+  const mine = alerts.filter(a => a.unit_id === u.id && !a.cleared_at);
+  const worst = mine.some(a => a.level === 'action') ? 'is-critical'
+              : mine.length ? 'is-warn' : '';
+  const pct = u.capacity_kg
+    ? Math.round(100 * Number(u.stored_kg || 0) / Number(u.capacity_kg))
+    : null;
+
+  return `
+    <div class="card fleet-card ${worst}">
+      <div class="fleet-card-top">
+        <div>
+          <p class="fleet-code">${esc(u.code)}</p>
+          <p class="produce-meta">${esc(u.label)}${u.district ? ' · ' + esc(u.district) : ''}</p>
+        </div>
+        <p class="fleet-temp">
+          ${u.setpoint_c === null || u.setpoint_c === undefined
+            ? '<span class="fleet-unset">not set</span>'
+            : Number(u.setpoint_c).toFixed(1) + '<span>°C</span>'}
+        </p>
+      </div>
+      <div class="fleet-card-bottom">
+        <span class="produce-tag">
+          ${Number(u.stored_kg || 0).toFixed(0)} kg${pct !== null ? ' · ' + pct + '%' : ''}
+        </span>
+        <span class="produce-tag">${u.batch_count || 0} batches</span>
+        ${mine.length
+          ? `<span class="produce-tag is-alert">${mine.length} open alert${mine.length === 1 ? '' : 's'}</span>`
+          : ''}
+      </div>
+    </div>
+  `;
+}
+
+export function bindFpoEvents({ onSetpoint = async () => {} } = {}) {
+  const btn = document.getElementById('btnSaveSetpoint');
+  const input = document.getElementById('fleetSetpoint');
+  const err = document.getElementById('setpointError');
+  if (!btn || !input) return;
+
+  btn.addEventListener('click', async () => {
+    const value = Number(input.value);
+    if (err) err.hidden = true;
+
+    if (!Number.isFinite(value) || value < 0 || value > 25) {
+      if (err) { err.textContent = 'Enter a temperature between 0 and 25.'; err.hidden = false; }
+      return;
+    }
+
+    btn.disabled = true;
+    const original = btn.textContent;
+    btn.textContent = 'Applying';
+    try {
+      /* The confirmation is returned, not written into the DOM. Refreshing
+         after the write re-renders this whole panel, which used to delete the
+         success line a few milliseconds after it appeared. */
+      await onSetpoint(value);
+    } catch (e) {
+      if (err) { err.textContent = e.message; err.hidden = false; }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
 }

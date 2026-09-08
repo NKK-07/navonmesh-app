@@ -8,20 +8,42 @@
 // signal. CACHE_NAME carries a version: bump it whenever ASSETS changes, and
 // the old cache is dropped on activate.
 
-const CACHE_NAME = 'navonmesh-v12';
+const CACHE_NAME = 'navonmesh-v16';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './src/css/style.css',
   './src/app.js',
+  './src/components/BottomNav.js',
+  './src/components/DemoPanel.js',
+  './src/components/Header.js',
+  './src/components/Sidebar.js',
+  './src/components/icons.js',
+  './src/css/style.css',
   './src/data/crops.js',
   './src/data/i18n.js',
+  './src/data/live.js',
   './src/data/mockHardware.js',
-  './src/utils/audio.js',
-  './src/utils/notifications.js',
   './src/utils/api.js',
+  './src/utils/audio.js',
+  './src/utils/contact.js',
+  './src/utils/notifications.js',
+  './src/views/AlertsPage.js',
+  './src/views/ConnectivityPage.js',
+  './src/views/CropProfilesPage.js',
+  './src/views/EnergyPage.js',
+  './src/views/FarmerDashboard.js',
+  './src/views/FpoDashboard.js',
+  './src/views/HelpPage.js',
   './src/views/LoginPage.js',
+  './src/views/PcmPage.js',
+  './src/views/PerformancePage.js',
+  './src/views/ProducePage.js',
+  './src/views/RetailerDashboard.js',
+  './src/views/SettingsPage.js',
+  './src/views/ShelfLifePage.js',
+  './src/views/StorageMonitor.js',
+  './src/views/SystemHealthPage.js',
   './icon-192.png',
   './icon-badge.png'
 ];

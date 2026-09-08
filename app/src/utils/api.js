@@ -161,6 +161,37 @@ export const getUnits  = () => readJson('/api/units');
 export const getAlerts = () => readJson('/api/alerts');
 export const getBatches = () => readJson('/api/batches');
 export const getMe = () => readJson('/api/me');
+export const getReadings = (unitId, limit = 60) => readJson(
+  '/api/readings?limit=' + limit + (unitId ? '&unit=' + encodeURIComponent(unitId) : ''));
+
+/* Writes. Unlike the reads above these do NOT swallow failure: a farmer who
+   marks produce for sale has to know whether it took, and silently returning
+   null would leave the screen showing something the database never agreed to. */
+async function write(path, method, payload) {
+  const res = await apiFetch(path, {
+    method,
+    body: payload === undefined ? undefined : JSON.stringify(payload)
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error(body.error || ('request failed (' + res.status + ')'));
+    err.status = res.status;
+    throw err;
+  }
+  return body;
+}
+
+export const createBatch = data => write('/api/batches', 'POST', data);
+export const updateBatch = (id, data) =>
+  write('/api/batches/' + encodeURIComponent(id), 'PATCH', data);
+export const removeBatch = id =>
+  write('/api/batches/' + encodeURIComponent(id), 'PATCH', { removed: true });
+
+/** One target temperature across every unit the caller may write. */
+export const setFleetSetpoint = setpoint_c =>
+  write('/api/units/setpoint', 'POST', { setpoint_c });
+export const setUnitSetpoint = (id, setpoint_c) =>
+  write('/api/units/' + encodeURIComponent(id), 'PATCH', { setpoint_c });
 
 export async function ackAlert(id) {
   try {

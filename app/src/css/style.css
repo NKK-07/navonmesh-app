@@ -932,3 +932,142 @@ button {
   font-family:var(--font-mono,ui-monospace,monospace);
   font-size:12px;color:var(--text-muted);margin-left:8px;white-space:nowrap;
 }
+
+/* ============================================================== live data
+   Screens backed by the database rather than the simulation. The age line is
+   the important part: without it a farmer cannot tell a reading taken a minute
+   ago from one taken before the signal dropped, and the app used to assert
+   ONLINE over invented numbers with no way to know. */
+
+.data-age{
+  font-family:var(--font-mono,ui-monospace,monospace);
+  font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--text-muted);margin:0;white-space:nowrap;
+}
+.data-age.is-stale{color:var(--clay,#B4622F);font-weight:600}
+
+/* Anything still coming from the simulation says so, next to the number. */
+.demo-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--font-mono,ui-monospace,monospace);
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--clay,#B4622F);
+  border:1px solid currentColor;border-radius:3px;
+  padding:2px 6px;margin-left:8px;vertical-align:middle;
+}
+.demo-banner{
+  display:flex;align-items:flex-start;gap:10px;
+  border:1px solid var(--clay,#B4622F);border-radius:var(--radius-md,5px);
+  background:rgba(180,98,47,.06);
+  padding:12px 14px;margin-bottom:18px;
+  font-size:13.5px;line-height:1.5;color:var(--text-dark);
+}
+.demo-banner strong{color:var(--clay,#B4622F)}
+
+/* ---------------------------------------------------------------- produce */
+.produce-wrap,.fleet-wrap{display:flex;flex-direction:column;gap:20px}
+.produce-title{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.produce-title h1{font-size:26px;margin:0 0 3px}
+.produce-sub{color:var(--text-muted);font-size:14px;margin:0;line-height:1.5}
+.produce-h2{font-size:18px;margin:0}
+.produce-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.produce-summary{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;
+}
+.produce-stat{padding:16px 18px}
+.produce-stat-n{
+  font-size:30px;font-weight:700;margin:0;line-height:1.05;color:var(--text-dark);
+}
+.produce-stat-n span{font-size:15px;font-weight:600;color:var(--text-muted);margin-left:3px}
+.produce-stat-l{font-size:12.5px;color:var(--text-muted);margin:6px 0 0;line-height:1.4}
+.produce-stat.is-warn .produce-stat-n{color:var(--clay,#B4622F)}
+
+.produce-list{display:flex;flex-direction:column;gap:12px}
+.produce-list-muted{opacity:.82}
+.produce-card{padding:16px 18px}
+.produce-card.is-muted{background:var(--bg-main)}
+.produce-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.produce-crop{font-size:16.5px;font-weight:700;margin:0;color:var(--text-dark)}
+.produce-meta{font-size:12.5px;color:var(--text-muted);margin:4px 0 0;line-height:1.45}
+.produce-kg{
+  font-size:23px;font-weight:700;margin:0;white-space:nowrap;color:var(--text-dark);
+}
+.produce-kg span{font-size:13px;font-weight:600;color:var(--text-muted);margin-left:2px}
+.produce-card-bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:14px;padding-top:13px;border-top:1px solid var(--border-light);
+  flex-wrap:wrap;
+}
+.produce-tag{
+  font-family:var(--font-mono,ui-monospace,monospace);
+  font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.produce-tag.is-sale{color:var(--agri-green,#04785C);font-weight:700}
+.produce-tag.is-alert{color:var(--clay,#B4622F);font-weight:700}
+.produce-edit-btn{min-height:40px;padding:0 16px;font-size:13.5px}
+
+.produce-card.is-editing{border-color:var(--agri-green,#04785C)}
+.produce-edit{display:flex;flex-direction:column;gap:13px;margin-top:14px}
+.produce-edit label,.produce-modal-card label{
+  display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;
+}
+.produce-edit label>span,.produce-modal-card label>span{color:var(--text-dark)}
+.produce-check{flex-direction:row!important;align-items:center;gap:10px!important}
+.produce-check input{width:20px;height:20px;accent-color:var(--agri-green,#04785C)}
+.produce-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.produce-actions button{min-height:44px}
+.produce-remove{border-color:var(--clay,#B4622F);color:var(--clay,#B4622F);margin-left:auto}
+.produce-err{color:#A6321F;font-size:13px;margin:0;line-height:1.45}
+.fleet-ok{color:var(--agri-green,#04785C);font-size:13px;margin:8px 0 0;font-weight:600}
+
+.produce-empty{padding:26px 20px;text-align:center}
+.produce-empty-t{font-size:16px;font-weight:700;margin:0 0 6px;color:var(--text-dark)}
+.produce-empty-p{font-size:13.5px;color:var(--text-muted);margin:0;line-height:1.55}
+
+.produce-modal{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(20,16,12,.5);
+  display:flex;align-items:flex-end;justify-content:center;padding:0;
+}
+.produce-modal-card{
+  width:100%;max-width:520px;max-height:92vh;overflow-y:auto;
+  display:flex;flex-direction:column;gap:14px;
+  border-radius:12px 12px 0 0;padding:22px 20px 26px;margin:0;
+}
+.produce-modal-card h3{font-size:20px;margin:0}
+@media (min-width:640px){
+  .produce-modal{align-items:center;padding:20px}
+  .produce-modal-card{border-radius:var(--radius-lg,7px)}
+}
+
+/* ------------------------------------------------------------------ fleet */
+.fleet-setpoint{padding:18px 20px}
+.fleet-setpoint-row{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.fleet-setpoint-row input{width:110px;min-height:44px;font-size:17px;font-weight:700}
+.fleet-unit{font-size:16px;font-weight:700;color:var(--text-muted);margin-left:-4px}
+.fleet-setpoint-row button{min-height:44px;flex:1 1 auto}
+.fleet-band{font-size:12.5px;margin-top:10px}
+
+.fleet-list{display:flex;flex-direction:column;gap:12px}
+.fleet-card{padding:16px 18px;border-left:4px solid transparent}
+.fleet-card.is-warn{border-left-color:var(--solar-yellow,#E0A21A)}
+.fleet-card.is-critical{border-left-color:#A6321F}
+.fleet-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.fleet-code{font-size:16.5px;font-weight:700;margin:0;color:var(--text-dark)}
+.fleet-temp{font-size:23px;font-weight:700;margin:0;white-space:nowrap;color:var(--text-dark)}
+.fleet-temp span{font-size:13px;font-weight:600;color:var(--text-muted)}
+.fleet-unset{font-size:13px;font-weight:600;color:var(--text-muted)}
+.fleet-card-bottom{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  margin-top:13px;padding-top:12px;border-top:1px solid var(--border-light);
+}
+
+@media (max-width:639px){
+  .produce-title{flex-direction:column;gap:8px}
+  .produce-title h1{font-size:23px}
+  .produce-head .btn-primary{width:100%;justify-content:center}
+  .produce-remove{margin-left:0;width:100%;justify-content:center}
+  .fleet-setpoint-row button{width:100%}
+}

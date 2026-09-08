@@ -1,7 +1,10 @@
 // NAVONMESH Real-Time Performance & Historical Charts View (SVG Data Visualizations)
 
+import { demoBanner, hasRealReadings } from '../data/live.js';
+
 export function renderPerformancePage(state, timeframe = '24h') {
   return `
+    ${hasRealReadings() ? '' : demoBanner('Performance history')}
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">

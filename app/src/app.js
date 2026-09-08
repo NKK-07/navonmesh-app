@@ -4,6 +4,12 @@
 import { hardwareService } from './data/mockHardware.js';
 import * as notify from './utils/notifications.js';
 import { isSignedIn, getUser, signOut } from './utils/api.js';
+import {
+  live, onLiveChange, refreshLive, refreshAfterWrite, hydrateFromCache, clearLive
+} from './data/live.js';
+import {
+  createBatch, updateBatch, removeBatch, setFleetSetpoint
+} from './utils/api.js';
 import { renderLoginPage, bindLoginEvents } from './views/LoginPage.js';
 
 // Components
@@ -26,17 +32,37 @@ import { renderSystemHealthPage } from './views/SystemHealthPage.js';
 import { renderConnectivityPage } from './views/ConnectivityPage.js';
 import { renderHelpPage, bindHelpEvents } from './views/HelpPage.js';
 import { renderRetailerDashboard } from './views/RetailerDashboard.js';
-import { renderFpoDashboard } from './views/FpoDashboard.js';
+import { renderFpoDashboard, bindFpoEvents } from './views/FpoDashboard.js';
 import { renderSettingsPage, bindSettingsEvents } from './views/SettingsPage.js';
+
+/* The database spells it fpo_manager; the views have always said fpo. One
+   translation, in one place, rather than both spellings leaking everywhere. */
+function roleOf(user) {
+  const r = user && user.role;
+  if (r === 'fpo_manager') return 'fpo';
+  if (r === 'admin') return 'admin';
+  if (r === 'retailer') return 'retailer';
+  return 'farmer';
+}
 
 class NavonmeshApp {
   constructor() {
-    this.currentTab = 'dashboard'; // The site at ../index.html is the pitch; the app opens on live state
+    /* Where you land is who you are. A manager reopening the app wants the
+       fleet, not one farmer's chamber; setting this only on the sign-in path
+       meant every reload dropped them back on the farmer dashboard. */
+    this.currentTab = roleOf(getUser()) === 'fpo' ? 'fpo' : 'dashboard';
     this.currentLang = 'en';
-    this.userRole = 'farmer';
+    /* The role comes from the signed token, not from a button. Settings used
+       to offer 'FPO Manager Fleet View' as a free choice, so any farmer could
+       click once and be looking at a regional fleet screen. The backend has
+       app_is_manager() and a policy set written to stop exactly that; the app
+       simply never asked. */
+    this.userRole = roleOf(getUser());
     this.selectedCropId = 'cabbage';
     this.isDemoModalOpen = false;
     this.isAddProduceModalOpen = false;
+    this.editingBatchId = null;
+    this.fleetNotice = null;
     this.performanceTimeframe = '24h';
 
     // Register Service Worker for PWA Offline Caching
@@ -72,11 +98,29 @@ class NavonmeshApp {
     });
     notify.syncFromState(hardwareService.getState());
 
+    // Real data, kept apart from the simulation above. The cache paints first
+    // so a farmer opening the app on a weak signal sees this morning's produce
+    // instead of an empty screen, then the network confirms or corrects it.
+    onLiveChange(() => this.render());
+    hydrateFromCache();
+    this.refreshLive();
+
+    // The database is not a telemetry feed; a minute is plenty and it keeps
+    // the compute from being woken on every animation tick.
+    this.liveTimer = setInterval(() => this.refreshLive(), 60_000);
+    window.addEventListener('online', () => this.refreshLive());
+
     // Initial Render
     this.render();
   }
 
+  refreshLive() {
+    if (!isSignedIn()) return;
+    refreshLive().catch(err => console.warn('[live] refresh failed:', err.message));
+  }
+
   setTab(tabId) {
+    this.fleetNotice = null;
     this.currentTab = tabId;
     window.scrollTo(0, 0);
     this.render();
@@ -88,10 +132,15 @@ class NavonmeshApp {
      last screen the previous one was looking at. */
   handleSignOut() {
     signOut();
+    /* The cache holds this farmer's produce and their unit. It cannot be
+       left on the device for whoever signs in next. */
+    clearLive();
     this.currentTab = 'dashboard';
     this.selectedCropId = null;
-    this.userRole = 'farmer';
+    this.userRole = roleOf(getUser());   // null user, so back to 'farmer'
     this.isDemoModalOpen = false;
+    this.isAddProduceModalOpen = false;
+    this.editingBatchId = null;
     this.render();
   }
 
@@ -100,11 +149,24 @@ class NavonmeshApp {
     this.render();
   }
 
+  /* A view a role is not entitled to is not offered, and asking for it
+     anyway does nothing. The server would refuse the data regardless, so this
+     is about not showing a screen that cannot be filled. */
   setUserRole(role) {
+    if (!this.canUseView(role)) return;
     this.userRole = role;
     if (role === 'retailer') this.currentTab = 'retailer';
     else if (role === 'fpo') this.currentTab = 'fpo';
+    else this.currentTab = 'dashboard';
     this.render();
+  }
+
+  canUseView(view) {
+    const actual = roleOf(getUser());
+    if (view === 'farmer') return true;            // everyone stores produce
+    if (view === 'fpo') return actual === 'fpo' || actual === 'admin';
+    if (view === 'retailer') return actual === 'retailer' || actual === 'admin';
+    return false;
   }
 
   render() {
@@ -116,7 +178,14 @@ class NavonmeshApp {
     // showing a dashboard first would only ever be a dashboard of nothing.
     if (!isSignedIn()) {
       appEl.innerHTML = renderLoginPage();
-      bindLoginEvents(() => { this.currentTab = 'dashboard'; this.render(); });
+      bindLoginEvents(() => {
+        /* Whoever just signed in decides the role and the opening screen. A
+           manager lands on their fleet, a farmer on their own unit. */
+        this.userRole = roleOf(getUser());
+        this.currentTab = this.userRole === 'fpo' ? 'fpo' : 'dashboard';
+        this.refreshLive();
+        this.render();
+      });
       return;
     }
 
@@ -129,7 +198,7 @@ class NavonmeshApp {
     else if (this.currentTab === 'performance') mainViewHtml = renderPerformancePage(hwState, this.performanceTimeframe);
     else if (this.currentTab === 'crops') mainViewHtml = renderCropProfilesPage(hwState, this.currentLang, this.selectedCropId);
     else if (this.currentTab === 'shelflife') mainViewHtml = renderShelfLifePage(hwState, this.currentLang);
-    else if (this.currentTab === 'produce') mainViewHtml = renderProducePage(hwState, this.currentLang, this.isAddProduceModalOpen);
+    else if (this.currentTab === 'produce') mainViewHtml = renderProducePage(hwState, this.currentLang, this.isAddProduceModalOpen, this.editingBatchId);
     else if (this.currentTab === 'energy') mainViewHtml = renderEnergyPage(hwState, this.currentLang);
     else if (this.currentTab === 'pcm') mainViewHtml = renderPcmPage(hwState, this.currentLang);
     else if (this.currentTab === 'alerts') mainViewHtml = renderAlertsPage(hwState, this.currentLang);
@@ -137,7 +206,7 @@ class NavonmeshApp {
     else if (this.currentTab === 'connectivity') mainViewHtml = renderConnectivityPage(hwState, this.currentLang);
     else if (this.currentTab === 'troubleshoot') mainViewHtml = renderHelpPage(hwState, this.currentLang);
     else if (this.currentTab === 'retailer') mainViewHtml = renderRetailerDashboard(hwState);
-    else if (this.currentTab === 'fpo') mainViewHtml = renderFpoDashboard();
+    else if (this.currentTab === 'fpo') mainViewHtml = renderFpoDashboard(this.currentLang, this.fleetNotice);
     else if (this.currentTab === 'settings') mainViewHtml = renderSettingsPage(hwState, this.currentLang, this.userRole);
 
     appEl.innerHTML = `
@@ -170,9 +239,43 @@ class NavonmeshApp {
     if (this.currentTab === 'dashboard') bindFarmerDashboardEvents(hwState, this.currentLang, this.setTab.bind(this));
     else if (this.currentTab === 'performance') bindPerformanceEvents((tf) => { this.performanceTimeframe = tf; this.render(); });
     else if (this.currentTab === 'crops') bindCropProfilesEvents(this.selectedCropId, (cropId) => { this.selectedCropId = cropId; this.render(); });
-    else if (this.currentTab === 'produce') bindProduceEvents((open) => { this.isAddProduceModalOpen = open; this.render(); });
+    else if (this.currentTab === 'produce') bindProduceEvents({
+      onToggleModal: open => { this.isAddProduceModalOpen = open; this.render(); },
+      onEdit: id => { this.editingBatchId = id; this.render(); },
+      /* Each of these refreshes from the server rather than patching local
+         state from the response. The database is the thing that decides what
+         happened, and a screen that updates itself optimistically is a screen
+         that can disagree with it. */
+      onSave: async (id, changes) => {
+        await updateBatch(id, changes);
+        this.editingBatchId = null;
+        await refreshAfterWrite();
+      },
+      onCreate: async data => {
+        const unit = (live().units || [])[0];
+        if (!unit) throw new Error('no unit to store produce in yet');
+        await createBatch({ ...data, unit_id: unit.id });
+        this.isAddProduceModalOpen = false;
+        await refreshAfterWrite();
+      },
+      onRemove: async id => {
+        await removeBatch(id);
+        this.editingBatchId = null;
+        await refreshAfterWrite();
+      }
+    });
     else if (this.currentTab === 'alerts') bindAlertsEvents(this.currentLang);
     else if (this.currentTab === 'troubleshoot') bindHelpEvents(this.currentLang);
+    else if (this.currentTab === 'fpo') bindFpoEvents({
+      onSetpoint: async value => {
+        const result = await setFleetSetpoint(value);
+        this.fleetNotice = 'Set to ' + value.toFixed(1) + '°C on ' +
+          (result && result.updated ? result.updated : 'all') +
+          ' units. Every farmer on them sees this now.';
+        await refreshAfterWrite();
+        return result;
+      }
+    });
     else if (this.currentTab === 'settings') bindSettingsEvents(this.currentLang, this.setLang.bind(this), this.setUserRole.bind(this), this.handleSignOut.bind(this));
   }
 }

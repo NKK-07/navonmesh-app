@@ -42,9 +42,16 @@ const GROUPS = [
 export function renderSidebar(currentTab, currentLang, userRole) {
   const groups = GROUPS.map(group => ({ ...group, items: [...group.items] }));
 
+  /* The fleet view is offered from the signed role, not from whichever mode
+     Settings was left in. A farmer never sees this entry, and asking for the
+     tab by hand gets an empty screen because the policies return them one
+     unit. */
+  const actual = (getUser() || {}).role;
+  const isManager = actual === 'fpo_manager' || actual === 'admin';
+
   if (userRole === 'retailer') {
     groups[0].items.unshift({ id: 'retailer', labelKey: 'navRetailer' });
-  } else if (userRole === 'fpo') {
+  } else if (isManager) {
     groups[0].items.unshift({ id: 'fpo', labelKey: 'navFpo' });
   }
 

@@ -13,6 +13,13 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
   const user = getUser();
   const remembered = isRemembered();
   const operatorNumber = getOperatorNumber();
+  /* What this ACCOUNT may open, from the token. The buttons used to be an
+     open choice, so any farmer could put themselves in the fleet view. */
+  const actualRole = (user || {}).role;
+  const canFpo = actualRole === 'fpo_manager' || actualRole === 'admin';
+  const canRetailer = actualRole === 'retailer' || actualRole === 'admin';
+  const roleWord = getTranslation(currentLang,
+    canFpo ? 'roleFpoManager' : canRetailer ? 'roleRetailer' : 'roleFarmer');
 
   return `
     <div style="display: flex; flex-direction: column; gap: 24px;">
@@ -86,18 +93,23 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
 
         <!-- User Role Switcher -->
         <div class="card">
-          <h3 style="font-size: 18px; margin-bottom: 16px;"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>‍<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> Active User Interface Mode</h3>
+          <h3 style="font-size: 18px; margin-bottom: 6px;">${icon('fpo', 18)} Your view</h3>
+          <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 16px;">
+            ${canFpo || canRetailer
+              ? 'You are signed in as ' + roleWord + '. These are the views your account can open.'
+              : 'You are signed in as ' + roleWord + '. This is the view your account opens; the fleet view belongs to your FPO manager.'}
+          </p>
           
           <div style="display: flex; flex-direction: column; gap: 12px;">
             <button class="btn-secondary ${userRole === 'farmer' ? 'active' : ''}" id="btnSetFarmerRole" style="${userRole === 'farmer' ? 'border-color: var(--agri-green); background: var(--agri-green-light); font-weight: bold;' : ''}">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>‍<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8M12 13c0-4 3-6 7-6 0 4-3 6-7 6M12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5"/></svg> Farmer Simple View (Default)
             </button>
-            <button class="btn-secondary ${userRole === 'retailer' ? 'active' : ''}" id="btnSetRetailerRole" style="${userRole === 'retailer' ? 'border-color: var(--solar-yellow); background: var(--solar-yellow-light); font-weight: bold;' : ''}">
+            ${canRetailer ? `<button class="btn-secondary ${userRole === 'retailer' ? 'active' : ''}" id="btnSetRetailerRole" style="${userRole === 'retailer' ? 'border-color: var(--solar-yellow); background: var(--solar-yellow-light); font-weight: bold;' : ''}">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h2.5l2 11h11M8 20a1 1 0 1 0 2 0 1 1 0 0 0-2 0M16 20a1 1 0 1 0 2 0 1 1 0 0 0-2 0M7 9h13l-1.5 5H8"/></svg> Small Vegetable Retailer Mode
-            </button>
-            <button class="btn-secondary ${userRole === 'fpo' ? 'active' : ''}" id="btnSetFpoRole" style="${userRole === 'fpo' ? 'border-color: var(--cooling-blue); background: var(--cooling-blue-light); font-weight: bold;' : ''}">
+            </button>` : ''}
+            ${canFpo ? `<button class="btn-secondary ${userRole === 'fpo' ? 'active' : ''}" id="btnSetFpoRole" style="${userRole === 'fpo' ? 'border-color: var(--cooling-blue); background: var(--cooling-blue-light); font-weight: bold;' : ''}">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5V6l7-2.5V20.5M10.5 20.5h10V10h-10M13.5 13.5h1M17 13.5h1M13.5 17h1M17 17h1M6 8.5h1.5M6 12h1.5M6 15.5h1.5"/></svg> FPO / Cooperative Manager Fleet View
-            </button>
+            </button>` : ''}
           </div>
         </div>
 

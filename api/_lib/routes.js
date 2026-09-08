@@ -180,11 +180,112 @@ export async function handleApi(req, res, route) {
 
   if (route === '/api/units' && method === 'GET') {
     const units = await withUser(uid, async c => {
-      const { rows } = await c.query(
-        `select id, code, label, district, capacity_kg from units order by code`);
+      /* RLS decides the rows: a farmer gets the units they are a member of, a
+         manager gets every unit their FPO owns. This query does not filter,
+         on purpose. Filtering here as well would hide the fact that the
+         policy is what makes it correct. */
+      const { rows } = await c.query(`
+        select u.id, u.code, u.label, u.district, u.capacity_kg,
+               u.setpoint_c, u.setpoint_set_at,
+               s.name as setpoint_set_by_name,
+               f.operator_phone,
+               coalesce(b.stored_kg, 0) as stored_kg,
+               coalesce(b.batch_count, 0) as batch_count
+          from units u
+          left join users s on s.id = u.setpoint_set_by
+          left join fpos  f on f.id = u.fpo_id
+          left join (
+            select unit_id,
+                   sum(weight_kg)::numeric(10,2) as stored_kg,
+                   count(*)::int as batch_count
+              from batches where removed_on is null
+             group by unit_id
+          ) b on b.unit_id = u.id
+         order by u.code`);
       return rows;
     });
     return json(res, 200, { units });
+  }
+
+  /* Telemetry, read back. The gateway has been able to write readings since
+     the first migration and nothing could ever read them, which made the one
+     number this product exists to show — the temperature inside the chamber —
+     unreachable from the app. */
+  if (route === '/api/readings' && method === 'GET') {
+    const q = new URL(req.url, 'http://x').searchParams;
+    const unit = q.get('unit');
+    const limit = Math.min(Math.max(parseInt(q.get('limit') || '60', 10) || 60, 1), 500);
+
+    const readings = await withUser(uid, async c => {
+      const { rows } = await c.query(`
+        select r.unit_id, u.code as unit_code, r.taken_at, r.temp_c,
+               r.humidity_pct, r.battery_pct, r.solar_kw, r.load_kg,
+               r.door_open, r.pcm_pct
+          from readings r join units u on u.id = r.unit_id
+         where ($1::uuid is null or r.unit_id = $1)
+         order by r.taken_at desc
+         limit $2`, [unit || null, limit]);
+      return rows;
+    });
+    /* Oldest first is what a chart wants; the query sorts the other way so
+       the limit takes the most recent rows rather than the first ever. */
+    return json(res, 200, { readings: readings.reverse() });
+  }
+
+  /* The target temperature, set once by a manager and read by every farmer on
+     the unit. A trigger keeps this to the setpoint columns, so a manager
+     cannot rename or resize a unit through here. */
+  if (route.startsWith('/api/units/') && method === 'PATCH') {
+    const id = route.split('/')[3];
+    const b = await body(req);
+
+    let setpoint = null;
+    if (b.setpoint_c !== null && b.setpoint_c !== undefined) {
+      setpoint = Number(b.setpoint_c);
+      if (!Number.isFinite(setpoint) || setpoint < 0 || setpoint > 25) {
+        return json(res, 400, { error: 'setpoint must be between 0 and 25 degrees' });
+      }
+    }
+
+    try {
+      const updated = await withUser(uid, async c => {
+        const { rows } = await c.query(`
+          update units
+             set setpoint_c = $2, setpoint_set_by = $3, setpoint_set_at = now()
+           where id = $1
+           returning id, code, setpoint_c, setpoint_set_at`,
+          [id, setpoint, uid]);
+        return rows[0] || null;
+      });
+      /* No row means the policy refused it: not a manager, or not their FPO.
+         RLS answers this, not an if statement up here. */
+      if (!updated) return json(res, 403, { error: 'only an FPO manager can set this' });
+      return json(res, 200, { unit: updated });
+    } catch (err) {
+      if (/only the setpoint/.test(err.message)) {
+        return json(res, 400, { error: err.message });
+      }
+      throw err;
+    }
+  }
+
+  /* Applies one setpoint to every unit the caller may write. For a manager
+     that is their whole FPO, which is what "adjusts in all logins" means. */
+  if (route === '/api/units/setpoint' && method === 'POST') {
+    const b = await body(req);
+    const setpoint = Number(b.setpoint_c);
+    if (!Number.isFinite(setpoint) || setpoint < 0 || setpoint > 25) {
+      return json(res, 400, { error: 'setpoint must be between 0 and 25 degrees' });
+    }
+    const units = await withUser(uid, async c => {
+      const { rows } = await c.query(`
+        update units
+           set setpoint_c = $1, setpoint_set_by = $2, setpoint_set_at = now()
+         returning id, code, setpoint_c`, [setpoint, uid]);
+      return rows;
+    });
+    if (!units.length) return json(res, 403, { error: 'only an FPO manager can set this' });
+    return json(res, 200, { updated: units.length, units });
   }
 
   if (route === '/api/alerts' && method === 'GET') {
@@ -213,14 +314,102 @@ export async function handleApi(req, res, route) {
   if (route === '/api/batches' && method === 'GET') {
     const batches = await withUser(uid, async c => {
       const { rows } = await c.query(`
-        select b.id, b.unit_id, b.crop_id, b.weight_kg, b.stored_on,
-               b.owner_id, u.name as owner_name
-          from batches b left join users u on u.id = b.owner_id
+        select b.id, b.unit_id, n.code as unit_code, b.crop_id, b.weight_kg,
+               b.stored_on, b.owner_id, u.name as owner_name,
+               b.for_sale, b.ask_price_inr, b.note,
+               (b.owner_id = $1) as is_mine
+          from batches b
+          left join users u on u.id = b.owner_id
+          join units n on n.id = b.unit_id
          where b.removed_on is null
-         order by b.stored_on`);
+         order by b.stored_on`, [uid]);
       return rows;
     });
     return json(res, 200, { batches });
+  }
+
+  /* Putting produce in. The insert policy requires owner_id = the caller, so
+     a farmer cannot store produce in someone else's name, and requires the
+     unit to be one they are a member of. Neither check is repeated here. */
+  if (route === '/api/batches' && method === 'POST') {
+    const b = await body(req);
+    const weight = Number(b.weight_kg);
+    if (!b.unit_id) return json(res, 400, { error: 'unit_id required' });
+    if (!b.crop_id) return json(res, 400, { error: 'crop_id required' });
+    if (!Number.isFinite(weight) || weight <= 0 || weight > 10000) {
+      return json(res, 400, { error: 'weight_kg must be between 0 and 10000' });
+    }
+
+    try {
+      const batch = await withUser(uid, async c => {
+        const { rows } = await c.query(`
+          insert into batches
+            (unit_id, owner_id, crop_id, weight_kg, for_sale, ask_price_inr, note)
+          values ($1, $2, $3, $4, $5, $6, $7)
+          returning *`,
+          [b.unit_id, uid, String(b.crop_id).slice(0, 64), weight,
+           !!b.for_sale,
+           b.ask_price_inr === null || b.ask_price_inr === undefined
+             ? null : Number(b.ask_price_inr),
+           b.note ? String(b.note).slice(0, 300) : null]);
+        return rows[0];
+      });
+      return json(res, 201, { batch });
+    } catch (err) {
+      /* A policy refusal reads as a row level security violation, and it means
+         the caller is not a member of that unit. That is a 403, not a 500. */
+      if (/row-level security/i.test(err.message)) {
+        return json(res, 403, { error: 'you are not storing produce at that unit' });
+      }
+      if (/batches_weight_sane|batches_price_sane/.test(err.message)) {
+        return json(res, 400, { error: 'weight or price out of range' });
+      }
+      throw err;
+    }
+  }
+
+  /* Adjusting produce: the weight, whether it is for sale, the asking price,
+     and taking it out. Removal is `removed_on` rather than a delete, so the
+     tonnage-saved figure keeps its history. */
+  if (route.startsWith('/api/batches/') && method === 'PATCH') {
+    const id = route.split('/')[3];
+    const b = await body(req);
+
+    const sets = [];
+    const args = [id];
+    const put = (sql, value) => { args.push(value); sets.push(sql + ' = $' + args.length); };
+
+    if (b.weight_kg !== undefined) {
+      const w = Number(b.weight_kg);
+      if (!Number.isFinite(w) || w <= 0 || w > 10000) {
+        return json(res, 400, { error: 'weight_kg must be between 0 and 10000' });
+      }
+      put('weight_kg', w);
+    }
+    if (b.for_sale !== undefined) put('for_sale', !!b.for_sale);
+    if (b.ask_price_inr !== undefined) {
+      const p = b.ask_price_inr === null ? null : Number(b.ask_price_inr);
+      if (p !== null && (!Number.isFinite(p) || p < 0)) {
+        return json(res, 400, { error: 'ask_price_inr cannot be negative' });
+      }
+      put('ask_price_inr', p);
+    }
+    if (b.note !== undefined) put('note', b.note ? String(b.note).slice(0, 300) : null);
+    /* current_date, not a date computed in Node. The app runs in IST and the
+       server may not; taking the UTC date puts an evening removal on
+       yesterday, which is wrong on the one report where it matters. */
+    if (b.removed === true) sets.push('removed_on = current_date');
+
+    if (!sets.length) return json(res, 400, { error: 'nothing to change' });
+
+    const batch = await withUser(uid, async c => {
+      const { rows } = await c.query(
+        `update batches set ${sets.join(', ')} where id = $1 returning *`, args);
+      return rows[0] || null;
+    });
+    /* The update policy is owner-or-manager. No row back means neither. */
+    if (!batch) return json(res, 403, { error: 'that is not your produce' });
+    return json(res, 200, { batch });
   }
 
   if (route === '/api/push/subscribe' && method === 'POST') {
