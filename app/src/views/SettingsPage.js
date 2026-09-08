@@ -3,8 +3,17 @@
 import { getTranslation } from '../data/i18n.js';
 import { hardwareService } from '../data/mockHardware.js';
 import * as notify from '../utils/notifications.js';
+import { icon } from '../components/icons.js';
+import { getUser, isRemembered } from '../utils/api.js';
+import {
+  getOperatorNumber, setOperatorNumber, formatOperatorNumber
+} from '../utils/contact.js';
 
 export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C') {
+  const user = getUser();
+  const remembered = isRemembered();
+  const operatorNumber = getOperatorNumber();
+
   return `
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
@@ -111,13 +120,55 @@ export function renderSettingsPage(state, currentLang, userRole, tempUnit = 'C')
           </div>
         </div>
 
+        <div class="card">
+          <h3 style="font-size: 18px; margin-bottom: 6px;">
+            ${icon('phone', 18)} ${getTranslation(currentLang, 'callOperatorNumber')}
+          </h3>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+            The number the Call operator button on the Alerts page dials. Until
+            this is set, that button has nobody to reach.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input class="lang-select" id="inputOperatorNumber" type="tel" inputmode="tel"
+                   style="flex: 1 1 190px; min-width: 0;"
+                   placeholder="+91 98620 12345"
+                   value="${operatorNumber ? formatOperatorNumber(operatorNumber) : ''}">
+            <button class="btn-secondary" id="btnSaveOperator" type="button">Save</button>
+          </div>
+          <p id="operatorSaved" style="color: var(--agri-green); font-size: 13px; margin-top: 8px;" hidden>Saved.</p>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size: 18px; margin-bottom: 6px;">
+            ${icon('signout', 18)} ${getTranslation(currentLang, 'signOut')}
+          </h3>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+            ${user
+              ? `${getTranslation(currentLang, 'signedInAs')} <strong>${escapeHtml(user.name || '')}</strong>.`
+              : ''}
+            ${remembered
+              ? 'This phone is set to keep you signed in.'
+              : 'This session ends when you close the app.'}
+          </p>
+          <button class="btn-secondary" id="btnSignOutSettings" type="button"
+                  style="border-color: #A6321F; color: #A6321F;">
+            ${icon('signout', 18)} ${getTranslation(currentLang, 'signOut')}
+          </button>
+        </div>
+
       </div>
 
     </div>
   `;
 }
 
-export function bindSettingsEvents(currentLang, onLangChange, onSelectRole) {
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+export function bindSettingsEvents(currentLang, onLangChange, onSelectRole, onSignOut) {
   /* ---- notifications ---- */
   const toggleBtn = document.getElementById('btnToggleNotify');
   const stateLine = document.getElementById('notifyState');
@@ -207,4 +258,27 @@ export function bindSettingsEvents(currentLang, onLangChange, onSelectRole) {
       alert('✓ Hardware simulation reset to default state.');
     });
   }
+
+  /* ---- operator number ---- */
+  const opInput = document.getElementById('inputOperatorNumber');
+  const opSave = document.getElementById('btnSaveOperator');
+  const opSaved = document.getElementById('operatorSaved');
+  if (opSave && opInput) {
+    const save = () => {
+      const stored = setOperatorNumber(opInput.value);
+      opInput.value = stored ? formatOperatorNumber(stored) : '';
+      if (opSaved) {
+        opSaved.textContent = stored
+          ? 'Saved. The Alerts page will dial ' + formatOperatorNumber(stored) + '.'
+          : 'Cleared. The Alerts page has no number to dial.';
+        opSaved.hidden = false;
+      }
+    };
+    opSave.addEventListener('click', save);
+    opInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); save(); } });
+  }
+
+  /* ---- sign out ---- */
+  const outBtn = document.getElementById('btnSignOutSettings');
+  if (outBtn && onSignOut) outBtn.addEventListener('click', onSignOut);
 }

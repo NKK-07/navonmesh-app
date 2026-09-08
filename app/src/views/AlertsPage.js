@@ -3,6 +3,33 @@
 import { hardwareService } from '../data/mockHardware.js';
 import { speakText } from '../utils/audio.js';
 import { getTranslation } from '../data/i18n.js';
+import { getOperatorNumber, formatOperatorNumber } from '../utils/contact.js';
+
+const PHONE_ICON = '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.5c0 8 5.5 13.5 13.5 13.5l2-3-4-2.5-2 2a15 15 0 0 1-6-6l2-2L7.5 3.5z"/></svg>';
+
+/* A real tel: link when there is a real number, and an honest prompt when
+   there is not. The previous version popped an alert box containing
+   "+91 98620 XXXXX", which looks like it worked and reaches nobody. */
+function renderCallOperator(currentLang) {
+  const number = getOperatorNumber();
+  const style = 'border-color: #A6321F; color: #A6321F;';
+
+  if (number) {
+    return `
+      <a class="btn-secondary" style="${style}" href="tel:${number}">
+        ${PHONE_ICON} ${getTranslation(currentLang, 'callOperator')}
+        <span class="op-number">${formatOperatorNumber(number)}</span>
+      </a>
+    `;
+  }
+
+  return `
+    <button class="btn-secondary" type="button" data-goto-tab="settings"
+            style="${style}" title="${getTranslation(currentLang, 'noOperatorNumber')}">
+      ${PHONE_ICON} ${getTranslation(currentLang, 'setOperatorNumber')}
+    </button>
+  `;
+}
 
 export function renderAlertsPage(state, currentLang) {
   const alertsHtml = state.alerts.map(alt => {
@@ -34,9 +61,7 @@ export function renderAlertsPage(state, currentLang) {
           <button class="btn-secondary btn-alert-ack" data-id="${alt.id}">
             ✓ ${getTranslation(currentLang, 'acknowledge')}
           </button>
-          <button class="btn-secondary" style="border-color: #A6321F; color: #A6321F;" onclick="alert('Calling FPO Village Operator: +91 98620 XXXXX')">
-            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.5c0 8 5.5 13.5 13.5 13.5l2-3-4-2.5-2 2a15 15 0 0 1-6-6l2-2L7.5 3.5z"/></svg> ${getTranslation(currentLang, 'callOperator')}
-          </button>
+          ${renderCallOperator(currentLang)}
         </div>
       </div>
     `;

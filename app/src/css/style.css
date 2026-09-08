@@ -885,3 +885,50 @@ button {
 .login-btn:hover:not(:disabled){background:var(--agri-green-dark)}
 .login-btn:disabled{opacity:.6;cursor:default}
 .login-help{color:var(--text-muted);font-size:12.5px;line-height:1.6;margin:22px 0 0}
+
+/* Keep me signed in. Off by default, and the hint says why, because the person
+   most likely to tick it out of habit is the one on a shared handset. */
+.login-remember{
+  display:flex;align-items:flex-start;gap:11px;
+  margin:6px 0 18px;cursor:pointer;
+  font-size:14px;color:var(--text-dark);
+}
+.login-remember input{
+  width:20px;height:20px;margin:1px 0 0;flex:0 0 auto;
+  accent-color:var(--agri-green);cursor:pointer;
+}
+.login-remember small{
+  display:block;margin-top:2px;
+  color:var(--text-muted);font-size:12.5px;line-height:1.5;
+}
+
+/* Who is signed in, and the way out. Sits under the nav rather than in it:
+   it is not a place to go. */
+.sidebar-account{
+  margin-top:auto;padding:14px 20px 18px;
+  border-top:1px solid var(--border-light);
+}
+.sidebar-who{margin:0 0 10px;line-height:1.35}
+.sidebar-who-name{
+  display:block;font-size:13.5px;font-weight:700;color:var(--text-dark);
+}
+.sidebar-who-role{
+  display:block;font-family:var(--font-mono,ui-monospace,monospace);
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);margin-top:2px;
+}
+.sidebar-signout{
+  display:flex;align-items:center;gap:9px;width:100%;
+  min-height:42px;padding:0 12px;
+  background:none;border:1px solid var(--border-light);
+  border-radius:var(--radius-md,5px);
+  color:var(--clay,#B4622F);font-size:13.5px;font-weight:600;
+  cursor:pointer;transition:border-color .15s,background .15s;
+}
+.sidebar-signout:hover{border-color:var(--clay,#B4622F);background:var(--bg-main)}
+
+/* The dialled number, next to the label, so it is checkable before tapping. */
+.op-number{
+  font-family:var(--font-mono,ui-monospace,monospace);
+  font-size:12px;color:var(--text-muted);margin-left:8px;white-space:nowrap;
+}

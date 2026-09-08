@@ -89,7 +89,20 @@ export const TRANSLATIONS = {
     recommendedTemp: "Recommended Temp",
     recommendedHumidity: "Recommended Humidity",
     expectedLife: "Expected Shelf Life",
-    ethyleneSens: "Ethylene Sensitivity"
+    ethyleneSens: "Ethylene Sensitivity",
+
+    // Session, roles and operator contact
+    signOut: "Sign out",
+    roleFarmer: "Farmer",
+    roleFpoManager: "FPO manager",
+    roleAdmin: "Administrator",
+    roleRetailer: "Retailer",
+    keepSignedIn: "Keep me signed in on this phone",
+    sharedPhoneHint: "Leave this off on a shared handset.",
+    callOperatorNumber: "Operator number",
+    noOperatorNumber: "No operator number saved yet",
+    setOperatorNumber: "Add the number",
+    signedInAs: "Signed in as",
   },
 
   hi: {
@@ -168,7 +181,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "अनुशंसित तापमान",
     recommendedHumidity: "अनुशंसित नमी",
     expectedLife: "संभावित शेल्फ लाइफ",
-    ethyleneSens: "इथाइलीन संवेदनशीलता"
+    ethyleneSens: "इथाइलीन संवेदनशीलता",
+
+    // Session, roles and operator contact
+    signOut: "साइन आउट",
+    roleFarmer: "किसान",
+    roleFpoManager: "एफपीओ प्रबंधक",
+    roleAdmin: "प्रशासक",
+    roleRetailer: "विक्रेता",
+    keepSignedIn: "इस फ़ोन पर साइन इन रखें",
+    sharedPhoneHint: "साझा फ़ोन पर इसे बंद रखें।",
+    callOperatorNumber: "ऑपरेटर नंबर",
+    noOperatorNumber: "अभी कोई ऑपरेटर नंबर सहेजा नहीं गया",
+    setOperatorNumber: "नंबर जोड़ें",
+    signedInAs: "साइन इन",
+    navGroupMonitor: "निगरानी",
+    navGroupProduce: "उपज",
+    navGroupSystem: "सिस्टम",
+    navAboutProject: "परियोजना के बारे में",
   },
 
   as: {
@@ -247,7 +277,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "প্ৰস্তাবিত উষ্ণতা",
     recommendedHumidity: "প্ৰস্তাবিত আৰ্দ্ৰতা",
     expectedLife: "আশাশুধীয়া সময়",
-    ethyleneSens: "ইথিলিন সংবেদনশীলতা"
+    ethyleneSens: "ইথিলিন সংবেদনশীলতা",
+
+    // Session, roles and operator contact
+    signOut: "ছাইন আউট",
+    roleFarmer: "কৃষক",
+    roleFpoManager: "এফপিঅ পৰিচালক",
+    roleAdmin: "প্ৰশাসক",
+    roleRetailer: "বিক্ৰেতা",
+    keepSignedIn: "এই ফোনত ছাইন ইন কৰি ৰাখক",
+    sharedPhoneHint: "ভাগ কৰা ফোনত ইয়াক বন্ধ ৰাখক।",
+    callOperatorNumber: "অপাৰেটৰ নম্বৰ",
+    noOperatorNumber: "এতিয়াও অপাৰেটৰ নম্বৰ ছেভ কৰা নাই",
+    setOperatorNumber: "নম্বৰ যোগ কৰক",
+    signedInAs: "ছাইন ইন",
+    navGroupMonitor: "নিৰীক্ষণ",
+    navGroupProduce: "উৎপাদন",
+    navGroupSystem: "ছিষ্টেম",
+    navAboutProject: "প্ৰকল্পৰ বিষয়ে",
   },
 
   ne: {
@@ -326,7 +373,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "सिफारिस गरिएको तापक्रम",
     recommendedHumidity: "सिफारिस गरिएको आद्रता",
     expectedLife: "अपेक्षित भण्डारण अवधि",
-    ethyleneSens: "इथिलिन संवेदनशीलता"
+    ethyleneSens: "इथिलिन संवेदनशीलता",
+
+    // Session, roles and operator contact
+    signOut: "साइन आउट",
+    roleFarmer: "किसान",
+    roleFpoManager: "एफपीओ प्रबन्धक",
+    roleAdmin: "प्रशासक",
+    roleRetailer: "खुद्रा विक्रेता",
+    keepSignedIn: "यो फोनमा साइन इन राख्नुहोस्",
+    sharedPhoneHint: "साझा फोनमा यो बन्द राख्नुहोस्।",
+    callOperatorNumber: "सञ्चालक नम्बर",
+    noOperatorNumber: "अहिलेसम्म सञ्चालक नम्बर सुरक्षित छैन",
+    setOperatorNumber: "नम्बर थप्नुहोस्",
+    signedInAs: "साइन इन",
+    navGroupMonitor: "अनुगमन",
+    navGroupProduce: "उब्जनी",
+    navGroupSystem: "प्रणाली",
+    navAboutProject: "परियोजनाबारे",
   },
 
   mni: {
@@ -405,7 +469,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "য়াবা টেম্পরেচর",
     recommendedHumidity: "য়াবা হুমাইদিতি",
     expectedLife: "লেমহৌগদবা নুমিৎ",
-    ethyleneSens: "ইথিলিন কেপাসিতী"
+    ethyleneSens: "ইথিলিন কেপাসিতী",
+
+    // Session, roles and operator contact
+    signOut: "সাইন আউট",
+    roleFarmer: "লৌমী",
+    roleFpoManager: "এফপিঅ মেনেজর",
+    roleAdmin: "এদমিন",
+    roleRetailer: "য়োনবা মী",
+    keepSignedIn: "ফোন অসিদা সাইন ইন তৌদুনা থম্মু",
+    sharedPhoneHint: "শেয়ার তৌবা ফোনদা মসি থিংবিয়ু।",
+    callOperatorNumber: "ওপরেটর নম্বর",
+    noOperatorNumber: "ওপরেটর নম্বর হৌজিক সেভ তৌদ্রি",
+    setOperatorNumber: "নম্বর হাপচিল্লু",
+    signedInAs: "সাইন ইন",
+    navGroupMonitor: "য়েংশিনবা",
+    navGroupProduce: "মহৈ-মরোং",
+    navGroupSystem: "সিস্টেম",
+    navAboutProject: "প্রোজেক্ত অসিগী মরমদা",
   },
 
   kha: {
@@ -484,7 +565,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "Temp Ba Bha",
     recommendedHumidity: "Humidity Ba Bha",
     expectedLife: "Sngi Sah Bha",
-    ethyleneSens: "Ethylene Sens"
+    ethyleneSens: "Ethylene Sens",
+
+    // Session, roles and operator contact
+    signOut: "Mih noh",
+    roleFarmer: "Nongrep",
+    roleFpoManager: "Nongsumar FPO",
+    roleAdmin: "Nongsumar",
+    roleRetailer: "Nongdie",
+    keepSignedIn: "Pynlong sngewbha ha kane ka phone",
+    sharedPhoneHint: "Wat pynlong ha ka phone ba ki paidbah pyndonkam.",
+    callOperatorNumber: "Nombor u nongtrei",
+    noOperatorNumber: "Ym don nombor u nongtrei",
+    setOperatorNumber: "Buh ia u nombor",
+    signedInAs: "Kem ha",
+    navGroupMonitor: "Peit",
+    navGroupProduce: "Ki jingthung",
+    navGroupSystem: "Ka system",
+    navAboutProject: "Shaphang ka kam",
   },
 
   mizo: {
@@ -563,7 +661,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "Temp Tha Bera",
     recommendedHumidity: "Humidity Tha Bera",
     expectedLife: "Chamate Nilai",
-    ethyleneSens: "Ethylene Sens"
+    ethyleneSens: "Ethylene Sens",
+
+    // Session, roles and operator contact
+    signOut: "Chhuahsan",
+    roleFarmer: "Loneitu",
+    roleFpoManager: "FPO enkawltu",
+    roleAdmin: "Enkawltu",
+    roleRetailer: "Hnathawktu",
+    keepSignedIn: "He fon-ah hian min lut reng rawh",
+    sharedPhoneHint: "Mi dang nen in hman ho fon-ah chuan hmang suh.",
+    callOperatorNumber: "Operator number",
+    noOperatorNumber: "Operator number dah a la awm lo",
+    setOperatorNumber: "Number dah rawh",
+    signedInAs: "A lut",
+    navGroupMonitor: "En reng",
+    navGroupProduce: "Thlai",
+    navGroupSystem: "System",
+    navAboutProject: "Hnathawh chungchang",
   },
 
   nag: {
@@ -642,7 +757,24 @@ export const TRANSLATIONS = {
     recommendedTemp: "Recommended Temp",
     recommendedHumidity: "Recommended Humidity",
     expectedLife: "Expected Shelf Life",
-    ethyleneSens: "Ethylene Sens"
+    ethyleneSens: "Ethylene Sens",
+
+    // Session, roles and operator contact
+    signOut: "Sign out kuru",
+    roleFarmer: "Kheti manu",
+    roleFpoManager: "FPO manager",
+    roleAdmin: "Admin",
+    roleRetailer: "Bikri manu",
+    keepSignedIn: "Etu phone te sign in rakhibi",
+    sharedPhoneHint: "Dusra manu logote share kora phone te etu bondh rakhibi.",
+    callOperatorNumber: "Operator number",
+    noOperatorNumber: "Operator number ekhon tak save nai",
+    setOperatorNumber: "Number dibi",
+    signedInAs: "Sign in",
+    navGroupMonitor: "Sai thaka",
+    navGroupProduce: "Kheti saman",
+    navGroupSystem: "System",
+    navAboutProject: "Project laga bisi",
   }
 };
 

@@ -36,6 +36,14 @@ export function renderLoginPage() {
                  inputmode="numeric" autocomplete="current-password"
                  maxlength="6" placeholder="4 digits" required>
 
+          <label class="login-remember">
+            <input type="checkbox" id="loginRemember" name="remember">
+            <span>
+              Keep me signed in on this phone
+              <small>Leave this off on a shared handset.</small>
+            </span>
+          </label>
+
           <p class="login-error" id="loginError" role="alert" hidden></p>
 
           <button class="login-btn" id="loginBtn" type="submit">Sign in</button>
@@ -76,9 +84,11 @@ export function bindLoginEvents(onSignedIn) {
     btn.disabled = true;
     btn.textContent = 'Signing in';
 
+    const remember = !!(document.getElementById('loginRemember') || {}).checked;
+
     let result;
     try {
-      result = await login(phone, pin);
+      result = await login(phone, pin, remember);
     } catch {
       return fail('Cannot reach the server. Check your connection and try again.');
     }

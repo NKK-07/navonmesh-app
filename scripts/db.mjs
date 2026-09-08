@@ -14,12 +14,20 @@
  * Two mappings matter and are the reason this is a script rather than a pair
  * of --env-file flags:
  *
- * Migrations get the DIRECT connection. Neon's pooled endpoint is PgBouncer
+ * Schema work gets the DIRECT connection. Neon's pooled endpoint is PgBouncer
  * in transaction mode, which drops session state between statements, and the
  * failures do not mention pooling: a SET that silently does not persist, a
  * write landing in a read-only transaction inherited from an earlier client.
- * Everything this runner launches is laptop side schema work, so it always
- * takes the unpooled host.
+ *
+ * Anything that SERVES REQUESTS gets the pooled one, and says so with --serve:
+ *
+ *   node scripts/db.mjs neon --serve server/server.js
+ *
+ * This started out unconditional: every launch took the direct host, on the
+ * assumption that a runner called db.mjs only ever ran migrations. Then the
+ * dev server was launched through it and served every request over the
+ * endpoint reserved for schema work, which held until the compute went cold
+ * and a login came back 500.
  *
  * DATABASE_URL_APP is cleared unless the target defines its own. It names the
  * non-owning role that RLS actually binds, and the local one points at
@@ -79,12 +87,16 @@ function describe(url) {
   }
 }
 
-const [, , targetName, script, ...rest] = process.argv;
+const argv = process.argv.slice(2);
+/* A long running server wants the pooler; migrations and the RLS suite want
+   the direct endpoint. The flag is consumed here, never passed on. */
+const SERVE = argv.includes('--serve');
+const [targetName, script, ...rest] = argv.filter(a => a !== '--serve');
 const target = TARGETS[targetName];
 
 if (!target || !script) {
   console.error('usage: node scripts/db.mjs <' +
-                Object.keys(TARGETS).join('|') + '> <script.js> [args...]');
+                Object.keys(TARGETS).join('|') + '> [--serve] <script.js> [args...]');
   process.exit(2);
 }
 
@@ -105,18 +117,30 @@ if (targetName === 'neon') {
       '  write the connection strings into .env.local, then try again.\n');
     process.exit(1);
   }
-  /* Keep the pooled string reachable under its own name: provisioning needs
-     it to print the URL the deployed app should use, which is the pooled one
-     even though nothing here connects with it. */
+  /* Keep the pooled string reachable under its own name: provisioning needs it
+     to print the URL the deployed app should use. */
   env.DATABASE_URL_POOLED = env.DATABASE_URL;
-  env.DATABASE_URL = env.DATABASE_URL_UNPOOLED;
+
+  /* Direct for schema work, pooled for anything that serves requests.
+     This used to be direct unconditionally, on the assumption written into
+     the comment above that everything launched here is laptop side schema
+     work. That stopped being true the moment this ran server.js, which then
+     served every request over the endpoint meant for migrations. --serve says
+     which kind of thing is being launched, rather than leaving it to a guess
+     about the filename. */
+  env.DATABASE_URL = SERVE ? env.DATABASE_URL_POOLED : env.DATABASE_URL_UNPOOLED;
 
   /* server/.env.neon supplies this once the app role exists. Until then it
-     must be absent rather than inherited from the local file. */
+     must be absent rather than inherited from the local file, and it follows
+     the same direct-or-pooled rule as the owner connection: both pools have to
+     land on the same endpoint or the process straddles two of them. */
   const own = fs.existsSync(path.join(ROOT, 'server/.env.neon'))
     ? parseEnv(fs.readFileSync(path.join(ROOT, 'server/.env.neon'), 'utf8'))
     : {};
-  if (own.DATABASE_URL_APP) env.DATABASE_URL_APP = own.DATABASE_URL_APP;
+  const appUrl = SERVE
+    ? (own.DATABASE_URL_APP_POOLED || own.DATABASE_URL_APP)
+    : own.DATABASE_URL_APP;
+  if (appUrl) env.DATABASE_URL_APP = appUrl;
   else delete env.DATABASE_URL_APP;
 }
 
@@ -133,10 +157,18 @@ console.log('  app      ' + (app
   ? app.role + '@' + app.host + '/' + app.db + (app.pooled ? '   POOLED' : '')
   : 'not set, so RLS is not exercised'));
 console.log('  env      ' + (loaded.join(', ') || 'none found'));
+if (targetName === 'neon') {
+  console.log('  endpoint ' + (SERVE ? 'pooled, serving requests'
+                                     : 'direct, schema work'));
+}
 console.log('');
 
-if (owner && owner.pooled) {
+if (owner && owner.pooled && !SERVE) {
   console.log('  Warning: that is a pooled host. Schema work wants the direct one.\n');
+}
+if (owner && !owner.pooled && SERVE) {
+  console.log('  Warning: serving requests over the direct endpoint. That is the\n' +
+              '  one meant for migrations and it runs out of connections.\n');
 }
 
 spawn(process.execPath, [path.join(ROOT, script), ...rest],

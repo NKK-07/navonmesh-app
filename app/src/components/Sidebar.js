@@ -7,6 +7,7 @@
 
 import { getTranslation } from '../data/i18n.js';
 import { icon } from './icons.js';
+import { getUser } from '../utils/api.js';
 
 const GROUPS = [
   {
@@ -65,6 +66,8 @@ export function renderSidebar(currentTab, currentLang, userRole) {
     `;
   }).join('');
 
+  const user = getUser();
+
   return `
     <aside class="app-sidebar">
       ${groupsHtml}
@@ -72,11 +75,39 @@ export function renderSidebar(currentTab, currentLang, userRole) {
         <span>${getTranslation(currentLang, 'navAboutProject')}</span>
         ${icon('external', 13)}
       </a>
+      ${user ? `
+        <div class="sidebar-account">
+          <p class="sidebar-who">
+            <span class="sidebar-who-name">${escapeHtml(user.name || '')}</span>
+            <span class="sidebar-who-role">${roleLabel(currentLang, user.role)}</span>
+          </p>
+          <button class="sidebar-signout" id="btnSignOut" type="button">
+            ${icon('signout', 15)}
+            <span>${getTranslation(currentLang, 'signOut')}</span>
+          </button>
+        </div>
+      ` : ''}
     </aside>
   `;
 }
 
-export function bindSidebarEvents(onTabSelect) {
+function roleLabel(lang, role) {
+  if (role === 'fpo_manager') return getTranslation(lang, 'roleFpoManager');
+  if (role === 'admin') return getTranslation(lang, 'roleAdmin');
+  if (role === 'retailer') return getTranslation(lang, 'roleRetailer');
+  return getTranslation(lang, 'roleFarmer');
+}
+
+/* The name comes from the database and is rendered into innerHTML. It is our
+   own row rather than anything a stranger controls, but a name with an
+   apostrophe or an ampersand in it should not be able to break the markup. */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+export function bindSidebarEvents(onTabSelect, onSignOut) {
   const buttons = document.querySelectorAll('.app-sidebar .sidebar-item');
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -84,4 +115,7 @@ export function bindSidebarEvents(onTabSelect) {
       onTabSelect(tabId);
     });
   });
+
+  const out = document.getElementById('btnSignOut');
+  if (out && onSignOut) out.addEventListener('click', onSignOut);
 }

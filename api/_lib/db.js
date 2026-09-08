@@ -55,8 +55,33 @@ function makePool(url, max) {
     ssl: sslFor(url),
     max,
     idleTimeoutMillis: SERVERLESS ? 10_000 : 30_000,
-    connectionTimeoutMillis: 10_000
+    /* Neon suspends a compute that has been idle a few minutes, and the first
+       connection after that has to wake it. 10s was not enough: a cold login
+       came back "Connection terminated due to connection timeout" and the
+       farmer saw a 500. */
+    connectionTimeoutMillis: Number(process.env.PG_CONNECT_TIMEOUT_MS || 20_000)
   });
+}
+
+/* One retry, and only on failure to GET a connection.
+ *
+ * This is safe precisely because nothing has run yet: no transaction is open,
+ * no statement has been sent, so a second attempt cannot repeat a write. A
+ * retry anywhere later would not be safe and is not done.
+ *
+ * Worth the code because of how this product is used. Farmers check the
+ * chamber in the morning and again in the evening, so the compute is usually
+ * asleep when someone actually needs it, and the very first request of the day
+ * is the one most likely to land on a cold start. */
+async function connect(pool) {
+  try {
+    return await pool.connect();
+  } catch (err) {
+    const cold = /timeout|ECONNRESET|ETIMEDOUT|Connection terminated/i.test(err.message || '');
+    if (!cold) throw err;
+    console.warn('[db] cold connection, retrying once:', err.message);
+    return pool.connect();
+  }
 }
 
 export const pool = makePool(OWNER_URL, POOL_MAX);
@@ -75,7 +100,7 @@ if (!APP_URL) {
 }
 
 async function inContext(settings, work) {
-  const client = await appPool.connect();
+  const client = await connect(appPool);
   try {
     await client.query('begin');
     for (const [key, value] of Object.entries(settings)) {
@@ -113,7 +138,7 @@ export function withAnon(work) {
 
 /** Owner connection: bypasses RLS. Migrations and provisioning only. */
 export async function withOwner(work) {
-  const client = await pool.connect();
+  const client = await connect(pool);
   try {
     return await work(client);
   } finally {

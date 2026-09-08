@@ -8,7 +8,7 @@
 // signal. CACHE_NAME carries a version: bump it whenever ASSETS changes, and
 // the old cache is dropped on activate.
 
-const CACHE_NAME = 'navonmesh-v11';
+const CACHE_NAME = 'navonmesh-v12';
 const ASSETS = [
   './',
   './index.html',

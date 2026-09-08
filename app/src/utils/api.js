@@ -12,12 +12,36 @@ const USER_KEY = 'navonmesh_user';
    are ever split across hosts. */
 export const API_BASE = '';
 
+/* Where the session lives is a decision the farmer makes at sign in.
+ *
+ * The default is sessionStorage, which dies when the tab closes. Before this,
+ * a 30 day token went into localStorage unconditionally: sign in once on the
+ * phone at an FPO collection centre and you stayed signed in for a month, on a
+ * device the next person picks up. That is the wrong default for a device
+ * several people share.
+ *
+ * localStorage is still available and still the right answer for a farmer's
+ * own phone, but only when they tick the box asking for it. */
+function stores() {
+  const out = [];
+  try { out.push(sessionStorage); } catch {}
+  try { out.push(localStorage); } catch {}
+  return out;
+}
+
+function read(key) {
+  for (const s of stores()) {
+    try { const v = s.getItem(key); if (v !== null) return v; } catch {}
+  }
+  return null;
+}
+
 export function getToken() {
-  try { return localStorage.getItem(TOKEN_KEY); } catch { return null; }
+  return read(TOKEN_KEY);
 }
 
 export function getUser() {
-  try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); }
+  try { return JSON.parse(read(USER_KEY) || 'null'); }
   catch { return null; }
 }
 
@@ -25,18 +49,32 @@ export function isSignedIn() {
   return !!getToken();
 }
 
-function store(token, user) {
+/** True when this session was deliberately persisted past the tab closing. */
+export function isRemembered() {
+  try { return localStorage.getItem(TOKEN_KEY) !== null; } catch { return false; }
+}
+
+function store(token, user, remember) {
+  /* Written to exactly one place. Writing both would make "keep me signed in"
+     impossible to turn off: clearing the session copy would leave the durable
+     one behind and silently sign the next person in. */
+  const target = remember ? 'localStorage' : 'sessionStorage';
   try {
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    window[target].setItem(TOKEN_KEY, token);
+    window[target].setItem(USER_KEY, JSON.stringify(user));
+  } catch {}
+  /* and never in the other one */
+  const other = remember ? 'sessionStorage' : 'localStorage';
+  try {
+    window[other].removeItem(TOKEN_KEY);
+    window[other].removeItem(USER_KEY);
   } catch {}
 }
 
 export function signOut() {
-  try {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
-  } catch {}
+  for (const s of stores()) {
+    try { s.removeItem(TOKEN_KEY); s.removeItem(USER_KEY); } catch {}
+  }
 }
 
 /**
@@ -62,11 +100,28 @@ export async function apiFetch(path, options = {}) {
   return res;
 }
 
-export async function login(phone, pin) {
+/* A phone number is one number however it is typed. Farmers write it with
+ * spaces, with 0 in front, with 91, or with none of those, and before this any
+ * of them came back as "that phone number and PIN do not match" — blaming the
+ * credentials for a formatting difference nobody can see, three tries from a
+ * 15 minute lockout. Normalising here rather than server side keeps the stored
+ * identity exactly one canonical string. */
+export function normalisePhone(input) {
+  let s = String(input || '').replace(/[\s()\-.]/g, '');
+  if (!s) return s;
+  if (s.startsWith('+')) return s;
+  s = s.replace(/^00/, '');           // 0091...
+  if (s.startsWith('91') && s.length === 12) return '+' + s;
+  s = s.replace(/^0/, '');            // domestic trunk prefix
+  if (s.length === 10) return '+91' + s;
+  return '+' + s;
+}
+
+export async function login(phone, pin, remember = false) {
   const res = await fetch(API_BASE + '/api/auth/login', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ phone, pin })
+    body: JSON.stringify({ phone: normalisePhone(phone), pin })
   });
 
   if (res.status === 423) {
@@ -86,7 +141,7 @@ export async function login(phone, pin) {
   const body = await res.json().catch(() => null);
   if (!body || !body.token) return { ok: false, reason: 'server', status: res.status };
 
-  store(body.token, body.user);
+  store(body.token, body.user, remember);
   return { ok: true, user: body.user };
 }
 

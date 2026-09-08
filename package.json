@@ -6,6 +6,7 @@
   "description": "Solar powered mini cold storage for the North East: the site, the offline first app, and the API behind them",
   "scripts": {
     "dev": "node scripts/db.mjs local server/server.js",
+    "dev:neon": "node scripts/db.mjs neon --serve server/server.js",
     "migrate": "node scripts/db.mjs local server/migrate.js",
     "migrate:status": "node scripts/db.mjs local server/migrate.js --status",
     "seed": "node scripts/db.mjs local server/seed.js",

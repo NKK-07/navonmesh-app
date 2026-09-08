@@ -82,6 +82,19 @@ class NavonmeshApp {
     this.render();
   }
 
+  /* Signing out has to clear more than the token. The tab, the selected crop
+     and the role view are all about the person who was signed in, and leaving
+     them set means the next person to sign in on a shared handset lands on the
+     last screen the previous one was looking at. */
+  handleSignOut() {
+    signOut();
+    this.currentTab = 'dashboard';
+    this.selectedCropId = null;
+    this.userRole = 'farmer';
+    this.isDemoModalOpen = false;
+    this.render();
+  }
+
   setLang(langCode) {
     this.currentLang = langCode;
     this.render();
@@ -143,7 +156,14 @@ class NavonmeshApp {
 
     // Event Bindings
     bindHeaderEvents(hwState, this.currentLang, this.setLang.bind(this));
-    bindSidebarEvents(this.setTab.bind(this));
+    bindSidebarEvents(this.setTab.bind(this), this.handleSignOut.bind(this));
+
+    /* Any control anywhere can send the user to a tab by carrying
+       data-goto-tab, so a view does not need its own navigation callback
+       threaded through app.js just to link somewhere. */
+    document.querySelectorAll('[data-goto-tab]').forEach(el => {
+      el.addEventListener('click', () => this.setTab(el.dataset.gotoTab));
+    });
     bindBottomNavEvents(this.setTab.bind(this));
     bindDemoPanelEvents((open) => { this.isDemoModalOpen = open; this.render(); });
 
@@ -153,7 +173,7 @@ class NavonmeshApp {
     else if (this.currentTab === 'produce') bindProduceEvents((open) => { this.isAddProduceModalOpen = open; this.render(); });
     else if (this.currentTab === 'alerts') bindAlertsEvents(this.currentLang);
     else if (this.currentTab === 'troubleshoot') bindHelpEvents(this.currentLang);
-    else if (this.currentTab === 'settings') bindSettingsEvents(this.currentLang, this.setLang.bind(this), this.setUserRole.bind(this));
+    else if (this.currentTab === 'settings') bindSettingsEvents(this.currentLang, this.setLang.bind(this), this.setUserRole.bind(this), this.handleSignOut.bind(this));
   }
 }
 
