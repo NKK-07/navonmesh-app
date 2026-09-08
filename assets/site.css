@@ -119,6 +119,22 @@ img, svg { display: block; max-width: 100%; }
 .nav-right { display: flex; align-items: center; gap: 14px; }
 .nav-langs { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 1px; color: var(--ink-3); }
 
+/* Sign in. The site had exactly one way in, a "See the live demo" button,
+   which is the right invitation for a first visit and the wrong one for a
+   farmer opening this on a Tuesday to check a chamber. Both land on /app/;
+   the app decides whether to show the login or the dashboard. */
+.nav-signin {
+  display: flex; align-items: center;
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--ink-2);
+  border: 1px solid var(--rule);
+  padding: 0 14px; min-height: 40px;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.nav-signin:hover { color: var(--ink); border-color: var(--ink); }
+
 .navtoggle {
   display: none;
   width: 46px;
@@ -667,6 +683,10 @@ h2.title-sm { font-size: 34px; font-weight: 800; letter-spacing: -1px; line-heig
 
   .navlinks { display: none; }
   .nav-right .nav-langs, .nav-right .btn { display: none; }
+  /* The demo button folds into the drawer; Sign in does not. Someone
+     coming back to their own cold store should not have to open a menu
+     to find the way in. */
+  .nav-signin { min-height: 44px; padding: 0 12px; font-size: 11px; }
   .navtoggle { display: flex; }
 
   .drawer {

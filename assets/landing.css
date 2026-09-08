@@ -198,6 +198,15 @@ svg{display:block}
 .navlinks{display:flex;gap:24px}
 .navlinks a{font-size:14px;color:var(--paper-dim);transition:color .18s var(--ease)}
 .navlinks a:hover{color:var(--paper)}
+.nav-signin{
+  display:flex;align-items:center;
+  border:1px solid rgba(255,253,248,.5);border-radius:999px;
+  padding:0 16px;min-height:40px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+  transition:background .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease);
+}
+.nav-signin:hover{background:var(--paper);color:var(--cold);border-color:var(--paper)}
 .nav-cta{
   border:1px solid rgba(255,253,248,.5);border-radius:999px;
   padding:9px 17px;font-size:13.5px;font-weight:500;white-space:nowrap;
@@ -330,19 +339,110 @@ main{position:relative;z-index:2;background:var(--cold-deep)}
   .h-grip svg{transform:rotate(90deg)}
   .h-hint{top:auto;left:calc(50% + 44px)}
 
+  /* Each reading sits in its own half of the horizontal split, measured from
+     the edge it belongs to: outside from the top, inside from the bottom.
+     Anchoring both to the top would stack them in the hot half and leave the
+     cold half empty, which is the opposite of what the page is saying. */
   .read{top:auto;transform:none;text-align:left}
-  .read-out{left:clamp(20px,6vw,40px);top:clamp(84px,13vh,128px)}
-  .read-in{right:auto;left:clamp(20px,6vw,40px);top:auto;bottom:clamp(210px,30vh,280px);text-align:left}
-  .r-deg{font-size:clamp(72px,22vw,120px)}
+  .read-out{left:clamp(20px,6vw,40px);top:clamp(124px,18vh,164px)}
+  .read-in{
+    right:auto;left:clamp(20px,6vw,40px);
+    top:auto;bottom:clamp(248px,34vh,310px);text-align:left;
+  }
+  .r-deg{font-size:clamp(64px,19vw,104px)}
+  .r-tag{font-size:10.5px;letter-spacing:.2em}
   .say{width:calc(100% - 40px)}
   .say-line{font-size:clamp(22px,6vw,30px)}
-  .crops{top:64px;gap:5px}
-  .crop{font-size:9.5px;padding:6px 10px;min-height:30px}
+
+  /* One row that scrolls sideways, never a block that wraps. Five pills wrap
+     to three lines at 375px, and a wrapping block grows downward into the
+     readings underneath it. */
+  .crops{
+    top:60px;left:0;right:0;transform:none;
+    flex-wrap:nowrap;justify-content:flex-start;
+    overflow-x:auto;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none;
+    padding:0 clamp(20px,6vw,40px);gap:6px;
+  }
+  .crops::-webkit-scrollbar{display:none}
+  /* 42px is a thumb. The old 30px was a mouse target on a device that has no
+     mouse. */
+  .crop{font-size:11px;padding:9px 14px;min-height:42px;flex:0 0 auto}
+
+  .nav{padding:18px clamp(20px,6vw,40px)}
+  .nav-cta{display:none}
+  .nav-signin{min-height:40px;padding:0 14px;font-size:11px}
+  .brand-name{font-size:20px}
+
   .day{bottom:clamp(126px,17vh,166px);width:calc(100% - 32px)}
   .day-plot{height:64px;cursor:ns-resize}
   .prod{width:clamp(54px,13vw,74px);margin-top:10px}
-  .read-out{top:clamp(112px,16vh,150px)}
-  .read-in{bottom:auto;top:auto}
+}
+
+/* Label type that was sized for a desktop viewed at arm's length. Below 9.5px
+   on a phone held in a field, in sunlight, these are decorative rather than
+   readable, so the smallest of them come back up to 11px. */
+@media (max-width:640px){
+  .day-t,.vs-f,.w-tag,.fig-l,.pw-l{font-size:11px;letter-spacing:.16em}
+  .kick{font-size:11px;letter-spacing:.15em}
+  .vs-tag{font-size:11px}
+  .mono{font-size:11px}
+
+  /* The six pieces of the hero add up to more than a phone screen, so
+     something has to go. The produce drawing is the only decorative one: it
+     repeats what the reading above it already says, and it costs 60px in each
+     half, which is the whole overlap. The numbers stay. */
+  .prod{display:none}
+
+  /* These six offsets are one budget, not six independent choices. The hero is
+     locked to the viewport height, so every block takes its space from the
+     others, and the constraint that matters is that the inside reading stays
+     BELOW the divider at 50%: it is the cold half, and floating it up into the
+     hot half inverts the only thing the page is saying. Measured at 375x812
+     and 360x780, bottom up: say 14, day 126, inside 256, which puts the inside
+     reading at 419 against a divider at 406. */
+  .nav{padding:14px clamp(20px,6vw,40px)}
+  .crops{top:74px}
+  .r-deg{font-size:clamp(56px,17vw,88px)}
+  .read-out{top:clamp(126px,16vh,148px)}
+
+  /* Trimmed where the space was padding rather than content: the clock in the
+     day header was set at a desktop size nothing needed, and the gaps inside
+     a reading were tuned against a much taller hero. */
+  .r-note{margin-top:8px}
+  .r-life{margin-top:2px}
+  .day-head{margin-bottom:2px}
+  .day-clock{font-size:19px}
+  .day-ticks{margin-top:4px}
+  .power{margin-top:6px}
+  .day-plot{height:42px}
+  .say-line{font-size:clamp(20px,5.4vw,26px)}
+  .pill{margin-top:12px}
+
+  /* The inside reading hangs off the divider, not off the bottom of the
+     screen. Anchored to the bottom it needs a different vh on every screen
+     height to stay in the cold half, and 812 and 780 disagree by a pixel in
+     opposite directions. Anchored here it is below the divider by
+     construction, on any screen, and the arithmetic stops mattering. */
+  .read-in{top:calc(50% + 10px);bottom:auto}
+  .day{bottom:clamp(118px,16vh,142px)}
+  .say{bottom:12px}
+}
+
+/* Between the divider and the headline there is room for the inside reading
+   and the day plot, and on a 780 screen that room runs out by about five
+   pixels. The reading gives them up: at these sizes the number is still the
+   largest thing on the half, which is all it has to be. */
+@media (max-width:860px) and (max-height:800px){
+  .r-deg{font-size:clamp(46px,14vw,68px)}
+  .r-note{margin-top:6px}
+}
+
+/* A short phone in landscape, or a small window, has no room for the day plot
+   between the readings and the headline. The headline is the argument; the
+   plot is evidence for it, and evidence can wait for a taller screen. */
+@media (max-width:860px) and (max-height:680px){
+  .day{display:none}
 }
 
 /* ------------------------------------------------------- reduced motion */

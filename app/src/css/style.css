@@ -276,7 +276,11 @@ button {
 .header-right-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  /* Without this the group refuses to shrink below its content and pushes the
+     header 155px wider than a 360px phone, which is most of the phones this
+     is for. */
+  min-width: 0;
 }
 
 /* Large Farmer Audio Button */
@@ -300,15 +304,38 @@ button {
 }
 
 .lang-select {
-  padding: 8px 14px;
+  padding: 8px 10px;
   border-radius: var(--radius-md);
   border: 2px solid var(--agri-green);
   background: var(--bg-card);
   color: var(--text-dark);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   cursor: pointer;
+  /* A select is as wide as its widest option, and the widest of the eight is
+     an Assamese or Meitei name. On a phone that alone overflows the header, so
+     it is capped here and given its full width back at 640px. */
+  max-width: 118px;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+/* Below 640px the speaker icon carries the button on its own. The word next to
+   it is the first thing that can go: it is the only label in the header that
+   repeats what its icon already says. */
+@media (max-width: 639px) {
+  .app-header { padding: 0 14px; }
+  .audio-listen-btn span { display: none; }
+  .audio-listen-btn { padding: 0 12px; min-height: 42px; }
+  /* Both header controls clear 42px. This is the app a farmer uses outdoors,
+     one handed, and a 35px target is a miss waiting to happen. */
+  .lang-select { min-height: 42px; }
+}
+
+@media (min-width: 640px) {
+  .lang-select { max-width: none; padding: 8px 14px; font-size: 14px; }
+  .header-right-actions { gap: 12px; }
 }
 
 /* Sidebar Navigation — grouped, rule-separated, no pills */
