@@ -7,3 +7,4 @@ node_modules/
 .env.neon
 .env.app
 .neon-seed-keys.txt
+.env.vercel
