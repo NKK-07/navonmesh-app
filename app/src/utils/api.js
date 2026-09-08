@@ -74,9 +74,18 @@ export async function login(phone, pin) {
     return { ok: false, reason: 'locked', until: b.until };
   }
   if (res.status === 429) return { ok: false, reason: 'rate' };
-  if (!res.ok) return { ok: false, reason: 'invalid' };
 
-  const body = await res.json();
+  /* Only a 401 means the phone and PIN were wrong. Everything else is our
+     problem, not the farmer's, and must not be reported as a bad credential:
+     someone standing at a cold store being told their PIN is wrong will retype
+     it until the account locks, and will not think to mention the outage. A
+     404 from a routing mistake read exactly like a wrong PIN once already. */
+  if (res.status === 401) return { ok: false, reason: 'invalid' };
+  if (!res.ok) return { ok: false, reason: 'server', status: res.status };
+
+  const body = await res.json().catch(() => null);
+  if (!body || !body.token) return { ok: false, reason: 'server', status: res.status };
+
   store(body.token, body.user);
   return { ok: true, user: body.user };
 }

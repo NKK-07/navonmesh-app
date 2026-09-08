@@ -97,6 +97,12 @@ export function bindLoginEvents(onSignedIn) {
     if (result.reason === 'rate') {
       return fail('Too many attempts from this phone. Wait a minute and try again.');
     }
+    /* Not a credential problem. Say so, or the next thing this person does is
+       retype a PIN that was right the first time. */
+    if (result.reason === 'server') {
+      return fail('Something is wrong at our end, not with your PIN. Try again ' +
+                  'in a minute' + (result.status ? ' (error ' + result.status + ')' : '') + '.');
+    }
     return fail('That phone number and PIN do not match.');
   });
 }
