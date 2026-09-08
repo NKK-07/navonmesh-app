@@ -16,6 +16,7 @@
     "neon:seed": "node scripts/db.mjs neon server/seed.js",
     "neon:provision": "node scripts/db.mjs neon server/provision.js",
     "neon:test:rls": "node scripts/db.mjs neon server/test-rls.js",
+    "alert:test": "node scripts/test-alert.mjs",
     "keys": "node -e \"import('web-push').then(w=>console.log(JSON.stringify(w.default.generateVAPIDKeys(),null,2)))\""
   },
   "dependencies": {
