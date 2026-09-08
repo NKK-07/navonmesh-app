@@ -110,13 +110,31 @@ class NavonmeshApp {
     this.liveTimer = setInterval(() => this.refreshLive(), 60_000);
     window.addEventListener('online', () => this.refreshLive());
 
+    // Coming back to the app is the moment its data is most likely to be
+    // wrong, and the poll above is a minute wide. A manager sets a target
+    // temperature in one window, switches to the farmer login in another, and
+    // nothing fired: not a write, not `online`, and the timer had fifty
+    // seconds left. Refreshing on focus is what makes the two agree.
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) this.refreshLive(true);
+    });
+    window.addEventListener('focus', () => this.refreshLive(true));
+
     // Initial Render
     this.render();
   }
 
-  refreshLive() {
+  /**
+   * @param light  fetch only what a manager can have changed under you: the
+   *   units (setpoint, totals) and the produce. The other three calls are
+   *   alerts, readings and the profile, and dragging them along made coming
+   *   back to the window take fifteen seconds to show a new target
+   *   temperature. The full refresh still runs on load and on the timer.
+   */
+  refreshLive(light = false) {
     if (!isSignedIn()) return;
-    refreshLive().catch(err => console.warn('[live] refresh failed:', err.message));
+    const opts = light ? { only: ['units', 'batches'] } : {};
+    refreshLive(opts).catch(err => console.warn('[live] refresh failed:', err.message));
   }
 
   setTab(tabId) {
@@ -124,6 +142,10 @@ class NavonmeshApp {
     this.currentTab = tabId;
     window.scrollTo(0, 0);
     this.render();
+    /* Opening a screen is asking to see what is on it. Cheap because the
+       refresh only fetches units and produce, and it means a farmer who taps
+       Produce sees the setpoint their manager changed a moment ago. */
+    this.refreshLive(true);
   }
 
   /* Signing out has to clear more than the token. The tab, the selected crop

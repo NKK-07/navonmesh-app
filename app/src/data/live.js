@@ -13,10 +13,23 @@
 // and "8.2 degrees, from before the signal dropped".
 
 import {
-  getUnits, getBatches, getAlerts, getReadings, getMe, isSignedIn
+  getUnits, getBatches, getAlerts, getReadings, getMe, isSignedIn, getUser
 } from '../utils/api.js';
 
-const CACHE_KEY = 'navonmesh_live_cache';
+/* One cache per user, not one per browser.
+ *
+ * The session token lives in sessionStorage, which is per tab, so a manager
+ * and a farmer can be signed in at the same time in two tabs of the same
+ * browser. They shared a single cache key, so whichever refreshed last wrote
+ * over the other, and the farmer's tab could paint the manager's units on
+ * load. Keying by user id keeps them apart and means signing out cannot leave
+ * one person's produce behind for the next. */
+const CACHE_PREFIX = 'navonmesh_live_cache';
+
+function cacheKey() {
+  const user = getUser();
+  return user && user.id ? CACHE_PREFIX + ':' + user.id : CACHE_PREFIX;
+}
 
 /* Everything null until the first successful fetch. Deliberately not zeros:
    zero batches and unknown batches look identical in a template, and only one
@@ -57,7 +70,7 @@ function publish(next) {
    in localStorage; it is their own data and it never leaves the phone. */
 function readCache() {
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
+    const raw = localStorage.getItem(cacheKey());
     if (!raw) return null;
     const parsed = JSON.parse(raw);
     return parsed && parsed.lastFetchedAt ? parsed : null;
@@ -68,7 +81,7 @@ function readCache() {
 
 function writeCache(snapshot) {
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
+    localStorage.setItem(cacheKey(), JSON.stringify({
       me: snapshot.me, units: snapshot.units, batches: snapshot.batches,
       alerts: snapshot.alerts, readings: snapshot.readings,
       lastFetchedAt: snapshot.lastFetchedAt
@@ -77,7 +90,12 @@ function writeCache(snapshot) {
 }
 
 export function clearLive() {
-  try { localStorage.removeItem(CACHE_KEY); } catch {}
+  /* Remove this user's cache and any stragglers from an older build that
+     used the unkeyed name. */
+  try {
+    localStorage.removeItem(cacheKey());
+    localStorage.removeItem(CACHE_PREFIX);
+  } catch {}
   publish(empty());
 }
 
